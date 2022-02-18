@@ -23,4 +23,11 @@ public class Player {
         }
 
     }
+    @Override
+    public String toString(){
+        String a = "-----------------";
+        a+=  "\nplayer id: " + this.player_id + "\npos: " + this.pl_pos;
+        a+= "\n-----------------";
+        return a;
+    }
 }

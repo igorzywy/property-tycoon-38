@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
     int TILE_COUNT = 40;
-    int PLAYER_COUNT = 1;
+    int PLAYER_COUNT = 5;
     int player_turn = 0;
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
@@ -48,15 +48,15 @@ public class Board {
     public static void main(String[] args){
         Board b = new Board();
 
-        /*
+
         for (int i = 0; i < b.bSize(); i++) {
             System.out.println(b.getTile(i).getTile_id());
 
         }
         for (int i = 0; i < b.pSize(); i++) {
-            System.out.println(b.getPlayer(i).getPlayer_id());
+            System.out.println(b.getPlayer(i));
         }
-        */
+
 
     }
 }
