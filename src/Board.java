@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Board {
     int TILE_COUNT = 40;
     int PLAYER_COUNT = 1;
-    int player_turn = 1;
+    int player_turn = 0;
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
     public Board(){
