@@ -50,7 +50,7 @@ public class Board {
 
 
         for (int i = 0; i < b.bSize(); i++) {
-            System.out.println(b.getTile(i).getTile_id());
+            System.out.println(b.getTile(i));
 
         }
         for (int i = 0; i < b.pSize(); i++) {

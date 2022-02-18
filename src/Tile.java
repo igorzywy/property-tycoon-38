@@ -9,4 +9,12 @@ public class Tile {
     public int getTile_id() {
         return this.tile_id;
     }
+
+    @Override
+    public String toString(){
+        String a = "-----------------";
+        a+=  "\ntile id: " + this.tile_id;
+        a+= "\n-----------------";
+        return a;
+    }
 }
