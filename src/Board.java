@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 public class Board {
     int TILE_COUNT = 40;
     int PLAYER_COUNT = 5;
@@ -9,10 +10,7 @@ public class Board {
     public Board(){
 
         //adding tiles to the board
-        this.board = new ArrayList<Tile>();
-        for (int i = 0; i < TILE_COUNT; i++) {
-            this.board.add(new Tile());
-        }
+        this.board = Tile.getXLSXData();
         this.players = new ArrayList<Player>();
         for (int i = 0; i < PLAYER_COUNT; i++) {
             this.players.add(new Player());
@@ -46,8 +44,10 @@ public class Board {
     }
 
     public static void main(String[] args){
+
         Board b = new Board();
 
+        System.out.println(b.bSize());
 
         for (int i = 0; i < b.bSize(); i++) {
             System.out.println(b.getTile(i));
