@@ -3,6 +3,8 @@ public class Player {
     static int pl_num = 1;
     int player_id = 0;
     int pl_pos = 0;
+    int pl_turn = 0;
+ boolean bankrupt = false; // manages if player is bankrupt
     public Player(){
         this.player_id = this.pl_num++;
     }
@@ -12,14 +14,25 @@ public class Player {
     }
 
     public int getPl_pos() {
+        System.out.println("pos");
         return this.pl_pos;
+
     }
 
-    public void incrPos(){
+    public boolean isBankrupt() {
+        return bankrupt;  // return the boolean if bankrupt
+    }
+
+    public void setBankrupt(boolean bankrupt) { // Allows you to change the value of bankrupt
+        this.bankrupt = bankrupt;
+    }
+
+    public void incrPos(int spaces){
         if (this.pl_pos > 39){
             this.pl_pos = 0;
+            this.pl_turn ++; // tracks how many full loop the player has done
         } else {
-            this.pl_pos++;
+            this.pl_pos += spaces; // increase the player position by the total of the 2 dices rolled
         }
 
     }

@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.util.Random;
 
 public class Board {
     int TILE_COUNT = 40;
@@ -7,6 +7,7 @@ public class Board {
     int player_turn = 0;
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
+
     public Board(){
 
         //adding tiles to the board
@@ -56,6 +57,12 @@ public class Board {
         for (int i = 0; i < b.pSize(); i++) {
             System.out.println(b.getPlayer(i));
         }
+
+//        b.getPlayer(0).incrPos( b.Roll());
+//        System.out.println("pos:" + b.getPlayer(0).getPl_pos());
+//        b.getPlayer(0).incrPos(b.Roll());
+//        System.out.println("pos:" + b.getPlayer(0).getPl_pos());
+
 
 
     }
