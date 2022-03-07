@@ -3,8 +3,7 @@ public class Player {
     static int pl_num = 1;
     int player_id = 0;
     int pl_pos = 0;
-    int pl_turn = 0;
- boolean bankrupt = false; // manages if player is bankrupt
+    boolean bankrupt = false; // manages if player is bankrupt
     public Player(){
         this.player_id = this.pl_num++;
     }
@@ -30,7 +29,6 @@ public class Player {
     public void incrPos(){
         if (this.pl_pos > 39){
             this.pl_pos = 0;
-            this.pl_turn ++; // tracks how many full loop the player has done
         } else {
             this.pl_pos ++;
         }

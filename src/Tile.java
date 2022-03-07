@@ -15,6 +15,7 @@ public class Tile {
     String tile_action = "";
     boolean tile_can_be_bought;
     Integer price, rent_unimproved, rent_1h, rent_2h, rent_3h, rent_4h, rent_hotel;
+    Integer owened_by = null;
 
     //constructor
     public Tile(String name, String group, String action, boolean can_be_bought, Integer price, Integer rent_unimproved, Integer rent_1h, Integer rent_2h, Integer rent_3h, Integer rent_4h, Integer rent_hotel){
