@@ -7,6 +7,7 @@ public class Board {
     int player_turn = 0;
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
+    ArrayList<Card> cards = null;
     public Board(){
 
         //adding tiles to the board
