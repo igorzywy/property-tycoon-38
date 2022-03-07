@@ -19,6 +19,10 @@ public class Board {
 
     }
 
+    public void setPLAYER_COUNT(int player_Count){
+        PLAYER_COUNT = player_Count;
+    }
+
     public void incPlayer(){
         player_turn++;
         if (this.player_turn > PLAYER_COUNT) {
