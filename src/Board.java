@@ -18,7 +18,20 @@ public class Board {
         }
 
     }
+    public int Roll(){
+        //roll a dice
+        Random rand = new Random();
+         int dice  = rand.nextInt(6);
+         int dice2 = rand.nextInt(6);
+         dice += 1;
+         dice2 += 1;
+         System.out.println("You rolled: ");
+         System.out.println(dice + " + " + dice2 + "=");
 
+         System.out.println(dice+dice2);
+         return dice+dice2 ;
+
+    }
     public void incPlayer(){
         if (this.player_turn >= PLAYER_COUNT){
             this.player_turn=0;
