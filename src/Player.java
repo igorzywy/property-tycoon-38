@@ -27,12 +27,12 @@ public class Player {
         this.bankrupt = bankrupt;
     }
 
-    public void incrPos(int spaces){
+    public void incrPos(){
         if (this.pl_pos > 39){
             this.pl_pos = 0;
             this.pl_turn ++; // tracks how many full loop the player has done
         } else {
-            this.pl_pos += spaces; // increase the player position by the total of the 2 dices rolled
+            this.pl_pos ++;
         }
 
     }

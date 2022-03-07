@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.util.Random;
 
 public class Board {
     int TILE_COUNT = 40;
@@ -26,6 +26,18 @@ public class Board {
             this.player_turn++;
         }
 
+    }
+
+    public int rollDice(){
+        Random rand = new Random();
+        int dice = rand.nextInt(6);
+        int dice2 = rand.nextInt(6);
+        dice ++;
+        dice2 ++;
+
+        System.out.println("you rolled: \n " + dice + " and " + dice2);
+
+        return dice + dice2;
     }
 
     public Tile getTile(int i){
@@ -57,6 +69,9 @@ public class Board {
         for (int i = 0; i < b.pSize(); i++) {
             System.out.println(b.getPlayer(i));
         }
+
+//        b.rollDice();
+//        b.rollDice();
 
 
     }
