@@ -20,10 +20,9 @@ public class Board {
     }
 
     public void incPlayer(){
-        if (this.player_turn >= PLAYER_COUNT){
-            this.player_turn=0;
-        }else{
-            this.player_turn++;
+        player_turn++;
+        if (this.player_turn > PLAYER_COUNT) {
+            this.player_turn = 0;
         }
 
     }
