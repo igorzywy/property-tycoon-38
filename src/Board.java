@@ -5,6 +5,7 @@ public class Board {
     int TILE_COUNT = 40;
     int PLAYER_COUNT = 5;
     int player_turn = 0;
+    int rl_double = 0 ;
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
     ArrayList<Card> cards = null;
@@ -30,15 +31,43 @@ public class Board {
         }
 
     }
+    public void movePlayer(Board b, Player player){
+        int roll = b.rollDice();
+        for(int i = 1;  i < roll ; i++){
+            player.incrPos();
+        }
+        if(this.rl_double ==3){
+            player.setPl_pos(10);
+            this.rl_double = 0;
+            System.out.println(player);
+            System.out.println("\n\n");
+        }
 
+        if(this.rl_double ==2){
+            b.movePlayer( b,player);
+            System.out.println(player);
+            System.out.println("\n\n");
+        }
+        if(this.rl_double == 1){
+            b.movePlayer( b,player);
+            System.out.println(player);
+            System.out.println("\n\n");
+        }
+
+    }
     public int rollDice(){
         Random rand = new Random();
         int dice = rand.nextInt(6);
         int dice2 = rand.nextInt(6);
+
         dice ++;
         dice2 ++;
+        if(dice == dice2){
+            this.rl_double++;
+        }
 
         System.out.println("you rolled: \n " + dice + " and " + dice2);
+        System.out.println("\n\n");
 
         return dice + dice2;
     }
@@ -72,6 +101,9 @@ public class Board {
         for (int i = 0; i < b.pSize(); i++) {
             System.out.println(b.getPlayer(i));
         }
+
+        b.movePlayer(b,b.getPlayer(b.player_turn));
+
 
 //        b.rollDice();
 //        b.rollDice();
