@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,24 +14,68 @@ public class Card {
     CardType type = null;
     String desc = null;
     String action = null;
+    Integer amount = null;
 
-    public Card(CardType type, String desc, String action){
-
+    public Card(String desc, String action, String type, Integer amount){
+        CardType c = null;
         card_id = card_id_incrementer++;
-        this.type = type;
+        if (type=="bpp") {
+            c = CardType.BANKPAYPLAYER;
+        }else if (type=="ppp"){
+            c = CardType.PLAYERPAYPLAYER;
+        }else if (type=="pm"){
+            c = CardType.PLAYERMOVE;
+        }else if (type=="ppb"){
+            c = CardType.PLAYERPAYBANK;
+        }
+        this.type = c;
         this.desc = desc;
         this.action = action;
-
+        this.amount = amount;
 
     }
 
     public static ArrayList<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
+        try {
+            File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
+            FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
+            //creating Workbook instance that refers to .xlsx file
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            XSSFSheet sheet = wb.getSheetAt(0);
+            for (int i = 3; i < 19; i++) {
+                Row row = sheet.getRow(i);
+                ArrayList<Object> data = new ArrayList<Object>();
+                for (int j = 0; j < 3; j++) {
+                    Cell cell = row.getCell(j);
+                    //getting the desc action and type
+                    if (j <= 2) {
+                        try {
+                            data.add(cell.getStringCellValue());
 
+                        } catch (Exception e) {
+                            data.add(null);
+                        }
 
-
-
-
+                    }else if (j==3) {
+                        try {
+                            Integer num = (int) cell.getNumericCellValue();
+                            if (num.equals(0)) {
+                                data.add(null);
+                            } else {
+                                data.add(num);
+                            }
+                        } catch (Exception e) {
+                            data.add(null);
+                        }
+                    }
+                }
+                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2), (Integer) data.get(3)));
+            }
+            return cards;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return cards;
     }
 
