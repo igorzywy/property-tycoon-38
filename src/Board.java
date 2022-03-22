@@ -6,6 +6,7 @@ public class Board {
     int PLAYER_COUNT = 5;
     int player_turn = 0;
     int rl_double = 0 ;
+    boolean isDouble = false;
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
     ArrayList<Card> cards = null;
@@ -31,41 +32,57 @@ public class Board {
         }
 
     }
-    public void movePlayer(Board b, Player player){
-        int roll = b.rollDice();
-        for(int i = 1;  i < roll ; i++){
-            player.incrPos();
-        }
-        if(this.rl_double ==3){
-            player.setPl_pos(10);
-            this.rl_double = 0;
-            System.out.println(player);
-            System.out.println("\n\n");
+
+    public void turn(Board b, Player p){
+        movePlayer(b,p);
+
+        while(this.isDouble && this.rl_double<3) {
+            movePlayer(b, p);
         }
 
-        if(this.rl_double ==2){
-            b.movePlayer( b,player);
-            System.out.println(player);
+            this.isDouble = false;
+            this.rl_double = 0;
+
+    }
+
+    public void jail(Player p){
+        p.setPl_pos(10);
+    }
+
+    public void movePlayer(Board b, Player player){
+
+        int roll = b.rollDice();
+        if(this.rl_double == 3 ){
+            this.isDouble = false;
+            this.rl_double = 0;
+            b.jail(player);
+            System.out.println("player is in jail");
             System.out.println("\n\n");
         }
-        if(this.rl_double == 1){
-            b.movePlayer( b,player);
-            System.out.println(player);
-            System.out.println("\n\n");
+        else {
+            for (int i = 1; i < roll; i++) {
+                player.incrPos();
+            }
         }
+
+
+       System.out.println("******" + player.getPl_pos()+"******\n\n");
+
 
     }
     public int rollDice(){
         Random rand = new Random();
         int dice = rand.nextInt(6);
         int dice2 = rand.nextInt(6);
-
         dice ++;
         dice2 ++;
         if(dice == dice2){
             this.rl_double++;
+            this.isDouble = true;
         }
-
+        else{
+            this.isDouble = false;
+        }
         System.out.println("you rolled: \n " + dice + " and " + dice2);
         System.out.println("\n\n");
 
@@ -102,8 +119,7 @@ public class Board {
             System.out.println(b.getPlayer(i));
         }
 
-        b.movePlayer(b,b.getPlayer(b.player_turn));
-
+        b.turn(b,b.getPlayer(b.player_turn));
 
 //        b.rollDice();
 //        b.rollDice();

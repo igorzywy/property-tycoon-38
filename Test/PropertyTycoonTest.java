@@ -15,7 +15,6 @@ public class PropertyTycoonTest {
     }
     @Test
     public void diceTest(){
-        int r = b.rollDice();
-
+         b.rollDice();
     }
 }
