@@ -103,13 +103,17 @@ public class Board {
         return this.players.get(i);
     }
 
+
     public Card getPLCard(int i) { return this.cardsPL.get(i); }
+
 
     public int bSize(){
         return this.board.size();
     }
 
+
     public int plCardsize() { return this.cardsPL.size(); }
+
 
     public int pSize(){
         return this.players.size();
