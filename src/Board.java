@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Board {
     int TILE_COUNT = 40;
@@ -10,10 +11,8 @@ public class Board {
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
     //opportunity knocks cards
-
     ArrayList<Card> cardsOK = null;
     //pot luck cards
-
     ArrayList<Card> cardsPL = null;
     public Board(){
 
@@ -42,13 +41,36 @@ public class Board {
     }
 
     public void turn(Board b, Player p){
+        Scanner input = new Scanner(System.in);
         movePlayer(b,p);
+        Tile t = b.getTile(p.getPl_pos());
+        if(t.tile_can_be_bought&& t.owened_by==null){
+            System.out.println(t.tile_name);
+            System.out.println("Price is " + t.price);
+            System.out.println("Do you want to buy? Y/N \n");
+            String s = input.nextLine();
+            if(s.equals("y")){
+                int cash = p.getPl_cash();
+                int price = t.price;
+                int total = cash - price;
+                if(total>0){
+                    p.setPl_cash(total);
+                    t.owened_by = p.player_id;
+                    System.out.println("cash: "+p.pl_cash);
+                    System.out.println("tile is owned by: "+ t.owened_by);
+                }else{
+                    System.out.println("you have insufficient funds");
+                }
 
-        while(this.isDouble && this.rl_double<3) {
+            }
+
+        }
+
+        while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
             movePlayer(b, p);
         }
 
-            this.isDouble = false;
+            this.isDouble = false; //reset values
             this.rl_double = 0;
 
     }

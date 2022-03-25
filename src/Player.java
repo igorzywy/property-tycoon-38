@@ -18,13 +18,16 @@ public class Player {
     }
 
     public int getPl_pos() {
-        System.out.println("pos");
+
         return this.pl_pos;
 
     }
     public int getPl_cash(){
-        System.out.println("cash ");
         return this.pl_cash;
+    }
+
+    public  void setPl_cash(int cash){
+        this.pl_cash = cash;
     }
 
     public boolean isBankrupt() {

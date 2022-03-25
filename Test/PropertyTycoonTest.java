@@ -1,6 +1,7 @@
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class PropertyTycoonTest {
 
@@ -15,5 +16,12 @@ public class PropertyTycoonTest {
     @Test
     public void diceTest(){
          b.rollDice();
+    }
+    @Test
+    public void movePlayerTest(){
+        int intial=b.getPlayer(1).getPl_pos();
+        b.turn(b, b.getPlayer(1));
+        assertTrue(intial<b.getPlayer(1).getPl_pos());
+
     }
 }
