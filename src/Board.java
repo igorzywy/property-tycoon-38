@@ -10,8 +10,10 @@ public class Board {
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
     //opportunity knocks cards
+
     ArrayList<Card> cardsOK = null;
     //pot luck cards
+
     ArrayList<Card> cardsPL = null;
     public Board(){
 
