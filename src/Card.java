@@ -15,8 +15,9 @@ public class Card {
     String desc = null;
     String action = null;
     Integer amount = null;
+    Integer perHotel = null;
 
-    public Card(String desc, String action, String type, Integer amount){
+    public Card(String desc, String action, String type, Integer amount, Integer perHotel){
         CardType c = null;
         card_id = card_id_incrementer++;
         if (type=="bpp") {
@@ -27,11 +28,22 @@ public class Card {
             c = CardType.PLAYERMOVE;
         }else if (type=="ppb"){
             c = CardType.PLAYERPAYBANK;
+        }else if (type=="ppf"){
+            c = CardType.PLAYERPAYFREE;
+        }else if (type=="pmx"){
+            c = CardType.PLAYERMOVEX;
+        }else if (type=="pmf"){
+            c = CardType.PLAYERMOVEFORWARD;
+        }else if (type=="ppr"){
+            c = CardType.PLAYERPAYREPAIR;
+        }else if (type=="jfc"){
+            c = CardType.JAILFREECARD;
         }
         this.type = c;
         this.desc = desc;
         this.action = action;
         this.amount = amount;
+        this.perHotel = perHotel;
 
     }
 
@@ -46,7 +58,7 @@ public class Card {
             for (int i = 3; i < 19; i++) {
                 Row row = sheet.getRow(i);
                 ArrayList<Object> data = new ArrayList<Object>();
-                for (int j = 0; j < 3; j++) {
+                for (int j = 0; j < 5; j++) {
                     Cell cell = row.getCell(j);
                     //getting the desc action and type
                     if (j <= 2) {
@@ -68,9 +80,20 @@ public class Card {
                         } catch (Exception e) {
                             data.add(null);
                         }
+                    }else if (j==4) {
+                        try {
+                            Integer num = (int) cell.getNumericCellValue();
+                            if (num.equals(0)) {
+                                data.add(null);
+                            } else {
+                                data.add(num);
+                            }
+                        } catch (Exception e) {
+                            data.add(null);
+                        }
                     }
                 }
-                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2), (Integer) data.get(3)));
+                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2), (Integer) data.get(3), (Integer) data.get(4)));
             }
             return cards;
         }catch (Exception e){
@@ -92,7 +115,9 @@ public class Card {
     @Override
     public String toString(){
         String a = "-----------------";
-        a+=  "\ncard_id: " + card_id;
+        a+=  "\ncard_id: " + card_id + " card_type: " + this.type + " desc: " + this.desc
+                + " action: " + this.action + " amount: " + this.amount + " perHotel: "
+                + this.perHotel;
         a+= "\n-----------------";
         return a;
     }

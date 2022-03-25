@@ -50,7 +50,7 @@ public class Tile {
             for (int i = 4; i < 44; i++) {
                 Row row = sheet.getRow(i);
                 ArrayList<Object> data = new ArrayList<Object>();
-                for (int j = 1; j <12 ; j++) {
+                for (int j = 1; j < 12 ; j++) {
                     Cell cell = row.getCell(j);
                     //adding the String columns so name, grp and action
                     if (j<=3){

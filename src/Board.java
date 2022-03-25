@@ -9,15 +9,21 @@ public class Board {
     boolean isDouble = false;
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
-    ArrayList<Card> cards = null;
+    //opportunity knocks cards
+    ArrayList<Card> cardsOK = null;
+    //pot luck cards
+    ArrayList<Card> cardsPL = null;
     public Board(){
 
         //adding tiles to the board
         this.board = Tile.getXLSXData();
+        //adding players to board
         this.players = new ArrayList<Player>();
         for (int i = 0; i < PLAYER_COUNT; i++) {
             this.players.add(new Player());
         }
+        //adding pot luck cards to board
+        this.cardsOK = Card.getXLSXDataPotLuck();
 
     }
 
@@ -97,9 +103,13 @@ public class Board {
         return this.players.get(i);
     }
 
+    public Card getPLCard(int i) { return this.cardsPL.get(i); }
+
     public int bSize(){
         return this.board.size();
     }
+
+    public int plCardsize() { return this.cardsPL.size(); }
 
     public int pSize(){
         return this.players.size();
@@ -113,12 +123,14 @@ public class Board {
 
         for (int i = 0; i < b.bSize(); i++) {
             System.out.println(b.getTile(i));
-
         }
         for (int i = 0; i < b.pSize(); i++) {
             System.out.println(b.getPlayer(i));
         }
 
+        for (int i = 0; i < b.plCardsize(); i++) {
+            System.out.println(b.getPLCard(i));
+        }
         b.turn(b,b.getPlayer(b.player_turn));
 
 //        b.rollDice();
