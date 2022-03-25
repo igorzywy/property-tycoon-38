@@ -131,6 +131,8 @@ public class Board {
         for (int i = 0; i < b.plCardsize(); i++) {
             System.out.println(b.getPLCard(i));
         }
+
+
         b.turn(b,b.getPlayer(b.player_turn));
 
 //        b.rollDice();

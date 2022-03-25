@@ -6,8 +6,7 @@ public class PropertyTycoonTest {
 
     private Board b;
     @Before
-    public  void setup(){ b = new Board();
-    }
+    public  void setup(){ b = new Board(); }
 
     @Test
     public void tileTest(){
