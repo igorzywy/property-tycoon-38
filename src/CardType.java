@@ -6,11 +6,11 @@ public enum CardType {
         (this can be forwards or backwards indicated with either pos or neg amount)
     pmf - player moves to specific tile and passes things like GO
      */
-    BANKPAYPLAYER("bpp"),PLAYERPAYPLAYER("ppp"),
-    PLAYERMOVE("pm"),PLAYERPAYBANK("ppb"),
-    PLAYERPAYFREE("ppf"),PLAYERMOVEX("pmx"),
-    PLAYERMOVEFORWARD("pmf"),PLAYERPAYREPAIR("ppr"),
-    JAILFREECARD("jfc")
+    bpp("BANKPAYPLAYER"),ppp("PLAYERPAYPLAYER"),
+    pm("PLAYERMOVE"),ppb("PLAYERPAYBANK"),
+    ppf("PLAYERPAYFREE"),pmx("PLAYERMOVEX"),
+    pmf("PLAYERMOVEFORWARD"),ppr("PLAYERPAYREPAIR"),
+    jfc("JAILFREECARD")
     ;
     private final String s;
     CardType(String s) {
