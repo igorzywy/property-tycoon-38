@@ -42,7 +42,7 @@ public class Tile {
     public static ArrayList<Tile> getXLSXData(){
         ArrayList<Tile> tiles= new ArrayList<Tile>();
         try {
-            File file = new File("/data/PropertyTycoonBoardData.xlsx");   //creating a new file instance
+            File file = new File("data/PropertyTycoonBoardData.xlsx");   //creating a new file instance
             FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
             //creating Workbook instance that refers to .xlsx file
             XSSFWorkbook wb = new XSSFWorkbook(fis);

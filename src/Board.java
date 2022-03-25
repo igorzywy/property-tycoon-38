@@ -25,7 +25,7 @@ public class Board {
             this.players.add(new Player());
         }
         //adding pot luck cards to board
-        this.cardsOK = Card.getXLSXDataPotLuck();
+        this.cardsPL = Card.getXLSXDataPotLuck();
 
     }
 
