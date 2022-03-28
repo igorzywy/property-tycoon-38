@@ -16,34 +16,17 @@ public class Card {
     String action = null;
     Integer amount = null;
     Integer perHotel = null;
+    String typeS = null;
 
     public Card(String desc, String action, String type, Integer amount, Integer perHotel){
-        CardType c = null;
+        CardType c = CardType.valueOf(type);
         card_id = card_id_incrementer++;
-        if (type=="bpp") {
-            c = CardType.BANKPAYPLAYER;
-        }else if (type=="ppp"){
-            c = CardType.PLAYERPAYPLAYER;
-        }else if (type=="pm"){
-            c = CardType.PLAYERMOVE;
-        }else if (type=="ppb"){
-            c = CardType.PLAYERPAYBANK;
-        }else if (type=="ppf"){
-            c = CardType.PLAYERPAYFREE;
-        }else if (type=="pmx"){
-            c = CardType.PLAYERMOVEX;
-        }else if (type=="pmf"){
-            c = CardType.PLAYERMOVEFORWARD;
-        }else if (type=="ppr"){
-            c = CardType.PLAYERPAYREPAIR;
-        }else if (type=="jfc"){
-            c = CardType.JAILFREECARD;
-        }
         this.type = c;
         this.desc = desc;
         this.action = action;
         this.amount = amount;
         this.perHotel = perHotel;
+        this.typeS = type;
 
     }
 
@@ -55,7 +38,7 @@ public class Card {
             //creating Workbook instance that refers to .xlsx file
             XSSFWorkbook wb = new XSSFWorkbook(fis);
             XSSFSheet sheet = wb.getSheetAt(0);
-            for (int i = 3; i < 19; i++) {
+            for (int i = 3; i < 20; i++) {
                 Row row = sheet.getRow(i);
                 ArrayList<Object> data = new ArrayList<Object>();
                 for (int j = 0; j < 5; j++) {
@@ -104,18 +87,64 @@ public class Card {
 
     public static ArrayList<Card> getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
+        try {
+            File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
+            FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
+            //creating Workbook instance that refers to .xlsx file
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            XSSFSheet sheet = wb.getSheetAt(1);
+            for (int i = 3; i < 19; i++) {
+                Row row = sheet.getRow(i);
+                ArrayList<Object> data = new ArrayList<Object>();
+                for (int j = 0; j < 5; j++) {
+                    Cell cell = row.getCell(j);
+                    //getting the desc action and type
+                    if (j <= 2) {
+                        try {
+                            data.add(cell.getStringCellValue());
 
+                        } catch (Exception e) {
+                            data.add(null);
+                        }
 
-
-
-
+                    }else if (j==3) {
+                        try {
+                            Integer num = (int) cell.getNumericCellValue();
+                            if (num.equals(0)) {
+                                data.add(null);
+                            } else {
+                                data.add(num);
+                            }
+                        } catch (Exception e) {
+                            data.add(null);
+                        }
+                    }else if (j==4) {
+                        try {
+                            Integer num = (int) cell.getNumericCellValue();
+                            if (num.equals(0)) {
+                                data.add(null);
+                            } else {
+                                data.add(num);
+                            }
+                        } catch (Exception e) {
+                            data.add(null);
+                        }
+                    }
+                }
+                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2), (Integer) data.get(3), (Integer) data.get(4)));
+            }
+            return cards;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return cards;
     }
+
 
     @Override
     public String toString(){
         String a = "-----------------";
-        a+=  "\ncard_id: " + card_id + " card_type: " + this.type + " desc: " + this.desc
+        a+=  "\ncard_id: " + card_id + " card_type: " + this.type + " String type: " + this.typeS +" desc: " + this.desc
                 + " action: " + this.action + " amount: " + this.amount + " perHotel: "
                 + this.perHotel;
         a+= "\n-----------------";

@@ -25,6 +25,8 @@ public class Board {
         }
         //adding pot luck cards to board
         this.cardsPL = Card.getXLSXDataPotLuck();
+        //adding opportunity knocks cards to board
+        this.cardsOK = Card.getXLSXDataOpportunityKnocks();
 
     }
 
@@ -129,7 +131,7 @@ public class Board {
 
 
     public Card getPLCard(int i) { return this.cardsPL.get(i); }
-
+    public Card getOKCard(int i) { return this.cardsOK.get(i); }
 
     public int bSize(){
         return this.board.size();
@@ -137,7 +139,7 @@ public class Board {
 
 
     public int plCardsize() { return this.cardsPL.size(); }
-
+    public int okCardsize() { return this.cardsOK.size(); }
 
     public int pSize(){
         return this.players.size();
@@ -158,6 +160,10 @@ public class Board {
 
         for (int i = 0; i < b.plCardsize(); i++) {
             System.out.println(b.getPLCard(i));
+        }
+
+        for (int i = 0; i < b.okCardsize(); i++) {
+            System.out.println(b.getOKCard(i));
         }
 
 
