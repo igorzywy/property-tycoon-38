@@ -43,15 +43,30 @@ public class Board {
     }
 
     public void turn(Board b, Player p){
-        Scanner input = new Scanner(System.in);
+
         movePlayer(b,p);
         Tile t = b.getTile(p.getPl_pos());
-        if(t.tile_can_be_bought&& t.owened_by==null){
+        canbeBrought(t,p);
+
+
+        while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
+            movePlayer(b, p);
+        }
+
+            this.isDouble = false; //reset values
+            this.rl_double = 0;
+
+    }
+
+    private void canbeBrought(Tile t, Player p){
+        Scanner input = new Scanner(System.in);
+
+        if(t.tile_can_be_bought&& t.owened_by==null){ // check that the title can be bought and is not owned by any1
             System.out.println(t.tile_name);
             System.out.println("Price is " + t.price);
             System.out.println("Do you want to buy? Y/N \n");
-            String s = input.nextLine();
-            if(s.equals("y")){
+            String s = input.nextLine(); //take the input
+            if(s.equals("y")){ // checks if the input is y
                 int cash = p.getPl_cash();
                 int price = t.price;
                 int total = cash - price;
@@ -63,19 +78,16 @@ public class Board {
                 }else{
                     System.out.println("you have insufficient funds");
                 }
+            }
+            if(s.equals("n")){
 
             }
 
         }
 
-        while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
-            movePlayer(b, p);
-        }
-
-            this.isDouble = false; //reset values
-            this.rl_double = 0;
-
     }
+
+    private void  auction(){}
 
     public void jail(Player p){
         p.setPl_pos(10);
@@ -168,6 +180,7 @@ public class Board {
 
 
         b.turn(b,b.getPlayer(b.player_turn));
+
 
 //        b.rollDice();
 //        b.rollDice();
