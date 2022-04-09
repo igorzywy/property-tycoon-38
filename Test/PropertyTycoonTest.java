@@ -19,9 +19,9 @@ public class PropertyTycoonTest {
     }
     @Test
     public void movePlayerTest(){
-        int intial=b.getPlayer(1).getPl_pos();
-        b.turn(b, b.getPlayer(1));
-        assertTrue(intial<b.getPlayer(1).getPl_pos());
+        int intial=b.getPlayer(0).getPl_pos();
+        b.turn(b, b.getPlayer(0));
+        assertTrue(intial<b.getPlayer(0).getPl_pos());
 
     }
 }

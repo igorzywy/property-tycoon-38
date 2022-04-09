@@ -14,6 +14,7 @@ public class Board {
     ArrayList<Card> cardsOK = null;
     //pot luck cards
     ArrayList<Card> cardsPL = null;
+    private boolean game_End = false;
     public Board(){
 
         //adding tiles to the board
@@ -41,12 +42,19 @@ public class Board {
         }
 
     }
+    public void incrplayerTurn(Board b){
+        if (this.player_turn > b.PLAYER_COUNT){
+            this.player_turn = 0;
+        } else {
+            this.player_turn ++;
+        }
+    }
 
-    public void turn(Board b, Player p){
-
+        public void turn(Board b, Player p){
+        System.out.println( "it's player  "+ p.getPlayer_id() + " turn\n");
         movePlayer(b,p);
         Tile t = b.getTile(p.getPl_pos());
-        canbeBrought(t,p);
+        canbeBrought(t,p,b);
 
 
         while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
@@ -55,10 +63,11 @@ public class Board {
 
             this.isDouble = false; //reset values
             this.rl_double = 0;
-
+            incrplayerTurn(b);
+            
     }
 
-    private void canbeBrought(Tile t, Player p){
+    private void canbeBrought(Tile t, Player p, Board b){
         Scanner input = new Scanner(System.in);
 
         if(t.tile_can_be_bought&& t.owened_by==null){ // check that the title can be bought and is not owned by any1
@@ -80,14 +89,32 @@ public class Board {
                 }
             }
             if(s.equals("n")){
-
+              auction(b);
             }
 
         }
 
     }
 
-    private void  auction(){}
+    private void  auction(Board b){
+        for(int i = 0;i< b.pSize();i++){
+            Player p = b.getPlayer(i);
+            Scanner input = new Scanner(System.in);
+            if(!p.isBankrupt()){
+                System.out.println( p.player_id + " would you like to place a bid?y/n \n");
+                String s = input.nextLine();
+                if(s.equals("y")){
+                    System.out.println("place bid: ");
+                    int bid = input.nextInt();
+
+                }
+            }
+        }
+    }
+
+    private void bid(){
+
+    }
 
     public void jail(Player p){
         p.setPl_pos(10);
@@ -159,6 +186,8 @@ public class Board {
 
     public static void main(String[] args){
 
+
+
         Board b = new Board();
 
         System.out.println(b.bSize());
@@ -178,9 +207,15 @@ public class Board {
             System.out.println(b.getOKCard(i));
         }
 
+       while(!b.game_End) {
+           for(int i =0; i< b.pSize();)
 
-        b.turn(b,b.getPlayer(b.player_turn));
 
+               if(!b.getPlayer(b.player_turn).isBankrupt()){
+                   b.turn(b, b.getPlayer(b.player_turn));
+               }
+
+       }
 
 //        b.rollDice();
 //        b.rollDice();
