@@ -105,7 +105,8 @@ public class Board {
                 String s = input.nextLine();
                 if(s.equals("y")){
                     System.out.println("place bid: ");
-                    int bid = input.nextInt();
+                    int bid = input.nextInt();//lets goo
+
 
                 }
             }
