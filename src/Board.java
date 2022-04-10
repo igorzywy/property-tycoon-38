@@ -81,7 +81,7 @@ public class Board {
                 int total = cash - price;
                 if(total>0){
                     p.setPl_cash(total);//yh
-                    t.owened_by = p.player_id;
+                    t.owened_by = p.player_id; //yh
                     System.out.println("cash: "+p.pl_cash);
                     System.out.println("tile is owned by: "+ t.owened_by);
                 }else{
