@@ -26,7 +26,7 @@ public class Player {
         return this.pl_cash;
     }
 
-    public  void setPl_cash(int cash){
+    public void setPl_cash(int cash){
         this.pl_cash = cash;
     }
 

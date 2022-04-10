@@ -34,6 +34,13 @@ public class Tile {
 
     }
 
+    public String getTileName(){
+        return tile_name;
+    }
+    public Integer getPrice(){
+        return price;
+    }
+
     public int getTile_id() {
         return this.tile_id;
     }
@@ -42,6 +49,13 @@ public class Tile {
         return tile_can_be_bought;
     }
 
+    public Integer getOwnedBy(){
+        return owned_by;
+    }
+
+    public void setOwnedBy(int i){
+        owned_by = i;
+    }
     public static ArrayList<Tile> getXLSXData(){
         ArrayList<Tile> tiles= new ArrayList<Tile>();
         try {
@@ -104,7 +118,8 @@ public class Tile {
                 this.tile_can_be_bought + " cost: " + this.price
                 + " rent in order: " + this.rent_unimproved
                 + " " + this.rent_1h + " " + this.rent_2h
-                + " " + this.rent_3h + " " + this.rent_4h + " " + this.rent_hotel + " ";
+                + " " + this.rent_3h + " " + this.rent_4h + " " + this.rent_hotel + " " +
+                "owned by: " + owned_by;
         a+= "\n-----------------";
         return a;
     }
