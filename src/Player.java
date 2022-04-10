@@ -39,7 +39,7 @@ public class Player {
     }
 
     public void incrPos(){
-        if (this.pl_pos > 39){
+        if (this.pl_pos == 39){
             this.pl_pos = 0;
         } else {
             this.pl_pos ++;

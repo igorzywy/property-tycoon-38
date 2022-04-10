@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -14,7 +16,12 @@ public class Board {
     ArrayList<Card> cardsOK = null;
     //pot luck cards
     ArrayList<Card> cardsPL = null;
-    private boolean game_End = false;
+
+
+    //player,bid
+    Pair<Integer,Integer> highest_bid = new Pair<>(0,0);
+
+    public boolean game_End = false;
     public Board(){
 
         //adding tiles to the board
@@ -34,43 +41,39 @@ public class Board {
     public void setPLAYER_COUNT(int player_Count){
         PLAYER_COUNT = player_Count;
     }
-
+    //increment the player turn
     public void incPlayer(){
-        player_turn++;
-        if (this.player_turn > PLAYER_COUNT) {
+        if (this.player_turn == PLAYER_COUNT-1) {
             this.player_turn = 0;
+        }else{
+            this.player_turn++;
         }
 
-    }
-    public void incrplayerTurn(Board b){
-        if (this.player_turn > b.PLAYER_COUNT){
-            this.player_turn = 0;
-        } else {
-            this.player_turn ++;
-        }
+
+
     }
 
-        public void turn(Board b, Player p){
+
+    public void turn(Player p){
         System.out.println( "it's player  "+ p.getPlayer_id() + " turn\n");
-        movePlayer(b,p);
-        Tile t = b.getTile(p.getPl_pos());
-        canbeBrought(t,p,b);
+        movePlayer(p);
+        Tile t = getTile(p.getPl_pos());
+        canBeBrought(t,p);
 
 
         while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
-            movePlayer(b, p);
+            movePlayer(p);
         }
-
             this.isDouble = false; //reset values
             this.rl_double = 0;
-            incrplayerTurn(b);
-            
-    }
+            incPlayer();
+        }
 
-    private void canbeBrought(Tile t, Player p, Board b){
+    //regular buying of tiles(no auction)
+    public void canBeBrought(Tile t, Player p){
         Scanner input = new Scanner(System.in);
 
-        if(t.tile_can_be_bought&& t.owened_by==null){ // check that the title can be bought and is not owned by any1
+        if(t.tile_can_be_bought && t.owned_by ==null){ // check that the title can be bought and is not owned by any1
             System.out.println(t.tile_name);
             System.out.println("Price is " + t.price);
             System.out.println("Do you want to buy? Y/N \n");
@@ -81,24 +84,36 @@ public class Board {
                 int total = cash - price;
                 if(total>0){
                     p.setPl_cash(total);//yh
-                    t.owened_by = p.player_id; //yh
+                    t.owned_by = p.player_id; //yh
                     System.out.println("cash: "+p.pl_cash);
-                    System.out.println("tile is owned by: "+ t.owened_by);
+                    System.out.println("tile is owned by: "+ t.owned_by);
                 }else{
                     System.out.println("you have insufficient funds");
                 }
             }
             if(s.equals("n")){
-              auction(b);
+              auction();
             }
-
         }
-
+    }
+    //buying tiles with auction
+    public void auctionBuy(Player p, Tile t) {
+        int cash = p.getPl_cash();
+        int price = highest_bid.getValue();
+        int total = cash - price;
+        if (total > 0) {
+            p.setPl_cash(total);//yh
+            t.owned_by = p.player_id; //yh
+            System.out.println("cash: " + p.pl_cash);
+            System.out.println("tile is owned by: " + t.owned_by);
+        }
     }
 
-    private void  auction(Board b){
-        for(int i = 0;i< b.pSize();i++){
-            Player p = b.getPlayer(i);
+
+    public void auction(){
+        highest_bid = new Pair<>(0,0);
+        for(int i = 0;i< pSize();i++){
+            Player p = getPlayer(i);
             Scanner input = new Scanner(System.in);
             if(!p.isBankrupt()){
                 System.out.println( p.player_id + " would you like to place a bid?y/n \n");
@@ -106,28 +121,41 @@ public class Board {
                 if(s.equals("y")){
                     System.out.println("place bid: ");
                     int bid = input.nextInt();//lets goo
+                    boolean valid_bid = false;
+                    while(valid_bid == false){
+                        if (bid > p.getPl_cash()){
+                            System.out.println("Cannot place bid you are too poor!");
+                            bid = input.nextInt();
+                        }else{
+                            valid_bid = true;
+                        }
+                    }
 
-
+                    bid(bid, p);
                 }
             }
         }
+        System.out.println(highest_bid);
+        auctionBuy(getPlayer(highest_bid.getKey()), getTile(getPlayer(player_turn).getPl_pos()));
     }
 
-    private void bid(){
-
+    public void bid(int player_bid, Player p){
+        if (player_bid > highest_bid.getValue()){
+            highest_bid = new Pair<>(p.player_id,player_bid);
+        }
     }
 
     public void jail(Player p){
         p.setPl_pos(10);
     }
 
-    public void movePlayer(Board b, Player player){
+    public void movePlayer(Player player){
 
-        int roll = b.rollDice();
+        int roll = rollDice();
         if(this.rl_double == 3 ){
             this.isDouble = false;
             this.rl_double = 0;
-            b.jail(player);
+            jail(player);
             System.out.println("player is in jail");
             System.out.println("\n\n");
         }
@@ -173,6 +201,12 @@ public class Board {
     public Card getPLCard(int i) { return this.cardsPL.get(i); }
     public Card getOKCard(int i) { return this.cardsOK.get(i); }
 
+    public boolean getGameEnd(){
+        return game_End;
+    }
+    public int getPlayerTurn(){
+        return player_turn;
+    }
     public int bSize(){
         return this.board.size();
     }
@@ -208,12 +242,12 @@ public class Board {
             System.out.println(b.getOKCard(i));
         }
 
-       while(!b.game_End) {
+       while(!b.getGameEnd()) {
            for(int i =0; i< b.pSize();)
 
 
-               if(!b.getPlayer(b.player_turn).isBankrupt()){
-                   b.turn(b, b.getPlayer(b.player_turn));
+               if(!b.getPlayer(b.getPlayerTurn()).isBankrupt()){
+                   b.turn(b.getPlayer(b.getPlayerTurn()));
                }
 
        }

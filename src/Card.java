@@ -76,7 +76,8 @@ public class Card {
                         }
                     }
                 }
-                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2), (Integer) data.get(3), (Integer) data.get(4)));
+                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2),
+                        (Integer) data.get(3), (Integer) data.get(4)));
             }
             return cards;
         }catch (Exception e){
@@ -131,7 +132,8 @@ public class Card {
                         }
                     }
                 }
-                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2), (Integer) data.get(3), (Integer) data.get(4)));
+                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2),
+                        (Integer) data.get(3), (Integer) data.get(4)));
             }
             return cards;
         }catch (Exception e){
