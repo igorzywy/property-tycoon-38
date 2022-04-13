@@ -259,10 +259,7 @@ public class Board {
         return this.players.get(i);
     }
 
-/*
-    public Card getPLCard(int i) { return this.cardsPL.get(i); }
-    public Card getOKCard(int i) { return this.cardsOK.get(i); }
-*/
+
     public boolean getGameEnd(){
         return game_End;
     }
@@ -272,10 +269,13 @@ public class Board {
     public int bSize(){
         return this.board.size();
     }
+    public Deque<Card> getCardsOK(){
+        return cardsOK;   }
+    public Deque<Card> getCardsPL(){
+        return cardsPL;   }
 
 
-    public int plCardsize() { return this.cardsPL.size(); }
-    public int okCardsize() { return this.cardsOK.size(); }
+
 
     public int pSize(){
         return this.players.size();
@@ -295,6 +295,9 @@ public class Board {
         for (int i = 0; i < b.pSize(); i++) {
             System.out.println(b.getPlayer(i));
         }
+        System.out.println(b.getCardsOK());
+        System.out.println(b.getCardsPL());
+
 /*
         for (int i = 0; i < b.plCardsize(); i++) {
             System.out.println(b.getPLCard(i));

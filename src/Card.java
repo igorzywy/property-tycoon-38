@@ -33,7 +33,7 @@ public class Card {
 
     public static Deque<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
-        Deque<Card> dCard = new ArrayDeque();
+        Deque<Card> dCard = new ArrayDeque<>();
         try {
             File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
             FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
@@ -82,9 +82,7 @@ public class Card {
                         (Integer) data.get(3), (Integer) data.get(4)));
             }
             Collections.shuffle(cards, new Random());
-            for(int i = 0;i<cards.size();i++){
-                dCard.add(cards.get(i));
-            }
+            dCard.addAll(cards);
             return dCard;
         }catch (Exception e){
             e.printStackTrace();
@@ -94,7 +92,7 @@ public class Card {
 
     public static Deque<Card> getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
-        Deque<Card> dCard = new ArrayDeque();
+        Deque<Card> dCard = new ArrayDeque<>();
         try {
             File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
             FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
@@ -143,9 +141,7 @@ public class Card {
                         (Integer) data.get(3), (Integer) data.get(4)));
             }
             Collections.shuffle(cards, new Random());
-            for(int i = 0;i<cards.size();i++){
-                dCard.add(cards.get(i));
-            }
+            dCard.addAll(cards);
             return dCard;
         }catch (Exception e){
             e.printStackTrace();
