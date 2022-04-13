@@ -2,7 +2,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -30,8 +31,9 @@ public class Card {
 
     }
 
-    public static ArrayList<Card> getXLSXDataPotLuck(){
+    public static Deque getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
+        Deque dCard = new ArrayDeque();
         try {
             File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
             FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
@@ -79,15 +81,20 @@ public class Card {
                 cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2),
                         (Integer) data.get(3), (Integer) data.get(4)));
             }
-            return cards;
+            Collections.shuffle(cards, new Random());
+            for(int i = 0;i<cards.size();i++){
+                dCard.add(cards.get(i));
+            }
+            return dCard;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return cards;
+        return dCard;
     }
 
-    public static ArrayList<Card> getXLSXDataOpportunityKnocks(){
+    public static Deque getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
+        Deque dCard = new ArrayDeque();
         try {
             File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
             FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
@@ -135,11 +142,15 @@ public class Card {
                 cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2),
                         (Integer) data.get(3), (Integer) data.get(4)));
             }
-            return cards;
+            Collections.shuffle(cards, new Random());
+            for(int i = 0;i<cards.size();i++){
+                dCard.add(cards.get(i));
+            }
+            return dCard;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return cards;
+        return dCard;
     }
 
 
