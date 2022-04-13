@@ -29,7 +29,7 @@ public class PropertyTycoonTest {
         Player p = b.getPlayer(0);
         p.setPl_pos(1);
         Tile t = b.getTile(1);
-        b.canBeBrought(t,p);
+
 
 
     }
