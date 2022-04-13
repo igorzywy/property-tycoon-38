@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class PropertyTycoonTest {
 
-    private Board b;
+     Board b;
     @Before
     public  void setup(){ b = new Board(); }
 
@@ -20,7 +20,7 @@ public class PropertyTycoonTest {
     @Test
     public void movePlayerTest(){
         int intial=b.getPlayer(0).getPl_pos();
-        b.turn();
+        b.turn(b.getPlayer(0));
         assertTrue(intial<b.getPlayer(0).getPl_pos());
 
     }
