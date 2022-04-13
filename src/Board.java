@@ -55,11 +55,21 @@ public class Board {
 
 
     public void turn(){
+        Player p = getPlayer(player_turn);
         for (int i = 0; i < board.size(); i++) {
             System.out.println(getTile(i));
         }
-        System.out.println( "it's player  "+ getPlayer(player_turn).getPlayer_id() +
-                " turn\n" + getPlayer(player_turn).getPl_cash());
+        System.out.println( "it's player  "+ p.getPlayer_id() +
+                " turn\n" + p.getPl_cash());
+        System.out.println("want to mortgage?");
+        Scanner input = new Scanner(System.in);
+        String s = input.nextLine();
+        if (s.equals("y") && p.getOwns().size() >= 1){
+            mortgage();
+        }else if (s.equals("y") && p.getOwns().size() < 1){
+            System.out.println("you don't own any tiles!");
+        }
+
         movePlayer();
         canBeBought();
         while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
@@ -69,19 +79,51 @@ public class Board {
             this.rl_double = 0;
             incPlayer();
     }
-    //lets players sell stuff
+    //lets players mortgage a property
     public void mortgage(){
-        System.out.println("player " + getPlayer(player_turn).getPlayer_id() + "owns: " + getPlayersTiles());
-    }
-
-    public ArrayList<Integer> getPlayersTiles(){
-        ArrayList<Integer> tiles = new ArrayList<>();
-        for (int i = 0; i < board.size(); i++) {
-            if (getPlayer(player_turn).getPlayer_id()==getTile(i).getOwnedBy() && getTile(i).getOwnedBy() != null){
-                tiles.add(getTile(i).getTile_id());
+        Player p = getPlayer(player_turn);
+        System.out.println("player " + p.getPlayer_id() + "owns: " + p.getOwns());
+        System.out.println("input tile Id to sell");
+        Scanner input = new Scanner(System.in);
+        int s = input.nextInt();
+        ArrayList<Tile> tilesOfPlayer = p.getOwns();
+        boolean removedTile = false;
+        while(removedTile == false){
+            for (int i = 0; i < tilesOfPlayer.size(); i++) {
+                if (tilesOfPlayer.get(i).getTile_id() == s){
+                    tilesOfPlayer.get(i).flipMortgaged();
+                    System.out.println("player: " + p.getPlayer_id() + " gains: " + tilesOfPlayer.get(i).getPrice()/2);
+                    p.addPl_cash(tilesOfPlayer.get(i).getPrice()/2);
+                    removedTile = true;
+                }else{
+                    System.out.println("you don't own that tile");
+                    s = input.nextInt();
+                }
             }
         }
-        return tiles;
+
+
+        /* can be used to trade properties
+         while(removedTile == false){
+            for (int i = 0; i < tilesOfPlayer.size(); i++) {
+                if (tilesOfPlayer.get(i).getTile_id() == s){
+                    tilesOfPlayer.get(i).setOwnedBy(null);
+                    p.removeOwned(tilesOfPlayer.get(i));
+
+                    removedTile = true;
+                }else{
+                    System.out.println("you don't own that tile");
+                    s = input.nextInt();
+                }
+            }
+        }
+         */
+        System.out.println(p.getOwns());
+    }
+// need to add so that it also ask with the player wants to trade that it gets the other players id
+    public String getPlayersTiles(){
+        getPlayer(player_turn).getOwns();
+        return null;
     }
     //regular buying of tiles(no auction)
     public void canBeBought(){
@@ -101,6 +143,7 @@ public class Board {
                 if(total>0){
                     p.setPl_cash(total);//yh
                     t.setOwnedBy(p.getPlayer_id()); //yh
+                    p.addOwns(t);
                     System.out.println("cash: "+p.getPl_cash());
                     System.out.println("tile is owned by: "+ t.getOwnedBy());
                 }else{
@@ -121,7 +164,8 @@ public class Board {
         int total = cash - price;
         if (total > 0) {
             getPlayer(highest_bid.getKey()).setPl_cash(total);//yh
-            getTile(t).setOwnedBy(highest_bid.getKey()); ; //yh
+            getTile(t).setOwnedBy(highest_bid.getKey()); //yh
+            getPlayer(highest_bid.getKey()).addOwns(getTile(t));
             System.out.println("cash: " + getPlayer(highest_bid.getKey()).getPl_cash());
             System.out.println("tile is owned by: " + getTile(t).getOwnedBy());
         }

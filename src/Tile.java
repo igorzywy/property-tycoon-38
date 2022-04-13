@@ -16,6 +16,7 @@ public class Tile {
     boolean tile_can_be_bought;
     Integer price, rent_unimproved, rent_1h, rent_2h, rent_3h, rent_4h, rent_hotel;
     Integer owned_by = null;
+    boolean mortgaged = false;
 
     //constructor
     public Tile(String name, String group, String action, boolean can_be_bought, Integer price, Integer rent_unimproved, Integer rent_1h, Integer rent_2h, Integer rent_3h, Integer rent_4h, Integer rent_hotel){
@@ -53,7 +54,11 @@ public class Tile {
         return owned_by;
     }
 
-    public void setOwnedBy(int i){
+    public void flipMortgaged(){
+        this.mortgaged = !mortgaged;
+    }
+
+    public void setOwnedBy(Integer i){
         owned_by = i;
     }
     public static ArrayList<Tile> getXLSXData(){
@@ -118,8 +123,8 @@ public class Tile {
                 this.tile_can_be_bought + " cost: " + this.price
                 + " rent in order: " + this.rent_unimproved
                 + " " + this.rent_1h + " " + this.rent_2h
-                + " " + this.rent_3h + " " + this.rent_4h + " " + this.rent_hotel + " " +
-                "owned by: " + owned_by;
+                + " " + this.rent_3h + " " + this.rent_4h + " " + this.rent_hotel +
+                " owned by: " + owned_by + " mortgaged: " + mortgaged;
         a+= "\n-----------------";
         return a;
     }
