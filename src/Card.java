@@ -31,9 +31,9 @@ public class Card {
 
     }
 
-    public static Deque getXLSXDataPotLuck(){
+    public static Deque<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
-        Deque dCard = new ArrayDeque();
+        Deque<Card> dCard = new ArrayDeque();
         try {
             File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
             FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
@@ -92,9 +92,9 @@ public class Card {
         return dCard;
     }
 
-    public static Deque getXLSXDataOpportunityKnocks(){
+    public static Deque<Card> getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
-        Deque dCard = new ArrayDeque();
+        Deque<Card> dCard = new ArrayDeque();
         try {
             File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
             FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
