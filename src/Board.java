@@ -1,6 +1,7 @@
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,9 +14,9 @@ public class Board {
     ArrayList<Tile> board = null;
     ArrayList<Player> players = null;
     //opportunity knocks cards
-    ArrayList<Card> cardsOK = null;
+    Deque<Card> cardsOK = null;
     //pot luck cards
-    ArrayList<Card> cardsPL = null;
+    Deque<Card> cardsPL = null;
 
 
     //player,bid
@@ -88,7 +89,7 @@ public class Board {
         int s = input.nextInt();
         ArrayList<Tile> tilesOfPlayer = p.getOwns();
         boolean removedTile = false;
-        while(removedTile == false){
+        while(!removedTile){
             for (int i = 0; i < tilesOfPlayer.size(); i++) {
                 if (tilesOfPlayer.get(i).getTile_id() == s){
                     tilesOfPlayer.get(i).flipMortgaged();
@@ -258,10 +259,10 @@ public class Board {
         return this.players.get(i);
     }
 
-
+/*
     public Card getPLCard(int i) { return this.cardsPL.get(i); }
     public Card getOKCard(int i) { return this.cardsOK.get(i); }
-
+*/
     public boolean getGameEnd(){
         return game_End;
     }
@@ -294,7 +295,7 @@ public class Board {
         for (int i = 0; i < b.pSize(); i++) {
             System.out.println(b.getPlayer(i));
         }
-
+/*
         for (int i = 0; i < b.plCardsize(); i++) {
             System.out.println(b.getPLCard(i));
         }
@@ -302,7 +303,7 @@ public class Board {
         for (int i = 0; i < b.okCardsize(); i++) {
             System.out.println(b.getOKCard(i));
         }
-
+*/
        while(!b.getGameEnd()) {
            for(int i =0; i< b.pSize();)
 
