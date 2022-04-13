@@ -22,6 +22,15 @@ public class PropertyTycoonTest {
         int intial=b.getPlayer(0).getPl_pos();
         b.turn(b.getPlayer(0));
         assertTrue(intial<b.getPlayer(0).getPl_pos());
+    }
+    @Test
+    public void buyProperty(){
+        //set player pos to 1 so they can buy old creek
+        Player p = b.getPlayer(0);
+        p.setPl_pos(1);
+        Tile t = b.getTile(1);
+        b.canBeBrought(t,p);
+
 
     }
 }

@@ -13,9 +13,9 @@ public class Board {
     ArrayList<Player> players = null;
 
     //opportunity cards
-    Deque opportunityCards;
+    Deque<Card> opportunityCards;
     //pot of luck cards
-    Deque potOfLuck;
+    Deque<Card> potOfLuck;
 
 
 
