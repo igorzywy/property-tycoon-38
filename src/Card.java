@@ -1,13 +1,10 @@
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 
 public class Card {
     static int card_id_incrementer = 0;
@@ -34,119 +31,46 @@ public class Card {
     public static Deque<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
         Deque<Card> dCard = new ArrayDeque<>();
+        String path = "data/PotLuckCardData.csv";
+        String line = "";
         try {
-            File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
-            FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
-            //creating Workbook instance that refers to .xlsx file
-            XSSFWorkbook wb = new XSSFWorkbook(fis);
-            XSSFSheet sheet = wb.getSheetAt(0);
-            for (int i = 3; i < 20; i++) {
-                Row row = sheet.getRow(i);
-                ArrayList<Object> data = new ArrayList<Object>();
-                for (int j = 0; j < 5; j++) {
-                    Cell cell = row.getCell(j);
-                    //getting the desc action and type
-                    if (j <= 2) {
-                        try {
-                            data.add(cell.getStringCellValue());
-
-                        } catch (Exception e) {
-                            data.add(null);
-                        }
-
-                    }else if (j==3) {
-                        try {
-                            Integer num = (int) cell.getNumericCellValue();
-                            if (num.equals(0)) {
-                                data.add(null);
-                            } else {
-                                data.add(num);
-                            }
-                        } catch (Exception e) {
-                            data.add(null);
-                        }
-                    }else if (j==4) {
-                        try {
-                            Integer num = (int) cell.getNumericCellValue();
-                            if (num.equals(0)) {
-                                data.add(null);
-                            } else {
-                                data.add(num);
-                            }
-                        } catch (Exception e) {
-                            data.add(null);
-                        }
-                    }
-                }
-                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2),
-                        (Integer) data.get(3), (Integer) data.get(4)));
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String headerLine = br.readLine();
+            while((line = br.readLine()) != null){
+                String[] values = line.split(",");
+                cards.add(new Card(values[0],values[1],values[2],
+                        Integer.parseInt(values[3]),Integer.parseInt(values[4])));
             }
-            Collections.shuffle(cards, new Random());
-            dCard.addAll(cards);
-            return dCard;
-        }catch (Exception e){
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        dCard.addAll(cards);
         return dCard;
     }
 
     public static Deque<Card> getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
         Deque<Card> dCard = new ArrayDeque<>();
+        String path = "data/OpportunityKnocksCardData.csv";
+        String line = "";
         try {
-            File file = new File("data/PropertyTycoonCardData.xlsx");   //creating a new file instance
-            FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
-            //creating Workbook instance that refers to .xlsx file
-            XSSFWorkbook wb = new XSSFWorkbook(fis);
-            XSSFSheet sheet = wb.getSheetAt(1);
-            for (int i = 3; i < 19; i++) {
-                Row row = sheet.getRow(i);
-                ArrayList<Object> data = new ArrayList<Object>();
-                for (int j = 0; j < 5; j++) {
-                    Cell cell = row.getCell(j);
-                    //getting the desc action and type
-                    if (j <= 2) {
-                        try {
-                            data.add(cell.getStringCellValue());
-
-                        } catch (Exception e) {
-                            data.add(null);
-                        }
-
-                    }else if (j==3) {
-                        try {
-                            Integer num = (int) cell.getNumericCellValue();
-                            if (num.equals(0)) {
-                                data.add(null);
-                            } else {
-                                data.add(num);
-                            }
-                        } catch (Exception e) {
-                            data.add(null);
-                        }
-                    }else if (j==4) {
-                        try {
-                            Integer num = (int) cell.getNumericCellValue();
-                            if (num.equals(0)) {
-                                data.add(null);
-                            } else {
-                                data.add(num);
-                            }
-                        } catch (Exception e) {
-                            data.add(null);
-                        }
-                    }
-                }
-                cards.add(new Card((String) data.get(0),(String) data.get(1), (String) data.get(2),
-                        (Integer) data.get(3), (Integer) data.get(4)));
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String headerLine = br.readLine();
+            while((line = br.readLine()) != null){
+                String[] values = line.split(",");
+                cards.add(new Card(values[0],values[1],values[2],
+                        Integer.parseInt(values[3]),Integer.parseInt(values[4])));
             }
-            Collections.shuffle(cards, new Random());
-            dCard.addAll(cards);
-            return dCard;
-        }catch (Exception e){
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        dCard.addAll(cards);
         return dCard;
+
     }
 
 
