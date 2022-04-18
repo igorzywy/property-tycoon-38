@@ -1,0 +1,17 @@
+﻿Description,Action,Type,Amount/HousePice,HotelPrice
+"""Bank pays you divided of £50""",Bank pays player £50,bpp,50,0
+"""You have won a lip sync battle. Collect £100""",Bank pays player £100,bpp,100,0
+"""Advance to Turing Heights""",Player token moves forwards to Turing Heights,pm,0,0
+"""Advance to Han Xin Gardens. If you pass GO collect £200""",Player moves token,pmf,0,0
+"""Fined £15 for speeding""",Player puts £15 on free parking,ppf,15,0
+"""Pay university fees of £150""",Player pays £150 to the bank,ppb,150,0
+"""Take a trip to Hove station. If you pass GO collect £200""",Player moves token,pmf,0,0
+"""Loan matures collect £150""",Bank pays £150 to the player,bpp,150,0
+"""You are assessed for repairs £40/house £115/hotel""",Player pays money to the bank,ppr,40,115
+"""Advance to GO""",Player moves token,pm,0,0
+"""You are assessed for repairs £25/house £100/hotel""",Player pays money to the bank,ppr,25,100
+"""Go back 3 spaces""",Player moves token,pmx,-3,0
+"""Advance to Skywalker Drive. If you pass GO collect £200""",Player moves token,pmf,0,0
+"""Go to jail. Do not pass GO do not collect £200""",As the card says,pm,0,0
+"""Drunk in charge of a hoverboard. Fine £30""",Player puts £20 on free parking,ppf,30,0
+"""Get out of jail free""",Retained by the player until needed. No resale or trade value,jfc,0,0

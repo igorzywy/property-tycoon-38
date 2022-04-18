@@ -1,0 +1,18 @@
+﻿Description,Action,Type,Amount/HousePice,HotelPrice
+"""You inherit £200""",Bank pays player £200,bpp,200,0
+"""You have won 2nd prize in a beauty contest collect £50""",Bank pays player £50,bpp,50,0
+"""You are up the creek with no paddle - go back to the Old Creek""",Player token moves backwards to the Old Creek,pm,0,0
+"""Student loan refund Collect £20""",Bank pays player £20,bpp,20,0
+"""Bank error in your favour Collect £200""",Bank pays player £200,bpp,200,0
+"""Pay bill for text books of £100""",Player pays £100 to the bank,ppb,100,0
+"""Mega late night taxi bill pay £50""",Player pays £50 to the bank,ppb,50,0
+"""Advance to go""",Player moves forwards to GO,pmf,0,0
+"""From sale of Bitcoin you get £50""",Bank pays player £50,bpp,50,0
+"""Bitcoin assets fall - pay off Bitcoin short fall""",Player pays £50 to the bank,ppb,50,0
+"""Pay a £10 fine or take opportunity knocks""",If fine paid player puts £10 on free parking,ppb,10,0
+"""Pay insurance fee of £50""",Player puts £50 on free parking,ppf,50,0
+"""Savings bond matures collect £100",Bank pays £100 to the player,bpp,100,0
+"""Go to jail. Do not pass GO do not collect £200""",As the card says,pm,0,0
+"""Received interest on shares of £25""",Bank pays player £25,bpp,25,0
+"""It's your birthday Collect £10 from each player""",Player receives £10 from each player,ppp,10,0
+"""Get out of jail free""",Retained by the player until needed. No resale or trade value,jfc,0,0
