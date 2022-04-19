@@ -1,4 +1,4 @@
-package com.example.game;
+package game;
 
 import javafx.util.Pair;
 
@@ -8,21 +8,21 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Board {
-    int TILE_COUNT = 40;
-    int PLAYER_COUNT = 5;
-    int player_turn = 0;
-    int rl_double = 0 ;
-    boolean isDouble = false;
-    ArrayList<Tile> board = null;
-    ArrayList<Player> players = null;
+    private int TILE_COUNT = 40;
+    private int PLAYER_COUNT = 5;
+    private int player_turn = 0;
+    private int rl_double = 0 ;
+    private boolean isDouble = false;
+    private ArrayList<Tile> board = null;
+    private ArrayList<Player> players = null;
     //opportunity knocks cards
-    Deque<Card> cardsOK = null;
+    private Deque<Card> cardsOK = null;
     //pot luck cards
-    Deque<Card> cardsPL = null;
+    private Deque<Card> cardsPL = null;
 
 
     //player,bid
-    Pair<Integer,Integer> highest_bid = new Pair<>(0,0);
+    private Pair<Integer,Integer> highest_bid = new Pair<>(0,0);
 
     public boolean game_End = false;
     public Board(int p_count){
@@ -55,6 +55,14 @@ public class Board {
         }
 
 
+
+    }
+
+    public void setRl_double(int d){
+        rl_double = d;
+    }
+    public void setIsDouble(boolean b){
+        isDouble = b;
 
     }
 
@@ -226,7 +234,7 @@ public class Board {
         else {
             for (int i = 1; i < roll; i++) {
                 getPlayer(player_turn).incrPos();
-                System.out.println(getPlayer(player_turn).pl_pos);
+                System.out.println(getPlayer(player_turn).getPl_pos());
             }
         }
 

@@ -1,4 +1,4 @@
-package com.example.game;
+package game;
 
 
 import java.io.BufferedReader;
@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Deque;
 
 public class Card {
-    static int card_id_incrementer = 0;
-    int card_id = 0;
-    CardType type = null;
-    String desc = null;
-    String action = null;
-    Integer amount = null;
-    Integer perHotel = null;
-    String typeS = null;
+    private static int card_id_incrementer = 0;
+    private int card_id = 0;
+    private CardType type = null;
+    private String desc = null;
+    private String action = null;
+    private Integer amount = null;
+    private Integer perHotel = null;
+    private String typeS = null;
 
     public Card(String desc, String action, String type, Integer amount, Integer perHotel){
         CardType c = CardType.valueOf(type);

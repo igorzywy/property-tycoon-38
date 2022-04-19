@@ -1,4 +1,4 @@
-package com.example.game;
+package game;
 
 
 import java.io.BufferedReader;
@@ -9,15 +9,15 @@ import java.util.ArrayList;
 
 public class Tile {
 
-    static int tile_id_incrementer = 0;
-    int tile_id = 0;
-    String tile_name = "";
-    String tile_grp = "";
-    String tile_action = "";
-    boolean tile_can_be_bought;
-    Integer price, rent_unimproved, rent_1h, rent_2h, rent_3h, rent_4h, rent_hotel;
-    Integer owned_by = null;
-    boolean mortgaged = false;
+    private static int tile_id_incrementer = 0;
+    private int tile_id = 0;
+    private String tile_name = "";
+    private String tile_grp = "";
+    private String tile_action = "";
+    private boolean tile_can_be_bought;
+    private Integer price, rent_unimproved, rent_1h, rent_2h, rent_3h, rent_4h, rent_hotel;
+    private Integer owned_by = null;
+    private boolean mortgaged = false;
 
     //constructor
     public Tile(String name, String group, String action, boolean can_be_bought, Integer price, Integer rent_unimproved, Integer rent_1h, Integer rent_2h, Integer rent_3h, Integer rent_4h, Integer rent_hotel){

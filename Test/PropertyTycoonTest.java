@@ -1,13 +1,16 @@
-import org.junit.Test;
+import game.Board;
+import game.Player;
+import game.Tile;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertTrue;
 
 public class PropertyTycoonTest {
 
-     Board b;
+    Board b;
     @Before
-    public  void setup(){ b = new Board(); }
+    public  void setup(){ b = new Board(5); }
 
     @Test
     public void tileTest(){
@@ -20,7 +23,6 @@ public class PropertyTycoonTest {
     @Test
     public void movePlayerTest(){
         int intial=b.getPlayer(0).getPl_pos();
-        b.turn();
         assertTrue(intial<b.getPlayer(0).getPl_pos());
     }
     @Test

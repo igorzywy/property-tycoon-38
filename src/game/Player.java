@@ -1,16 +1,19 @@
-package com.example.game;
+package game;
 
 
 import java.util.ArrayList;
 
 public class Player {
 
-    static int pl_num = 1;
-    int player_id = 0;
-    int pl_pos = 0;
-    int pl_cash = 1500; // cash that the player starts with
-    boolean bankrupt = false; // manages if player is bankrupt
-    ArrayList<Tile> owns = new ArrayList<>();
+
+    private static int pl_num = 1;
+    private int player_id = 0;
+    private int pl_pos = 0;
+    private int pl_cash = 1500; // cash that the player starts with
+    private boolean bankrupt = false; // manages if player is bankrupt
+    private ArrayList<Tile> owns = new ArrayList<>();
+
+
     public Player(){
         this.player_id = this.pl_num++;
     }

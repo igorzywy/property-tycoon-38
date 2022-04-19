@@ -1,18 +1,16 @@
-package com.example.game;
+package game;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Pair;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HelloController {
@@ -189,8 +187,8 @@ public class HelloController {
                     yesB.setDisable(false);
                     noB.setDisable(false);
                     //check if tile belongs to someone else
-                }else if(t.getOwnedBy() != null && t.getOwnedBy() != b.getPlayer(b.getPlayerTurn()).player_id){
-                    gameText.setText(b.getPlayer(b.getPlayerTurn()) + " pays rent to " + b.getPlayer(t.owned_by) );
+                }else if(t.getOwnedBy() != null && t.getOwnedBy() != b.getPlayer(b.getPlayerTurn()).getPlayer_id()){
+                    gameText.setText(b.getPlayer(b.getPlayerTurn()) + " pays rent to " + b.getPlayer(t.getOwnedBy()) );
                 }
             });
 
@@ -208,8 +206,8 @@ public class HelloController {
                         gameText.setText("cash: " + p.getPl_cash());
                         gameText.appendText("\ntile is owned by: " + t.getOwnedBy());
                         //reset values
-                        b.isDouble = false;
-                        b.rl_double = 0;
+                        b.setIsDouble(false);
+                        b.setRl_double(0);
                         b.incPlayer();
                         yesB.setDisable(true);
                         noB.setDisable(true);
