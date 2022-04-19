@@ -1,3 +1,5 @@
+package com.example.game;
+
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -23,10 +25,12 @@ public class Board {
     Pair<Integer,Integer> highest_bid = new Pair<>(0,0);
 
     public boolean game_End = false;
-    public Board(){
+    public Board(int p_count){
 
         //adding tiles to the board
         this.board = Tile.getXLSXData();
+        //setting player count
+        setPLAYER_COUNT(p_count);
         //adding players to board
         this.players = new ArrayList<Player>();
         for (int i = 0; i < PLAYER_COUNT; i++) {
@@ -55,31 +59,31 @@ public class Board {
     }
 
 
-    public void turn(){
-        Player p = getPlayer(player_turn);
-        for (int i = 0; i < board.size(); i++) {
-            System.out.println(getTile(i));
-        }
-        System.out.println( "it's player  "+ p.getPlayer_id() +
-                " turn\n" + p.getPl_cash());
-        System.out.println("want to mortgage?");
-        Scanner input = new Scanner(System.in);
-        String s = input.nextLine();
-        if (s.equals("y") && p.getOwns().size() >= 1){
-            mortgage();
-        }else if (s.equals("y") && p.getOwns().size() < 1){
-            System.out.println("you don't own any tiles!");
-        }
-
-        movePlayer();
-        canBeBought();
-        while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
-            movePlayer();
-        }
-            this.isDouble = false; //reset values
-            this.rl_double = 0;
-            incPlayer();
-    }
+//    public void turn(){
+//        Player p = getPlayer(player_turn);
+//        for (int i = 0; i < board.size(); i++) {
+//            System.out.println(getTile(i));
+//        }
+//        HelloController.setGameText( "it's player  "+ p.getPlayer_id() +
+//                " turn\n" + p.getPl_cash());
+//        System.out.println("want to mortgage?");
+//        Scanner input = new Scanner(System.in);
+//        String s = input.nextLine();
+//        if (s.equals("y") && p.getOwns().size() >= 1){
+//            mortgage();
+//        }else if (s.equals("y") && p.getOwns().size() < 1){
+//            System.out.println("you don't own any tiles!");
+//        }
+//
+//        movePlayer();
+//        canBeBought();
+//        while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
+//            movePlayer();
+//        }
+//            this.isDouble = false; //reset values
+//            this.rl_double = 0;
+//            incPlayer();
+//    }
     //lets players mortgage a property
     public void mortgage(){
         Player p = getPlayer(player_turn);
@@ -127,36 +131,34 @@ public class Board {
         return null;
     }
     //regular buying of tiles(no auction)
-    public void canBeBought(){
-        Player p = getPlayer(player_turn);
-        Tile t = getTile(getPlayer(player_turn).getPl_pos());
-        Scanner input = new Scanner(System.in);
-
-        if(t.getCanBeBought() && t.getOwnedBy() == null){ // check that the title can be bought and is not owned by any1
-            System.out.println(t.getTileName());
-            System.out.println("Price is " + t.getPrice());
-            System.out.println("Do you want to buy? Y/N \n");
-            String s = input.nextLine(); //take the input
-            if(s.equals("y")){ // checks if the input is y
-                int cash = p.getPl_cash();
-                int price = t.getPrice();
-                int total = cash - price;
-                if(total>0){
-                    p.setPl_cash(total);//yh
-                    t.setOwnedBy(p.getPlayer_id()); //yh
-                    p.addOwns(t);
-                    System.out.println("cash: "+p.getPl_cash());
-                    System.out.println("tile is owned by: "+ t.getOwnedBy());
-                }else{
-                    System.out.println("you have insufficient funds");
-                    mortgage();
-                }
-            }
-            if(s.equals("n")){
-              auction();
-            }
-        }
-    }
+//    public void canBeBought(){
+//        Player p = getPlayer(player_turn);
+//        Tile t = getTile(getPlayer(player_turn).getPl_pos());
+//
+//        if(t.getCanBeBought() && t.getOwnedBy() == null){ // check that the title can be bought and is not owned by any1
+//            System.out.println(t.getTileName());
+//            System.out.println("Price is " + t.getPrice());
+//            System.out.println("Do you want to buy? Y/N \n");
+//            if(s.equals("y")){ // checks if the input is y
+//                int cash = p.getPl_cash();
+//                int price = t.getPrice();
+//                int total = cash - price;
+//                if(total>0){
+//                    p.setPl_cash(total);//yh
+//                    t.setOwnedBy(p.getPlayer_id()); //yh
+//                    p.addOwns(t);
+//                    System.out.println("cash: "+p.getPl_cash());
+//                    System.out.println("tile is owned by: "+ t.getOwnedBy());
+//                }else{
+//                    System.out.println("you have insufficient funds");
+//                    mortgage();
+//                }
+//            }
+//            if(s.equals("n")){
+//              auction();
+//            }
+//        }
+//    }
     //buying tiles with auction
     public void auctionBuy(int t) {
        // getTile(getPlayer(player_turn).getPl_pos());
@@ -224,6 +226,7 @@ public class Board {
         else {
             for (int i = 1; i < roll; i++) {
                 getPlayer(player_turn).incrPos();
+                System.out.println(getPlayer(player_turn).pl_pos);
             }
         }
 
@@ -275,51 +278,8 @@ public class Board {
         return cardsPL;   }
 
 
-
-
     public int pSize(){
         return this.players.size();
     }
 
-    public static void main(String[] args){
-
-
-
-        Board b = new Board();
-
-        System.out.println(b.bSize());
-
-        for (int i = 0; i < b.bSize(); i++) {
-            System.out.println(b.getTile(i));
-        }
-        for (int i = 0; i < b.pSize(); i++) {
-            System.out.println(b.getPlayer(i));
-        }
-        System.out.println(b.getCardsOK());
-        System.out.println(b.getCardsPL());
-
-/*
-        for (int i = 0; i < b.plCardsize(); i++) {
-            System.out.println(b.getPLCard(i));
-        }
-
-        for (int i = 0; i < b.okCardsize(); i++) {
-            System.out.println(b.getOKCard(i));
-        }
-*/
-       while(!b.getGameEnd()) {
-           for(int i =0; i< b.pSize();)
-
-
-               if(!b.getPlayer(b.getPlayerTurn()).isBankrupt()){
-                   b.turn();
-               }
-
-       }
-
-//        b.rollDice();
-//        b.rollDice();
-
-
-    }
 }

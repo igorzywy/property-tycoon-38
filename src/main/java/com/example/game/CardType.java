@@ -1,3 +1,5 @@
+package com.example.game;
+
 public enum CardType {
 
     /*

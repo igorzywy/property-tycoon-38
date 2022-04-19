@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game.HelloController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="800.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../1557017445monopoly_board.jpg" />
+         </image>
+      </ImageView>
+      <BorderPane prefHeight="800.0" prefWidth="800.0">
+         <top>
+            <HBox prefHeight="108.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <FlowPane fx:id="pane21" prefHeight="108.0" prefWidth="106.0" />
+                  <FlowPane fx:id="pane22" prefHeight="108.0" prefWidth="65.0" />
+                  <FlowPane fx:id="pane23" prefHeight="108.0" prefWidth="66.0" />
+                  <FlowPane fx:id="pane24" prefHeight="108.0" prefWidth="66.0" />
+                  <FlowPane fx:id="pane25" prefHeight="108.0" prefWidth="66.0" />
+                  <FlowPane fx:id="pane26" prefHeight="108.0" prefWidth="59.0" />
+                  <FlowPane fx:id="pane27" prefHeight="108.0" prefWidth="66.0" />
+                  <FlowPane fx:id="pane28" prefHeight="108.0" prefWidth="66.0" />
+                  <FlowPane fx:id="pane29" prefHeight="108.0" prefWidth="66.0" />
+                  <FlowPane fx:id="pane30" prefHeight="108.0" prefWidth="66.0" />
+                  <FlowPane fx:id="pane31" prefHeight="108.0" prefWidth="105.0" />
+               </children>
+            </HBox>
+         </top>
+         <right>
+            <VBox prefHeight="592.0" prefWidth="109.0" BorderPane.alignment="CENTER">
+               <children>
+                  <FlowPane fx:id="pane32" prefHeight="66.0" prefWidth="110.0" />
+                  <FlowPane fx:id="pane33" prefHeight="66.0" prefWidth="110.0" />
+                  <FlowPane fx:id="pane34" prefHeight="66.0" prefWidth="110.0" />
+                  <FlowPane fx:id="pane35" prefHeight="62.0" prefWidth="110.0" />
+                  <FlowPane fx:id="pane36" prefHeight="62.0" prefWidth="110.0" />
+                  <FlowPane fx:id="pane37" prefHeight="65.0" prefWidth="110.0" />
+                  <FlowPane fx:id="pane38" prefHeight="62.0" prefWidth="110.0" />
+                  <FlowPane fx:id="pane39" prefHeight="65.0" prefWidth="110.0" />
+                  <FlowPane fx:id="pane40" prefHeight="65.0" prefWidth="110.0" />
+               </children>
+            </VBox>
+         </right>
+         <left>
+            <VBox prefHeight="586.0" prefWidth="107.0" BorderPane.alignment="CENTER">
+               <children>
+                  <FlowPane fx:id="pane20" prefHeight="64.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane19" prefHeight="64.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane18" prefHeight="64.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane17" prefHeight="64.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane16" prefHeight="61.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane15" prefHeight="64.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane14" prefHeight="71.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane13" prefHeight="64.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane12" prefHeight="66.0" prefWidth="107.0" />
+               </children>
+            </VBox>
+         </left>
+         <bottom>
+            <HBox prefHeight="105.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <FlowPane fx:id="pane11" prefHeight="106.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane10" prefHeight="106.0" prefWidth="64.0" />
+                  <FlowPane fx:id="pane9" prefHeight="106.0" prefWidth="64.0" />
+                  <FlowPane fx:id="pane8" prefHeight="106.0" prefWidth="64.0" />
+                  <FlowPane fx:id="pane7" prefHeight="106.0" prefWidth="64.0" />
+                  <FlowPane fx:id="pane6" prefHeight="106.0" prefWidth="68.0" />
+                  <FlowPane fx:id="pane5" prefHeight="106.0" prefWidth="71.0" />
+                  <FlowPane fx:id="pane4" prefHeight="106.0" prefWidth="57.0" />
+                  <FlowPane fx:id="pane3" prefHeight="106.0" prefWidth="64.0" />
+                  <FlowPane fx:id="pane2" prefHeight="106.0" prefWidth="70.0" />
+                  <FlowPane fx:id="pane1" prefHeight="106.0" prefWidth="105.0" />
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="dice1" fitHeight="56.0" fitWidth="62.0" layoutX="29.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Alea_6.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="dice2" fitHeight="56.0" fitWidth="62.0" layoutX="93.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Alea_6.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="diceOut" layoutX="156.0" layoutY="507.0" prefHeight="34.0" prefWidth="50.0" />
+                  <Button fx:id="mortB" layoutX="434.0" layoutY="191.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="78.0" text="Mortgage" />
+                  <TextField fx:id="playerNum" layoutX="29.0" layoutY="51.0" prefHeight="35.0" prefWidth="41.0" />
+                  <Text layoutX="17.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player count" />
+                  <Button layoutX="93.0" layoutY="52.0" mnemonicParsing="false" onAction="#NewGame" prefHeight="33.0" prefWidth="75.0" text="New Game" />
+                  <TextArea fx:id="gameText" layoutX="22.0" layoutY="144.0" prefHeight="200.0" prefWidth="268.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="17.0" />
+                     </font>
+                  </TextArea>
+                  <Button fx:id="rollB" layoutX="332.0" layoutY="192.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="82.0" text="Roll" />
+                  <Button fx:id="yesB" layoutX="333.0" layoutY="250.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="Yes" />
+                  <Button fx:id="noB" layoutX="433.0" layoutY="250.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="No" />
+                  <TextField fx:id="nums" layoutX="522.0" layoutY="196.0" prefHeight="31.0" prefWidth="54.0" />
+                  <Button fx:id="lockB" layoutX="529.0" layoutY="166.0" mnemonicParsing="false" text="Lock" />
+               </children></AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</Pane>
