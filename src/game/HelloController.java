@@ -107,7 +107,6 @@ public class HelloController {
     protected void initialize(){
         System.out.println("Initialising");
 
-
         //setting up tiles array
         //manually because java doesn't let me cast Field objects to FlowPane
         tiles[0]=pane1;tiles[1]=pane2;tiles[2]=pane3;tiles[3]=pane4;tiles[4]=pane5;tiles[5]=pane6;tiles[6]=pane7;
@@ -116,7 +115,6 @@ public class HelloController {
         tiles[21]=pane22;tiles[22]=pane23;tiles[23]=pane24;tiles[24]=pane25;tiles[25]=pane26;tiles[26]=pane27;tiles[27]=pane28;
         tiles[28]=pane29;tiles[29]=pane30;tiles[30]=pane31;tiles[31]=pane32;tiles[32]=pane33;tiles[33]=pane34;tiles[34]=pane35;
         tiles[35]=pane36;tiles[36]=pane37;tiles[37]=pane38;tiles[38]=pane39;tiles[39]=pane40;
-
 
         mortB.setVisible(false);
         lockB.setVisible(false);
@@ -423,6 +421,15 @@ public class HelloController {
 
 
     }
+    @FXML
+    protected void endTurn(){
+        b.incPlayer();
+        p = b.getPlayer(b.getPlayerTurn());
+        rollB.setVisible(true);
+        buyBYes.setVisible(false);
+        buyBNo.setVisible(false);
+    }
+
 
 
     //New Game button is pressed. We create a new Board object and set things to default values
@@ -466,6 +473,7 @@ public class HelloController {
                     cardPL();
                 }else if (checkIfCardOK()){
                     cardOK();
+
                 }else if(checkIfFPS()){
                     getFPS();
                 }else if(checkifGoJail()){
