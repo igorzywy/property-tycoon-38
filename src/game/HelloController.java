@@ -10,7 +10,6 @@ import javafx.scene.layout.FlowPane;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class HelloController {
 
@@ -181,8 +180,8 @@ public class HelloController {
     }
 
     @FXML
-    protected void checkIfCard(){
-
+    protected boolean checkIfCard(){
+        return false;
     }
 
 
@@ -217,7 +216,7 @@ public class HelloController {
 
 
 
-            AtomicReference<Boolean> mortgOption = new AtomicReference<>(false);
+            mortgOption = false;
             AtomicInteger bid = new AtomicInteger();
             for (int i = 0; i < b.bSize(); i++) {
                 System.out.println(b.getTile(i));
@@ -266,7 +265,7 @@ public class HelloController {
 
 
             lockB.setOnAction(e ->{
-                if(mortgOption.get() == true){
+                if(mortgOption == true){
                     boolean removedTile = false;
                     nums.setVisible(true);
                     int tileToMorg = Integer.parseInt(nums.getText());
@@ -274,12 +273,12 @@ public class HelloController {
                     System.out.println("roler");
                     removedTile = b.mortgage(tileToMorg);
                     if (removedTile == true){
-                        mortgOption.set(false);
+                        mortgOption = false;
                         nums.setVisible(false);
                         lockB.setVisible(false);
                     }else{
                         gameText.setText("You don't own this property");
-                        mortgOption.set(true);
+                        mortgOption = true;
                         nums.setVisible(true);
                         lockB.setVisible(true);
                     }
