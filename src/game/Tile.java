@@ -12,18 +12,20 @@ public class Tile {
     private static int tile_id_incrementer = 0;
     private int tile_id = 0;
     private String tile_name = "";
-    private String tile_grp = "";
+    private String tileGrp = "";
     private String tile_action = "";
     private boolean tile_can_be_bought;
     private Integer price, rent_unimproved, rent_1h, rent_2h, rent_3h, rent_4h, rent_hotel;
     private Integer owned_by = null;
     private boolean mortgaged = false;
+    private int houses = 0;
+    private int hotels = 0;
 
     //constructor
     public Tile(String name, String group, String action, boolean can_be_bought, Integer price, Integer rent_unimproved, Integer rent_1h, Integer rent_2h, Integer rent_3h, Integer rent_4h, Integer rent_hotel){
         tile_id = tile_id_incrementer++;
         tile_name = name;
-        tile_grp = group;
+        tileGrp = group;
         tile_action = action;
         tile_can_be_bought = can_be_bought;
         this.price = price;
@@ -36,12 +38,29 @@ public class Tile {
 
     }
 
+    public int getHotels() {
+        return hotels;
+    }
+
+    public int getHouses() {
+        return houses;
+    }
+
+    public void incrHotels() {
+        this.hotels++;
+    }
+
+    public void incrHouses(){
+        this.houses++;
+    }
+
     public String getTileName(){
         return tile_name;
     }
     public Integer getPrice(){
         return price;
     }
+
 
     public int getTile_id() {
         return this.tile_id;
@@ -68,7 +87,7 @@ public class Tile {
     }
 
     public String getGroup(){
-        return this.tile_grp;
+        return this.tileGrp;
     }
 
     public static ArrayList<Tile> getXLSXData(){
@@ -99,7 +118,7 @@ public class Tile {
     public String toString(){
         String a = "-----------------";
         a+=  "\ntile id: " + this.tile_id + " name: "
-                + this.tile_name + " grp: " + this.tile_grp
+                + this.tile_name + " grp: " + this.tileGrp
                 + " action: " + this.tile_action + " can be bought: " +
                 this.tile_can_be_bought + " cost: " + this.price
                 + " rent in order: " + this.rent_unimproved

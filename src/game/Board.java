@@ -51,6 +51,35 @@ public class Board {
 
     }
 
+    public int getGroupSize(String grp){
+        int counter = 0;
+        for (int i = 0; i < bSize(); i++) {
+            if (board.get(i).getGroup().equals(grp)){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public boolean checkForTwoHouseDiff(String grp){
+        ArrayList<Tile> tilesDiff = new ArrayList<Tile>();
+        for (int i = 0; i < bSize(); i++) {
+            if (board.get(i).getGroup().equals(grp)){
+                tilesDiff.add(board.get(i));
+            }
+        }
+        for (int i = 0; i < tilesDiff.size(); i++) {
+            for (int j = 0; j < tilesDiff.size(); j++) {
+                if (Math.abs(tilesDiff.get(i).getHouses() - tilesDiff.get(j).getHouses()) != 1){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     public void addCardsOK(Card c){
         this.cardsOK.addLast(c);
     }
