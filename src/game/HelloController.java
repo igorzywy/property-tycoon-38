@@ -7,6 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.shape.*;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -60,7 +61,8 @@ public class HelloController {
     @FXML FlowPane pane40;
 
     FlowPane[] tiles = new FlowPane[40];
-    Field[] fields = HelloController.class.getDeclaredFields();
+    Shape[] pawnsStorage = new Shape[5];
+    Shape[] pawns;
     boolean mortgOption = false;
     int bid = 0;
     boolean isAuction = false;
@@ -81,27 +83,14 @@ public class HelloController {
     //End Mortgage Button
     @FXML public Button endMorgB;
 
-    ImageView pawn1;
-    ImageView pawn2;
-    ImageView pawn3;
-    ImageView pawn4;
-    ImageView pawn5;
-    ImageView pawn6;
-
     Player p;
 
+    Circle pawn1 = new Circle(20);
+    Rectangle pawn2 = new Rectangle(20,20);
+    Ellipse pawn3 = new Ellipse(20,10);
 
-//    pawn1 = new ImageView("pawn-black.png");
-//    pawn1.setFitHeight(40);
-//    pawn1.setFitWidth(40);
-//    pawn2 = new ImageView("pawn-red.png");
-//    pawn2.setFitHeight(40);
-//    pawn2.setFitWidth(40);
-//    pawn3 = new ImageView("pawn-blue.png");
-//    pawn3.setFitHeight(40);
-//    pawn3.setFitWidth(40);
-//    //add the pawns to the starting tile
-//    pane1.getChildren().addAll(pawn1, pawn2, pawn3);
+
+
     //Setting objects up
     @FXML
     protected void initialize(){
@@ -115,6 +104,12 @@ public class HelloController {
         tiles[21]=pane22;tiles[22]=pane23;tiles[23]=pane24;tiles[24]=pane25;tiles[25]=pane26;tiles[26]=pane27;tiles[27]=pane28;
         tiles[28]=pane29;tiles[29]=pane30;tiles[30]=pane31;tiles[31]=pane32;tiles[32]=pane33;tiles[33]=pane34;tiles[34]=pane35;
         tiles[35]=pane36;tiles[36]=pane37;tiles[37]=pane38;tiles[38]=pane39;tiles[39]=pane40;
+
+        //assign all pawns to storage array
+        pawnsStorage[0]=pawn1;pawnsStorage[1]=pawn2;pawnsStorage[2]=pawn3;
+        //pawnsStorage[3]=pawn4;pawnsStorage[4]=pawn5;
+
+        tiles[0].getChildren().add(pawnsStorage[0]);
 
         mortB.setVisible(false);
         lockB.setVisible(false);
@@ -436,7 +431,7 @@ public class HelloController {
     @FXML
     protected void NewGame() throws InterruptedException {
 
-        if(playerNum !=null) {
+        if(Integer.parseInt(playerNum.getText()) >0 && Integer.parseInt(playerNum.getText())<6){
 
             b = new Board(Integer.parseInt(playerNum.getText()));
             System.out.println(b.bSize());
@@ -445,18 +440,17 @@ public class HelloController {
             lockB.setVisible(false);
             isAuction = false;
 
-
-
             mortgOption = false;
-            AtomicInteger bid = new AtomicInteger();
-            for (int i = 0; i < b.bSize(); i++) {
-                System.out.println(b.getTile(i));
-            }
-            for (int i = 0; i < b.pSize(); i++) {
-                System.out.println(b.getPlayer(i));
-            }
-            System.out.println(b.getCardsOK());
-            System.out.println(b.getCardsPL());
+//            pawns = new ImageView[b.getPLAYER_COUNT()];
+//            System.out.println(b.getPLAYER_COUNT());
+            //setting up array of pawns
+//            for(int i = 0; i < b.getPLAYER_COUNT(); i++){
+//                System.out.println(i);
+//                pawns[i] = pawnsStorage[i];
+//                tiles[0].getChildren().add(pawns[i]);
+//            }
+
+
             p = b.getPlayer(b.getPlayerTurn());
 
             buyBYes.setVisible(false);
