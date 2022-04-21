@@ -6,8 +6,94 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Random;
 import java.util.Scanner;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.util.Pair;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class Board {
+    @FXML private ImageView dice1;
+    @FXML private ImageView dice2;
+    @FXML private Label diceOut;
+
+    //game tiles-panes
+    @FXML FlowPane pane1;
+    @FXML FlowPane pane2;
+    @FXML FlowPane pane3;
+    @FXML FlowPane pane4;
+    @FXML FlowPane pane5;
+    @FXML FlowPane pane6;
+    @FXML FlowPane pane7;
+    @FXML FlowPane pane8;
+    @FXML FlowPane pane9;
+    @FXML FlowPane pane10;
+    @FXML FlowPane pane11;
+    @FXML FlowPane pane12;
+    @FXML FlowPane pane13;
+    @FXML FlowPane pane14;
+    @FXML FlowPane pane15;
+    @FXML FlowPane pane16;
+    @FXML FlowPane pane17;
+    @FXML FlowPane pane18;
+    @FXML FlowPane pane19;
+    @FXML FlowPane pane20;
+    @FXML FlowPane pane21;
+    @FXML FlowPane pane22;
+    @FXML FlowPane pane23;
+    @FXML FlowPane pane24;
+    @FXML FlowPane pane25;
+    @FXML FlowPane pane26;
+    @FXML FlowPane pane27;
+    @FXML FlowPane pane28;
+    @FXML FlowPane pane29;
+    @FXML FlowPane pane30;
+    @FXML FlowPane pane31;
+    @FXML FlowPane pane32;
+    @FXML FlowPane pane33;
+    @FXML FlowPane pane34;
+    @FXML FlowPane pane35;
+    @FXML FlowPane pane36;
+    @FXML FlowPane pane37;
+    @FXML FlowPane pane38;
+    @FXML FlowPane pane39;
+    @FXML FlowPane pane40;
+
+    @FXML public TextArea gameText;
+    @FXML public TextField playerNum;
+    @FXML public TextField nums;
+    @FXML public Button rollB;
+    @FXML public Button mortB;
+    @FXML public Button yesB;
+    @FXML public Button noB;
+    @FXML public Button lockB;
+    //button to buy or not properties after roll
+    @FXML public Button buyBYes;
+    @FXML public Button buyBNo;
+
+    ImageView pawn1;
+    ImageView pawn2;
+    ImageView pawn3;
+    ImageView pawn4;
+    ImageView pawn5;
+    ImageView pawn6;
+
+    FlowPane[] tiles = new FlowPane[40];
+    Field[] fields = HelloController.class.getDeclaredFields();
+    Boolean mortgOption = false;
+    int bid = 0;
+    boolean isAuction = false;
+    int currBidNo = 0;
+    private Board b;
+
     private int TILE_COUNT = 40;
     private int PLAYER_COUNT = 5;
     private int player_turn = 0;
@@ -25,6 +111,29 @@ public class Board {
     Pair<Integer,Integer> highest_bid = new Pair<>(0,0);
 
     public boolean game_End = false;
+
+    @FXML
+    protected void initialize(){
+        System.out.println("Initialising");
+
+        //setting up tiles array
+        //manually because java doesn't let me cast Field objects to FlowPane
+        tiles[0]=pane1;tiles[1]=pane2;tiles[2]=pane3;tiles[3]=pane4;tiles[4]=pane5;tiles[5]=pane6;tiles[6]=pane7;
+        tiles[7]=pane8;tiles[8]=pane9;tiles[9]=pane10;tiles[10]=pane11;tiles[11]=pane12;tiles[12]=pane13;tiles[13]=pane14;
+        tiles[14]=pane15;tiles[15]=pane16;tiles[16]=pane17;tiles[17]=pane18;tiles[18]=pane19;tiles[19]=pane20;tiles[20]=pane21;
+        tiles[21]=pane22;tiles[22]=pane23;tiles[23]=pane24;tiles[24]=pane25;tiles[25]=pane26;tiles[26]=pane27;tiles[27]=pane28;
+        tiles[28]=pane29;tiles[29]=pane30;tiles[30]=pane31;tiles[31]=pane32;tiles[32]=pane33;tiles[33]=pane34;tiles[34]=pane35;
+        tiles[35]=pane36;tiles[36]=pane37;tiles[37]=pane38;tiles[38]=pane39;tiles[39]=pane40;
+
+        mortB.setVisible(false);
+        lockB.setVisible(false);
+        buyBYes.setVisible(false);
+        buyBNo.setVisible(false);
+        nums.setVisible(false);
+
+    }
+
+
     public Board(int p_count){
 
         //adding tiles to the board
@@ -72,13 +181,13 @@ public class Board {
 //        for (int i = 0; i < board.size(); i++) {
 //            System.out.println(getTile(i));
 //        }
-//        HelloController.setGameText( "it's player  "+ p.getPlayer_id() +
+//        gameText.setText( "it's player  "+ p.getPlayer_id() +
 //                " turn\n" + p.getPl_cash());
 //        System.out.println("want to mortgage?");
 //        Scanner input = new Scanner(System.in);
 //        String s = input.nextLine();
 //        if (s.equals("y") && p.getOwns().size() >= 1){
-//            mortgage();
+//            //mortgage();
 //        }else if (s.equals("y") && p.getOwns().size() < 1){
 //            System.out.println("you don't own any tiles!");
 //        }
@@ -92,6 +201,7 @@ public class Board {
 //            this.rl_double = 0;
 //            incPlayer();
 //    }
+
     //lets players mortgage a property
     public boolean mortgage(int tileId){
         Player p = getPlayer(player_turn);
@@ -141,35 +251,35 @@ public class Board {
         return null;
     }
     //regular buying of tiles(no auction)
-    public boolean canBeBought() {
-        Player p = getPlayer(player_turn);
-        Tile t = getTile(getPlayer(player_turn).getPl_pos());
-
-        if (t.getCanBeBought() && t.getOwnedBy() == null) { // check that the title can be bought and is not owned by any1
-            System.out.println(t.getTileName());
-            System.out.println("Price is " + t.getPrice());
-            System.out.println("Do you want to buy? Y/N \n");
-            if (s.equals("y")) { // checks if the input is y
-                int cash = p.getPl_cash();
-                int price = t.getPrice();
-                int total = cash - price;
-                if (total > 0) {
-                    p.setPl_cash(total);//yh
-                    t.setOwnedBy(p.getPlayer_id()); //yh
-                    p.addOwns(t);
-                    System.out.println("cash: " + p.getPl_cash());
-                    System.out.println("tile is owned by: " + t.getOwnedBy());
-                } else {
-                    System.out.println("you have insufficient funds");
-                    mortgage();
-                }
-            }
-            if (s.equals("n")) {
-                auction();
-            }
-        }
-        return true;
-    }
+//    public boolean canBeBought() {
+//        Player p = getPlayer(player_turn);
+//        Tile t = getTile(getPlayer(player_turn).getPl_pos());
+//        String s = "";
+//        if (t.getCanBeBought() && t.getOwnedBy() == null) { // check that the title can be bought and is not owned by any1
+//            System.out.println(t.getTileName());
+//            System.out.println("Price is " + t.getPrice());
+//            System.out.println("Do you want to buy? Y/N \n");
+//            if (s.equals("y")) { // checks if the input is y
+//                int cash = p.getPl_cash();
+//                int price = t.getPrice();
+//                int total = cash - price;
+//                if (total > 0) {
+//                    p.setPl_cash(total);//yh
+//                    t.setOwnedBy(p.getPlayer_id()); //yh
+//                    p.addOwns(t);
+//                    System.out.println("cash: " + p.getPl_cash());
+//                    System.out.println("tile is owned by: " + t.getOwnedBy());
+//                } else {
+//                    System.out.println("you have insufficient funds");
+//                    mortgage();
+//                }
+//            }
+//            if (s.equals("n")) {
+//                auction();
+//            }
+//        }
+//        return true;
+//    }
 
         public boolean checkCanBeBought() {
             Tile t = getTile(getPlayer(player_turn).getPl_pos());
@@ -206,7 +316,7 @@ public class Board {
                 System.out.println("tile is owned by: " + getTile(t).getOwnedBy());
             }
         }
-    }
+
 
     public void auction(){
         highest_bid = new Pair<>(0,0);
@@ -248,7 +358,7 @@ public class Board {
 
     public void movePlayer(){
 
-        int roll = rollDice();
+        int roll = 5; //rollDice();
         if(this.rl_double == 3 ){
             this.isDouble = false;
             this.rl_double = 0;
