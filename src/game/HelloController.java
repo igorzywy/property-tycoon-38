@@ -78,6 +78,8 @@ public class HelloController {
     //button to buy or not properties after roll
     @FXML public Button buyBYes;
     @FXML public Button buyBNo;
+    //End Mortgage Button
+    @FXML public Button endMorgB;
 
     ImageView pawn1;
     ImageView pawn2;
@@ -119,6 +121,7 @@ public class HelloController {
         buyBYes.setVisible(false);
         buyBNo.setVisible(false);
         nums.setVisible(false);
+        endMorgB.setVisible(false);
 
     }
 
@@ -176,6 +179,7 @@ public class HelloController {
             mortgOption = true;
             nums.setVisible(true);
             lockB.setVisible(true);
+            endMorgB.setVisible(true);
         }else{
             bankrupt();
         }
@@ -190,7 +194,8 @@ public class HelloController {
 
     @FXML
     protected void goJail(){
-
+        p.setInJail();
+        p.setPl_pos(11);
     }
 
     @FXML
@@ -274,13 +279,12 @@ public class HelloController {
 
                 }else if(checkIfFPS()){
                     getFPS();
+                }else if(checkifGoJail()){
+                    goJail();
                 }
                 else{
                     gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");
                 }
-
-
-
 
             });
 
@@ -297,11 +301,15 @@ public class HelloController {
                 System.out.println("Morg");
             });
 
+            endMorgB.setOnAction(e ->{
+
+            });
 
             lockB.setOnAction(e ->{
                 if(mortgOption == true){
                     boolean removedTile = false;
                     nums.setVisible(true);
+                    endMorgB.setVisible(true);
                     int tileToMorg = Integer.parseInt(nums.getText());
 
                     System.out.println("roler");
@@ -310,11 +318,15 @@ public class HelloController {
                         mortgOption = false;
                         nums.setVisible(false);
                         lockB.setVisible(false);
+                        endMorgB.setVisible(false);
+
                     }else{
                         gameText.setText("You don't own this property");
                         mortgOption = true;
                         nums.setVisible(true);
                         lockB.setVisible(true);
+                        endMorgB.setVisible(true);
+
                     }
 
                 }
