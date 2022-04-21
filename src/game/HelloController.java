@@ -7,7 +7,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.util.Pair;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -148,9 +147,17 @@ public class HelloController {
             if(p.getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()) {
                 gameText.setText("You payed tax: " + b.getTile(p.getPl_pos()).getPrice());
             }else{
-                b.mortgage();
+                boolean removedTile = false;
+                nums.setVisible(true);
+                int tileToMorg = Integer.parseInt(nums.getText());
+                while(!removedTile){
+                    removedTile = b.mortgage(tileToMorg);
+                }
+
+                }
+
             }
-        }
+        
     }
 
     @FXML
