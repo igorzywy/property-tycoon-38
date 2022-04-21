@@ -9,8 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class HelloController {
 
@@ -62,7 +62,7 @@ public class HelloController {
 
     FlowPane[] tiles = new FlowPane[40];
     Field[] fields = HelloController.class.getDeclaredFields();
-    Boolean mortgOption = false;
+    boolean mortgOption = false;
     int bid = 0;
     boolean isAuction = false;
     int currBidNo = 0;
@@ -144,20 +144,46 @@ public class HelloController {
     @FXML
     protected boolean checkIfTax(){
         if(b.getTile(p.getPl_pos()).getGroup().equals("Tax")){
-            if(p.getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()) {
-                gameText.setText("You payed tax: " + b.getTile(p.getPl_pos()).getPrice());
                 return true;
-            }
+            }else{return false;}
 
 //                boolean removedTile = false;
 //                nums.setVisible(true);
 //                int tileToMorg = Integer.parseInt(nums.getText());
 //                while(!removedTile){
 //                    removedTile = b.mortgage(tileToMorg);
-                }
-        return false;
+
+
     }
 
+    @FXML
+    protected void taxation(){
+        if(p.getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()) {
+            gameText.setText("You payed tax: " + b.getTile(p.getPl_pos()).getPrice());
+        }else if (p.getOwns().size() >= 1){
+            //checks if all the properties the player owns are mortgaged
+            boolean allMortgaged = true;
+            for (int i = 0; i < p.getOwns().size(); i++) {
+                if (p.getOwns().get(i).getMortgaged() == false){
+                    allMortgaged = false;
+                }
+            }
+            //if they are mortgaged then the player goes bankrupt
+            if (allMortgaged == true){
+                bankrupt();
+            }
+            mortgOption = true;
+            nums.setVisible(true);
+            lockB.setVisible(true);
+        }else{
+            bankrupt();
+        }
+    }
+
+    @FXML
+    protected void checkIfCard(){
+
+    }
 
 
     @FXML
@@ -165,6 +191,16 @@ public class HelloController {
         mortgOption = true;
         rollB.setDisable(false);
     }
+
+    @FXML
+    protected void bankrupt(){
+        p.setBankrupt(true);
+        System.out.println(p.getPlayer_id() + " is bankrupt");
+        //call for all the players properties to be auctioned
+        //call to increment player
+    }
+
+
 
     //New Game button is pressed. We create a new Board object and set things to default values
     @FXML
@@ -181,7 +217,7 @@ public class HelloController {
 
 
 
-            Boolean mortgOption = false;
+            AtomicReference<Boolean> mortgOption = new AtomicReference<>(false);
             AtomicInteger bid = new AtomicInteger();
             for (int i = 0; i < b.bSize(); i++) {
                 System.out.println(b.getTile(i));
@@ -200,9 +236,19 @@ public class HelloController {
                 b.movePlayer();
                 gameText.setText(p.toString());
                 rollB.setVisible(false);
-                checkIfTax();
+                //check if tax,card,go,freepark,jail,gojail
+                if (checkIfTax()){
+                    taxation();
+                }else if(checkIfCard()){
 
-                gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");
+                }
+                else{
+                    gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");
+                }
+
+
+
+
             });
 
 
@@ -220,14 +266,24 @@ public class HelloController {
 
 
             lockB.setOnAction(e ->{
-                if(mortgOption == true){
+                if(mortgOption.get() == true){
                     boolean removedTile = false;
                     nums.setVisible(true);
                     int tileToMorg = Integer.parseInt(nums.getText());
-                    while(!removedTile){
-                        removedTile = b.mortgage(tileToMorg);
+
+                    System.out.println("roler");
+                    removedTile = b.mortgage(tileToMorg);
+                    if (removedTile == true){
+                        mortgOption.set(false);
+                        nums.setVisible(false);
+                        lockB.setVisible(false);
+                    }else{
                         gameText.setText("You don't own this property");
+                        mortgOption.set(true);
+                        nums.setVisible(true);
+                        lockB.setVisible(true);
                     }
+
                 }
 //                if(!nums.getText().isEmpty()) {
 //                    if(isAuction == false){

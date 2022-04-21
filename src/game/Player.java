@@ -9,7 +9,7 @@ public class Player {
     private static int pl_num = 1;
     private int player_id = 0;
     private int pl_pos = 0;
-    private int pl_cash = 1500; // cash that the player starts with
+    private int pl_cash = 150; // cash that the player starts with
     private boolean bankrupt = false; // manages if player is bankrupt
     private ArrayList<Tile> owns = new ArrayList<>();
 

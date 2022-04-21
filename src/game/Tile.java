@@ -46,6 +46,7 @@ public class Tile {
     public int getTile_id() {
         return this.tile_id;
     }
+    public boolean getMortgaged(){return this.mortgaged;}
 
     public boolean getCanBeBought(){
         return tile_can_be_bought;
