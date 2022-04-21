@@ -22,7 +22,7 @@ public class Board {
 
 
     //player,bid
-    private Pair<Integer,Integer> highest_bid = new Pair<>(0,0);
+    Pair<Integer,Integer> highest_bid = new Pair<>(0,0);
 
     public boolean game_End = false;
     public Board(int p_count){
@@ -139,49 +139,72 @@ public class Board {
         return null;
     }
     //regular buying of tiles(no auction)
-//    public void canBeBought(){
-//        Player p = getPlayer(player_turn);
-//        Tile t = getTile(getPlayer(player_turn).getPl_pos());
-//
-//        if(t.getCanBeBought() && t.getOwnedBy() == null){ // check that the title can be bought and is not owned by any1
-//            System.out.println(t.getTileName());
-//            System.out.println("Price is " + t.getPrice());
-//            System.out.println("Do you want to buy? Y/N \n");
-//            if(s.equals("y")){ // checks if the input is y
-//                int cash = p.getPl_cash();
-//                int price = t.getPrice();
-//                int total = cash - price;
-//                if(total>0){
-//                    p.setPl_cash(total);//yh
-//                    t.setOwnedBy(p.getPlayer_id()); //yh
-//                    p.addOwns(t);
-//                    System.out.println("cash: "+p.getPl_cash());
-//                    System.out.println("tile is owned by: "+ t.getOwnedBy());
-//                }else{
-//                    System.out.println("you have insufficient funds");
-//                    mortgage();
-//                }
-//            }
-//            if(s.equals("n")){
-//              auction();
-//            }
-//        }
-//    }
-    //buying tiles with auction
-    public void auctionBuy(int t) {
-       // getTile(getPlayer(player_turn).getPl_pos());
-        int cash = getPlayer(highest_bid.getKey()).getPl_cash();
-        int price = highest_bid.getValue();
-        int total = cash - price;
-        if (total > 0) {
-            getPlayer(highest_bid.getKey()).setPl_cash(total);//yh
-            getTile(t).setOwnedBy(highest_bid.getKey()); //yh
-            getPlayer(highest_bid.getKey()).addOwns(getTile(t));
-            System.out.println("cash: " + getPlayer(highest_bid.getKey()).getPl_cash());
-            System.out.println("tile is owned by: " + getTile(t).getOwnedBy());
+    public boolean canBeBought() {
+        Player p = getPlayer(player_turn);
+        Tile t = getTile(getPlayer(player_turn).getPl_pos());
+
+        if (t.getCanBeBought() && t.getOwnedBy() == null) { // check that the title can be bought and is not owned by any1
+            System.out.println(t.getTileName());
+            System.out.println("Price is " + t.getPrice());
+            System.out.println("Do you want to buy? Y/N \n");
+            if (s.equals("y")) { // checks if the input is y
+                int cash = p.getPl_cash();
+                int price = t.getPrice();
+                int total = cash - price;
+                if (total > 0) {
+                    p.setPl_cash(total);//yh
+                    t.setOwnedBy(p.getPlayer_id()); //yh
+                    p.addOwns(t);
+                    System.out.println("cash: " + p.getPl_cash());
+                    System.out.println("tile is owned by: " + t.getOwnedBy());
+                } else {
+                    System.out.println("you have insufficient funds");
+                    mortgage();
+                }
+            }
+            if (s.equals("n")) {
+                auction();
+            }
         }
+        return true;
     }
 
+        public boolean checkCanBeBought() {
+            Tile t = getTile(getPlayer(player_turn).getPl_pos());
+
+            if (t.getCanBeBought() == false || t.getOwnedBy() == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        public boolean checkIsOwned(){
+            Tile t = getTile(getPlayer(player_turn).getPl_pos());
+
+            if (t.getOwnedBy() == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        //buying tiles with auction
+        public void auctionBuy ( int t){
+            // getTile(getPlayer(player_turn).getPl_pos());
+            int cash = getPlayer(highest_bid.getKey()).getPl_cash();
+            int price = highest_bid.getValue();
+            int total = cash - price;
+            if (total > 0) {
+                getPlayer(highest_bid.getKey()).setPl_cash(total);//yh
+                getTile(t).setOwnedBy(highest_bid.getKey()); //yh
+                getPlayer(highest_bid.getKey()).addOwns(getTile(t));
+                System.out.println("cash: " + getPlayer(highest_bid.getKey()).getPl_cash());
+                System.out.println("tile is owned by: " + getTile(t).getOwnedBy());
+            }
+        }
+    }
 
     public void auction(){
         highest_bid = new Pair<>(0,0);

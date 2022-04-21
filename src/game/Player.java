@@ -58,6 +58,10 @@ public class Player {
         return this.owns;
     }
 
+    public void changePlCash(int cash){
+        this.pl_cash -= cash;
+    }
+
     public void removeOwned(Tile t){
         owns.remove(t);
 

@@ -65,8 +65,9 @@ public class HelloController {
     Field[] fields = HelloController.class.getDeclaredFields();
     Boolean mortgOption = false;
     int bid = 0;
-    boolean isBid = false;
+    boolean isAuction = false;
     int currBidNo = 0;
+    private Board b;
 
     @FXML public TextArea gameText;
     @FXML public TextField playerNum;
@@ -76,6 +77,9 @@ public class HelloController {
     @FXML public Button yesB;
     @FXML public Button noB;
     @FXML public Button lockB;
+    //button to buy or not properties after roll
+    @FXML public Button buyBYes;
+    @FXML public Button buyBNo;
 
     ImageView pawn1;
     ImageView pawn2;
@@ -83,6 +87,10 @@ public class HelloController {
     ImageView pawn4;
     ImageView pawn5;
     ImageView pawn6;
+
+    Player p;
+
+
 //    pawn1 = new ImageView("pawn-black.png");
 //    pawn1.setFitHeight(40);
 //    pawn1.setFitWidth(40);
@@ -108,6 +116,12 @@ public class HelloController {
         tiles[28]=pane29;tiles[29]=pane30;tiles[30]=pane31;tiles[31]=pane32;tiles[32]=pane33;tiles[33]=pane34;tiles[34]=pane35;
         tiles[35]=pane36;tiles[36]=pane37;tiles[37]=pane38;tiles[38]=pane39;tiles[39]=pane40;
 
+        mortB.setVisible(false);
+        lockB.setVisible(false);
+        buyBYes.setVisible(false);
+        buyBNo.setVisible(false);
+        nums.setVisible(false);
+
     }
 
 //    @FXML
@@ -129,6 +143,17 @@ public class HelloController {
 //    }
 
     @FXML
+    protected void checkIfTax(){
+        if(b.getTile(p.getPl_pos()).getGroup().equals("Tax")){
+            if(p.getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()) {
+                gameText.setText("You payed tax: " + b.getTile(p.getPl_pos()).getPrice());
+            }else{
+                b.mortgage();
+            }
+        }
+    }
+
+    @FXML
     protected void mortg(){
         mortgOption = true;
         rollB.setDisable(false);
@@ -140,15 +165,15 @@ public class HelloController {
 
         if(playerNum !=null) {
 
-            Board b = new Board(Integer.parseInt(playerNum.getText()));
+            b = new Board(Integer.parseInt(playerNum.getText()));
             System.out.println(b.bSize());
             rollB.setDisable(false);
-            mortB.setDisable(false);
-            noB.setDisable(true);
-            yesB.setDisable(true);
-            lockB.setDisable(true);
-            isBid = false;
-            currBidNo = 0;
+            mortB.setVisible(true);
+            lockB.setVisible(false);
+            isAuction = false;
+
+
+
             Boolean mortgOption = false;
             AtomicInteger bid = new AtomicInteger();
             for (int i = 0; i < b.bSize(); i++) {
@@ -159,104 +184,36 @@ public class HelloController {
             }
             System.out.println(b.getCardsOK());
             System.out.println(b.getCardsPL());
-            Player p = b.getPlayer(b.getPlayerTurn());
-            mortB.setOnAction(e -> {
-                if (b.getGameEnd()) {
-                    gameText.setText("GAME FINISHED");
-                } else if (mortgOption == false && p.getOwns().size() < 1 && !b.getPlayer(b.getPlayerTurn()).isBankrupt()) {
-                    gameText.setText("you don't own any tiles!");
-                }else if(mortgOption == true && p.getOwns().size() >= 1 && !b.getPlayer(b.getPlayerTurn()).isBankrupt()){
-                    b.mortgage();
-                    mortB.setDisable(true);
-                }
-            });
+            p = b.getPlayer(b.getPlayerTurn());
+
+            buyBYes.setVisible(false);
 
             //Rolls the dice and moves the player
             rollB.setOnAction(e ->{
                 b.movePlayer();
-                //Tile t does not get update, and always stays as the first tile to be assigned to it
-                //i dont understand why it does than, it should change, but it doesn't
-                Tile t = b.getTile(p.getPl_pos());
-                System.out.println(t);
-                if(t.getCanBeBought() && t.getOwnedBy() == null) { // check that the title can be bought and is not owned by any1
-                    gameText.setText(t.getTileName());
-                    gameText.appendText("\nPrice is " + t.getPrice());
-                    System.out.println("\nDo you want to buy?");
-                    mortB.setDisable(true);
-                    rollB.setDisable(true);
-                    yesB.setDisable(false);
-                    noB.setDisable(false);
-                    //check if tile belongs to someone else
-                }else if(t.getOwnedBy() != null && t.getOwnedBy() != b.getPlayer(b.getPlayerTurn()).getPlayer_id()){
-                    gameText.setText(b.getPlayer(b.getPlayerTurn()) + " pays rent to " + b.getPlayer(t.getOwnedBy()) );
-                }
+                gameText.setText(p.toString());
+                rollB.setVisible(false);
+                checkIfTax();
+                gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");
             });
 
 
-            yesB.setOnAction(e ->{
-                if(isBid == false){
-                    Tile t = b.getTile(p.getPl_pos());
-                    int cash = p.getPl_cash();
-                    int price = t.getPrice();
-                    int total = cash - price;
-                    if(total>0) {
-                        p.setPl_cash(total);//yh
-                        t.setOwnedBy(p.getPlayer_id()); //yh
-                        p.addOwns(t);
-                        gameText.setText("cash: " + p.getPl_cash());
-                        gameText.appendText("\ntile is owned by: " + t.getOwnedBy());
-                        //reset values
-                        b.setIsDouble(false);
-                        b.setRl_double(0);
-                        b.incPlayer();
-                        yesB.setDisable(true);
-                        noB.setDisable(true);
-                        b.incPlayer();
-                        rollB.setDisable(false);
-                        mortB.setDisable(false);
-                        gameText.setText(b.getPlayer(b.getPlayerTurn()) + "'s turn");
-                    }else{
-                        gameText.setText("You have insufficient funds");
-                        b.mortgage();
-                    }
-                }else{
-                    System.out.println("place bid: ");
-                    lockB.setDisable(false);
-                    yesB.setDisable(true);
-                    noB.setDisable(true);
-                }
+            mortB.setOnAction(e -> {
+//                if (b.getGameEnd()) {
+//                    gameText.setText("GAME FINISHED");
+//                } else if (mortgOption == false && p.getOwns().size() < 1 && !b.getPlayer(b.getPlayerTurn()).isBankrupt()) {
+//                    gameText.setText("you don't own any tiles!");
+//                }else if(mortgOption == true && p.getOwns().size() >= 1 && !b.getPlayer(b.getPlayerTurn()).isBankrupt()){
+//                    b.mortgage();
+//                    mortB.setDisable(true);
+//                }
+                System.out.println("Morg");
             });
 
-            noB.setOnAction(e ->{
-                if(isBid == false){
-                    isBid = true;
-                    currBidNo = 1;
-                    b.highest_bid = new Pair<>(0,0);
-                    gameText.setText(b.getPlayer(currBidNo) + "want to bid?");
-
-                }else{
-                    isBid = true;
-                    yesB.setDisable(false);
-                    if(currBidNo <= b.pSize() ){
-                            gameText.setText("All bids have been placed");
-                            isBid = false;
-                            b.auctionBuy(b.highest_bid.getKey());
-                            b.incPlayer();
-                            yesB.setDisable(true);
-                            noB.setDisable(true);
-                            rollB.setDisable(false);
-                            mortB.setDisable(false);
-                            gameText.setText(b.getPlayer(b.getPlayerTurn()) + "'s turn");
-                    }
-                    currBidNo++;
-                    gameText.setText(b.getPlayer(currBidNo) + " want to bid?");
-                }
-
-            });
 
             lockB.setOnAction(e ->{
                 if(!nums.getText().isEmpty()) {
-                    if(isBid == false){
+                    if(isAuction == false){
                         this.bid =Integer.parseInt(nums.getText());
                         ArrayList<Tile> tilesOfPlayer = p.getOwns();
                         boolean removedTile = false;
@@ -296,6 +253,7 @@ public class HelloController {
                         gameText.setText("Please enter a number");
                 }
             });
+
 
 
 //            while(!b.getGameEnd()) {

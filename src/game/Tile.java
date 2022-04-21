@@ -50,6 +50,9 @@ public class Tile {
     public boolean getCanBeBought(){
         return tile_can_be_bought;
     }
+    public void setCanBeBought(boolean c){
+        this.tile_can_be_bought = c;
+    }
 
     public Integer getOwnedBy(){
         return owned_by;
@@ -62,6 +65,11 @@ public class Tile {
     public void setOwnedBy(Integer i){
         owned_by = i;
     }
+
+    public String getGroup(){
+        return this.tile_grp;
+    }
+
     public static ArrayList<Tile> getXLSXData(){
         ArrayList<Tile> tiles= new ArrayList<Tile>();
         String path = "data/PropertyTycoonBoardData.csv";
