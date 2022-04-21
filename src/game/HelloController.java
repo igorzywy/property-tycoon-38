@@ -80,6 +80,8 @@ public class HelloController {
     @FXML public Button buyBNo;
     //End Mortgage Button
     @FXML public Button endMorgB;
+    //End Turn Button
+    @FXML public Button nextTurnB;
 
     ImageView pawn1;
     ImageView pawn2;
@@ -383,6 +385,15 @@ public class HelloController {
         gameText.setText(p.getPlayer_id() + " is just visiting!");
     }
 
+    @FXML
+    protected void endTurn(){
+        b.incPlayer();
+        p = b.getPlayer(b.getPlayerTurn());
+        rollB.setVisible(true);
+        buyBYes.setVisible(false);
+        buyBNo.setVisible(false);
+    }
+
 
 
     //New Game button is pressed. We create a new Board object and set things to default values
@@ -439,10 +450,37 @@ public class HelloController {
                 }
                 else{
                     gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");
+                    buyBYes.setVisible(true);
+                    buyBNo.setVisible(true);
                 }
 
             });
 
+            buyBYes.setOnAction(e ->{
+                if(p.getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()){
+                    p.setPl_cash(p.getPl_cash() - b.getTile(p.getPl_pos()).getPrice());
+                    p.addOwns(b.getTile(p.getPl_pos()));
+                    b.getTile(p.getPl_pos()).setOwnedBy(p.getPlayer_id());
+                    gameText.setText("Property has been bought");
+                    gameText.appendText(p.getPl_cash() + "");
+                    mortB.setVisible(true);
+                    buyBYes.setVisible(false);
+                    buyBNo.setVisible(false);
+                }else{
+                    gameText.setText("You don't have enough money");
+                    mortB.setVisible(true);
+                    buyBYes.setVisible(false);
+                    buyBNo.setVisible(false);
+                }
+            });
+
+            buyBNo.setOnAction(e ->{
+
+            });
+
+            nextTurnB.setOnAction(e -> {
+                endTurn();
+            });
 
             mortB.setOnAction(e -> {
 //                if (b.getGameEnd()) {
