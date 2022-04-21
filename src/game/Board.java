@@ -22,6 +22,7 @@ public class Board {
     private Deque<Card> cardsOK = null;
     //pot luck cards
     private Deque<Card> cardsPL = null;
+    private int freeParkingSpace = 0;
 
 
     //player,bid
@@ -48,6 +49,18 @@ public class Board {
         //adding opportunity knocks cards to board
         this.cardsOK = Card.getXLSXDataOpportunityKnocks();
 
+    }
+
+    public void addPublicSpace(int amount){
+        this.freeParkingSpace += amount;
+    }
+
+    public int getFreeParkingSpace(){
+        return this.freeParkingSpace;
+    }
+
+    public void setFreeParkingSpace(int amount){
+        this.freeParkingSpace = amount;
     }
 
     public void setPLAYER_COUNT(int player_Count){
@@ -256,7 +269,7 @@ public class Board {
 
     public void movePlayer(){
 
-        int roll = 5; //rollDice();
+        int roll = rollDice();
         if(this.rl_double == 3 ){
             this.isDouble = false;
             this.rl_double = 0;

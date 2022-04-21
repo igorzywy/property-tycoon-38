@@ -159,6 +159,8 @@ public class HelloController {
     protected void taxation(){
         if(p.getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()) {
             gameText.setText("You payed tax: " + b.getTile(p.getPl_pos()).getPrice());
+            p.setPl_cash(p.getPl_cash() - b.getTile(p.getPl_pos()).getPrice());
+            b.addPublicSpace(b.getTile(p.getPl_pos()).getPrice());
         }else if (p.getOwns().size() >= 1){
             //checks if all the properties the player owns are mortgaged
             boolean allMortgaged = true;
@@ -176,6 +178,36 @@ public class HelloController {
             lockB.setVisible(true);
         }else{
             bankrupt();
+        }
+    }
+
+    @FXML
+    protected void getFPS(){
+        gameText.setText("Player " + p.getPlayer_id() + " has receive the Free Parking Space money (" + b.getFreeParkingSpace() + ")");
+        p.addPl_cash(b.getFreeParkingSpace());
+        b.setFreeParkingSpace(0);
+    }
+
+    @FXML
+    protected void goJail(){
+
+    }
+
+    @FXML
+    protected boolean checkIfFPS(){
+        if(b.getTile(p.getPl_pos()).getGroup() == "free"){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @FXML
+    protected boolean checkifGoJail(){
+        if(b.getTile(p.getPl_pos()).getGroup() == "GoJail"){
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -240,6 +272,8 @@ public class HelloController {
                     taxation();
                 }else if(checkIfCard()){
 
+                }else if(checkIfFPS()){
+                    getFPS();
                 }
                 else{
                     gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");

@@ -12,6 +12,7 @@ public class Player {
     private int pl_cash = 150; // cash that the player starts with
     private boolean bankrupt = false; // manages if player is bankrupt
     private ArrayList<Tile> owns = new ArrayList<>();
+    private boolean inJail = false;
 
 
     public Player(){
@@ -31,6 +32,11 @@ public class Player {
         return this.pl_pos;
 
     }
+
+    public void setInJail(){
+        this.inJail = true;
+    }
+
     public int getPl_cash(){
         return this.pl_cash;
     }
