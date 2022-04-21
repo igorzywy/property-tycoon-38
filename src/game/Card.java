@@ -31,6 +31,18 @@ public class Card {
 
     }
 
+    public CardType getType(){
+        return this.type;
+    }
+
+    public int getAmount(){
+        return this.amount;
+    }
+
+    public int getHotelPrice(){
+        return this.perHotel;
+    }
+
     public static Deque<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
         Deque<Card> dCard = new ArrayDeque<>();

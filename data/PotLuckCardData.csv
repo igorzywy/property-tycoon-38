@@ -12,7 +12,7 @@
 """Pay a £10 fine or take opportunity knocks""",If fine paid player puts £10 on free parking,ppb,10,0
 """Pay insurance fee of £50""",Player puts £50 on free parking,ppf,50,0
 """Savings bond matures collect £100",Bank pays £100 to the player,bpp,100,0
-"""Go to jail. Do not pass GO do not collect £200""",As the card says,pm,0,0
+"""Go to jail. Do not pass GO do not collect £200""",As the card says,pm,11,0
 """Received interest on shares of £25""",Bank pays player £25,bpp,25,0
 """It's your birthday Collect £10 from each player""",Player receives £10 from each player,ppp,10,0
 """Get out of jail free""",Retained by the player until needed. No resale or trade value,jfc,0,0

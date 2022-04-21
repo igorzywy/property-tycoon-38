@@ -200,7 +200,7 @@ public class HelloController {
 
     @FXML
     protected boolean checkIfFPS(){
-        if(b.getTile(p.getPl_pos()).getGroup() == "free"){
+        if(b.getTile(p.getPl_pos()).getGroup() == "Free"){
             return true;
         }else{
             return false;
@@ -215,10 +215,135 @@ public class HelloController {
             return false;
         }
     }
+    //checking if the tile is a card tile pot luck
+    @FXML
+    protected boolean checkIfCardPL(){
+        if (b.getTile(p.getPl_pos()).getGroup() == "CardPL"){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     @FXML
-    protected boolean checkIfCard(){
-        return false;
+    protected void cardPL(){
+        Card c = b.getCardsPL().pollFirst();
+        if (c.getType() == CardType.bpp){
+            gameText.setText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
+            p.setPl_cash(p.getPl_cash() + c.getAmount());
+        }else if (c.getType() == CardType.ppp){
+            gameText.setText(p.getPlayer_id() + " receives " + c.getAmount() +
+                    " from each player since it's their birthday!");
+            for (int i = 0; i < b.getPLAYER_COUNT(); i++) {
+                b.getPlayer(i).setPl_cash(b.getPlayer(i).getPl_cash() - c.getAmount());
+            }
+            p.setPl_cash(p.getPl_cash() + (b.getPLAYER_COUNT()*c.getAmount()) + c.getAmount());
+            // get all players and sub 10 from all add players.size()*10 + 10 to the current player
+        }else if (c.getType() == CardType.pm){
+            gameText.setText(p.getPlayer_id() + " moves to tile " + c.getAmount());
+            p.setPl_pos(c.getAmount());
+        }else if (c.getType() == CardType.ppb){
+            gameText.setText(p.getPlayer_id() + " pays the bank " + c.getAmount());
+            p.setPl_cash(p.getPl_cash() - c.getAmount());
+        }else if (c.getType() == CardType.ppf){
+            gameText.setText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
+            p.setPl_cash(p.getPl_cash() - c.getAmount());
+            b.addPublicSpace(c.getAmount());
+        }else if (c.getType() == CardType.pmx){
+            if (c.getAmount() < 0){
+                gameText.setText(p.getPlayer_id() + " moves back " + c.getAmount());
+                for (int i = 0; i < c.getAmount(); i++) {
+                    p.decresePos();
+                }
+            }else if(c.getAmount() > 0){
+                gameText.setText(p.getPlayer_id() + " moves forwards " + c.getAmount());
+                for (int i = 0; i < c.getAmount(); i++) {
+                    p.incrPos();
+                }
+            }
+        }else if (c.getType() == CardType.ppr){
+            gameText.setText(p.getPlayer_id() + " pays for repairs " +
+                    c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
+            p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * c.getAmount()) +
+                    p.getHotelsOwned() * c.getHotelPrice());
+        }else if (c.getType() == CardType.pmf){
+            gameText.setText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
+            if (c.getAmount() - p.getPl_pos() > b.bSize()-1){
+                p.setPl_cash(p.getPl_cash() + 200);
+                p.setPl_pos(c.getAmount());
+            }else{
+                p.setPl_pos(c.getAmount());
+            }
+        }else if(c.getType() == CardType.jfc){
+            p.incrNoJailFreeCard();
+        }
+        b.addCardsPL(c);
+    }
+    //opportunity knocks
+    @FXML
+    protected boolean checkIfCardOK(){
+        if (b.getTile(p.getPl_pos()).getGroup() == "CardOK"){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    @FXML protected void cardOK(){
+        Card c = b.getCardsOK().pollFirst();
+        if (c.getType() == CardType.bpp){
+            gameText.setText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
+            p.setPl_cash(p.getPl_cash() + c.getAmount());
+        }else if (c.getType() == CardType.ppp){
+            gameText.setText(p.getPlayer_id() + " receives " + c.getAmount() +
+                    " from each player since it's their birthday!");
+            for (int i = 0; i < b.getPLAYER_COUNT(); i++) {
+                b.getPlayer(i).setPl_cash(b.getPlayer(i).getPl_cash() - c.getAmount());
+            }
+            p.setPl_cash(p.getPl_cash() + (b.getPLAYER_COUNT()*c.getAmount()) + c.getAmount());
+            // get all players and sub 10 from all add players.size()*10 + 10 to the current player
+        }else if (c.getType() == CardType.pm){
+            gameText.setText(p.getPlayer_id() + " moves to tile " + c.getAmount());
+            p.setPl_pos(c.getAmount());
+        }else if (c.getType() == CardType.ppb){
+            gameText.setText(p.getPlayer_id() + " pays the bank " + c.getAmount());
+            p.setPl_cash(p.getPl_cash() - c.getAmount());
+        }else if (c.getType() == CardType.ppf){
+            gameText.setText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
+            p.setPl_cash(p.getPl_cash() - c.getAmount());
+            b.addPublicSpace(c.getAmount());
+        }else if (c.getType() == CardType.pmx){
+            if (c.getAmount() < 0){
+                gameText.setText(p.getPlayer_id() + " moves back " + c.getAmount());
+                for (int i = 0; i < c.getAmount(); i++) {
+                    p.decresePos();
+                }
+            }else if(c.getAmount() > 0){
+                gameText.setText(p.getPlayer_id() + " moves forwards " + c.getAmount());
+                for (int i = 0; i < c.getAmount(); i++) {
+                    p.incrPos();
+                }
+            }
+        }else if (c.getType() == CardType.ppr){
+            gameText.setText(p.getPlayer_id() + " pays for repairs " +
+                    c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
+            p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * c.getAmount()) +
+                    p.getHotelsOwned() * c.getHotelPrice());
+        }else if (c.getType() == CardType.pmf){
+            gameText.setText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
+            if (c.getAmount() - p.getPl_pos() > b.bSize()-1){
+                p.setPl_cash(p.getPl_cash() + 200);
+                p.setPl_pos(c.getAmount());
+            }else{
+                p.setPl_pos(c.getAmount());
+            }
+        }else if(c.getType() == CardType.jfc){
+            p.incrNoJailFreeCard();
+        }
+        b.addCardsOK(c);
+    }
+
+    @FXML protected void getCard(){
+
     }
 
 
@@ -234,6 +359,28 @@ public class HelloController {
         System.out.println(p.getPlayer_id() + " is bankrupt");
         //call for all the players properties to be auctioned
         //call to increment player
+    }
+    // checking if the player is in jail and if they are just visiting
+    @FXML
+    protected boolean checkIfJail(){
+        if ((b.getTile(p.getPl_pos()).getGroup() == "Jail")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @FXML protected boolean checkIfJustVisit(){
+        if (p.getInJail()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    @FXML
+    protected void justVisiting(){
+        gameText.setText(p.getPlayer_id() + " is just visiting!");
     }
 
 
@@ -272,15 +419,23 @@ public class HelloController {
                 b.movePlayer();
                 gameText.setText(p.toString());
                 rollB.setVisible(false);
-                //check if tax,card,go,freepark,jail,gojail
+                //check if tax,cardPl,cardOK,go,freepark,jail,gojail
                 if (checkIfTax()){
                     taxation();
-                }else if(checkIfCard()){
+                }else if(checkIfCardPL()){
+                    cardPL();
+                }else if (checkIfCardOK()){
+                    cardOK();
 
                 }else if(checkIfFPS()){
                     getFPS();
                 }else if(checkifGoJail()){
                     goJail();
+                }else if (checkIfJail()){
+                    if (checkIfJustVisit()){
+                        justVisiting();
+                    }
+
                 }
                 else{
                     gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");

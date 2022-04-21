@@ -13,10 +13,28 @@ public class Player {
     private boolean bankrupt = false; // manages if player is bankrupt
     private ArrayList<Tile> owns = new ArrayList<>();
     private boolean inJail = false;
+    private int housesOwned = 0;
+    private int hotelsOwned = 0;
+    private int noJailFreeCard = 0;
 
+    public int getNoJailFreeCard() {
+        return noJailFreeCard;
+    }
+
+    public void incrNoJailFreeCard() {
+        this.noJailFreeCard ++;
+    }
 
     public Player(){
         this.player_id = this.pl_num++;
+    }
+
+    public int getHousesOwned(){
+        return this.housesOwned;
+    }
+
+    public int getHotelsOwned() {
+        return hotelsOwned;
     }
 
     public int getPlayer_id() {
@@ -31,6 +49,10 @@ public class Player {
 
         return this.pl_pos;
 
+    }
+
+    public boolean getInJail(){
+        return this.inJail;
     }
 
     public void setInJail(){
@@ -78,6 +100,15 @@ public class Player {
             this.pl_pos = 0;
         } else {
             this.pl_pos ++;
+        }
+
+    }
+
+    public void decresePos(){
+        if (this.pl_pos == 0){
+            this.pl_pos = 39;
+        } else {
+            this.pl_pos --;
         }
 
     }

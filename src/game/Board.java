@@ -51,6 +51,14 @@ public class Board {
 
     }
 
+    public void addCardsOK(Card c){
+        this.cardsOK.addLast(c);
+    }
+
+    public void addCardsPL(Card c){
+        this.cardsPL.addLast(c);
+    }
+
     public void addPublicSpace(int amount){
         this.freeParkingSpace += amount;
     }
@@ -314,6 +322,12 @@ public class Board {
 
     public Player getPlayer(int i){
         return this.players.get(i);
+    }
+
+    public ArrayList<Player> getPlayers(){return players;}
+
+    public int getPLAYER_COUNT(){
+        return PLAYER_COUNT;
     }
 
 

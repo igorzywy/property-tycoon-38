@@ -1,12 +1,12 @@
 ﻿Position,Space/property,Group,Action,Can be bought?,Cost,Rent (unimproved) ,1 house,2 houses,3 houses,4 houses,1 hotel
 1,Go,Go,Collect £200,FALSE,-200,0,0,0,0,0,0
 2,The Old Creek,Brown,None,TRUE,60,2,10,30,90,160,250
-3,Pot Luck,Card,Take card,FALSE,0,0,0,0,0,0,0
+3,Pot Luck,CardPL,Take card,FALSE,0,0,0,0,0,0,0
 4,Gangsters Paradise,Brown,None,TRUE,60,4,20,60,180,320,450
 5,Income Tax,Tax,Pay £200,FALSE,200,0,0,0,0,0,0
 6,Brighton Station,Station,None,TRUE,200,0,0,0,0,0,0
 7,The Angels Delight,Blue,None,TRUE,100,6,30,90,270,400,550
-8,Opportunity Knocks,Card,Take card,FALSE,0,0,0,0,0,0,0
+8,Opportunity Knocks,CardOK,Take card,FALSE,0,0,0,0,0,0,0
 9,Potter Avenue,Blue,None,TRUE,100,6,30,90,270,400,550
 10,Granger Drive,Blue,None,TRUE,120,8,40,100,300,450,600
 11,Jail/Just visiting,Jail,None,FALSE,0,0,0,0,0,0,0
@@ -16,12 +16,12 @@
 15,Rey Lane,Purple,None,TRUE,160,12,60,180,500,700,900
 16,Hove Station,Station,None,TRUE,200,0,0,0,0,0,0
 17,Bishop Drive,Orange,None,TRUE,180,14,70,200,550,750,950
-18,Pot Luck,Card,Take card,FALSE,0,0,0,0,0,0,0
+18,Pot Luck,CardPL,Take card,FALSE,0,0,0,0,0,0,0
 19,Dunham Street,Orange,None,TRUE,180,14,70,200,550,750,950
 20,Broyles Lane,Orange,None,TRUE,200,16,80,220,600,800,1000
 21,Free Parking,Free,Collect fines,FALSE,0,0,0,0,0,0,0
 22,Yue Fei Square,Red,None,TRUE,220,18,90,250,700,875,1050
-23,Opportunity Knocks,Card,Take card,FALSE,0,0,0,0,0,0,0
+23,Opportunity Knocks,CardOK,Take card,FALSE,0,0,0,0,0,0,0
 24,Mulan Rouge,Red,None,TRUE,220,18,90,250,700,875,1050
 25,Han Xin Gardens,Red,None,TRUE,240,20,100,300,750,925,1100
 26,Falmer Station,Station,None,TRUE,200,0,0,0,0,0,0
@@ -32,10 +32,10 @@
 31,Go to Jail,GoJail,Go to jail,FALSE,0,0,0,0,0,0,0
 32,Sirat Mews,Green,None,TRUE,300,26,130,390,900,1100,1275
 33,Ghengis Crescent,Green,None,TRUE,300,26,130,390,900,1100,1275
-34,Pot Luck,Card,Take card,FALSE,0,0,0,0,0,0,0
+34,Pot Luck,CardPL,Take card,FALSE,0,0,0,0,0,0,0
 35,Ibis Close,Green,None,TRUE,320,28,150,450,1000,1200,1400
 36,Portslade Station,Station,None,TRUE,200,0,0,0,0,0,0
-37,Opportunity Knocks,Card,Take card,FALSE,0,0,0,0,0,0,0
+37,Opportunity Knocks,CardOK,Take card,FALSE,0,0,0,0,0,0,0
 38,James Webb Way,Deep blue,None,TRUE,350,35,175,500,1100,1300,1500
 39,Super Tax,Tax,Pay £100,FALSE,100,0,0,0,0,0,0
 40,Turing Heights,Deep blue,None,TRUE,400,50,200,600,1400,1700,2000
