@@ -93,27 +93,28 @@ public class Board {
 //            incPlayer();
 //    }
     //lets players mortgage a property
-    public void mortgage(){
+    public boolean mortgage(int tileId){
         Player p = getPlayer(player_turn);
-        System.out.println("player " + p.getPlayer_id() + "owns: " + p.getOwns());
-        System.out.println("input tile Id to sell");
-        Scanner input = new Scanner(System.in);
-        int s = input.nextInt();
+//        System.out.println("player " + p.getPlayer_id() + "owns: " + p.getOwns());
+//        System.out.println("input tile Id to sell");
+//        Scanner input = new Scanner(System.in);
+//        int s = input.nextInt();
         ArrayList<Tile> tilesOfPlayer = p.getOwns();
         boolean removedTile = false;
-        while(!removedTile){
+//        while(!removedTile){
             for (int i = 0; i < tilesOfPlayer.size(); i++) {
-                if (tilesOfPlayer.get(i).getTile_id() == s){
+                if (tilesOfPlayer.get(i).getTile_id() == tileId){
                     tilesOfPlayer.get(i).flipMortgaged();
-                    System.out.println("player: " + p.getPlayer_id() + " gains: " + tilesOfPlayer.get(i).getPrice()/2);
+//                    System.out.println("player: " + p.getPlayer_id() + " gains: " + tilesOfPlayer.get(i).getPrice()/2);
                     p.addPl_cash(tilesOfPlayer.get(i).getPrice()/2);
                     removedTile = true;
+                    return removedTile;
                 }else{
-                    System.out.println("you don't own that tile");
-                    s = input.nextInt();
+//                    System.out.println("you don't own that tile");
+                    return false;
                 }
             }
-        }
+        //}
 
 
         /* can be used to trade properties
@@ -132,6 +133,7 @@ public class Board {
         }
          */
         System.out.println(p.getOwns());
+        return false;
     }
 // need to add so that it also ask with the player wants to trade that it gets the other players id
     public String getPlayersTiles(){
