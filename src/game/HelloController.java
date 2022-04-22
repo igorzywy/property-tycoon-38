@@ -9,9 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.shape.*;
 
-import java.lang.reflect.Field;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class HelloController {
 
     @FXML private ImageView dice1;
@@ -402,16 +399,20 @@ public class HelloController {
              if (playerOwnSet(b.getTile(tileI).getGroup())){
                  if (!b.checkForTwoHouseDiff(b.getTile(tileI).getGroup())){
                      b.getTile(tileI).incrHouses();
-                 }else {
+                     p.incrHousesOwned();
+                     gameText.setText(p.getPlayer_id() + " has bought a house on " + b.getTile(tileI).getTileName());
+                 }else{
                      gameText.setText("you have more than 1 house difference between your properties");
                  }
-             }else {
+             }else{
                  gameText.setText("you don't own the set");
              }
         }else{
             gameText.setText("you don't own that tile");
         }
     }
+
+    //buying a hotel
 
     //checking if the player owns the set
     @FXML

@@ -37,6 +37,14 @@ public class Player {
         return hotelsOwned;
     }
 
+    public void incrHousesOwned(){
+        this.housesOwned++;
+    }
+
+    public void incrHotelsOwned(){
+        this.hotelsOwned++;
+    }
+
     public int getPlayer_id() {
         return this.player_id;
     }
