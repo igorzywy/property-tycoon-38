@@ -61,6 +61,7 @@ public class HelloController {
     Shape[] pawnsStorage = new Shape[5];
     Shape[] pawns;
     boolean mortgOption = false;
+    boolean buyingHouseOption = false;
     int bid = 0;
     boolean isAuction = false;
     int currBidNo = 0;
@@ -81,6 +82,8 @@ public class HelloController {
     @FXML public Button endMorgB;
     //Button to end turn
     @FXML public Button nextTurnB;
+    //Button to upgrade to house/hotel
+    @FXML public Button upgradeB;
 
     Player p;
 
@@ -132,6 +135,7 @@ public class HelloController {
         nums.setVisible(false);
         endMorgB.setVisible(false);
         nextTurnB.setVisible(false);
+        upgradeB.setVisible(false);
 
     }
 
@@ -228,7 +232,7 @@ public class HelloController {
     //checking if the tile is a card tile pot luck
     @FXML
     protected boolean checkIfCardPL(){
-        if (b.getTile(p.getPl_pos()).getGroup() == "CardPL"){
+        if (b.getTile(p.getPl_pos()).getGroup().equals("CardPL")){
             return true;
         }else{
             return false;
@@ -292,7 +296,7 @@ public class HelloController {
     //opportunity knocks
     @FXML
     protected boolean checkIfCardOK(){
-        if (b.getTile(p.getPl_pos()).getGroup() == "CardOK"){
+        if (b.getTile(p.getPl_pos()).getGroup().equals("CardOK")){
             return true;
         }else{
             return false;
@@ -360,7 +364,9 @@ public class HelloController {
     @FXML
     protected void mortg(){
         mortgOption = true;
-        rollB.setDisable(false);
+        lockB.setVisible(true);
+        nums.setVisible(true);
+        gameText.setText(p.getOwns() + "");
     }
 
     @FXML
@@ -373,7 +379,7 @@ public class HelloController {
     // checking if the player is in jail and if they are just visiting
     @FXML
     protected boolean checkIfJail(){
-        if ((b.getTile(p.getPl_pos()).getGroup() == "Jail")){
+        if ((b.getTile(p.getPl_pos()).getGroup().equals("Jail"))){
             return true;
         }else{
             return false;
@@ -407,6 +413,7 @@ public class HelloController {
                      b.getTile(tileI).incrHouses();
                      p.incrHousesOwned();
                      gameText.setText(p.getPlayer_id() + " has bought a house on " + b.getTile(tileI).getTileName());
+                     tiles[tileI].setStyle("-fx-background-color: rgba(100, 100, 100, 0.4);");
                  }else{
                      gameText.setText("you have more than 1 house difference between your properties");
                  }
@@ -425,6 +432,7 @@ public class HelloController {
     protected boolean playerOwnSet(String tileGroup){
         int counter = 0;
         for (int i = 0; i < b.bSize(); i++) {
+
             if (b.getTile(i).getGroup().equals(tileGroup) && (b.getTile(i).getOwnedBy() == p.getPlayer_id())){
                 counter++;
             }
@@ -443,16 +451,6 @@ public class HelloController {
         buyBYes.setVisible(false);
         buyBNo.setVisible(false);
     }
-
-    @FXML
-    protected void addBuilding(int option, int tileNo){
-        if(option == 1){
-            tiles[tileNo].setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
-        }else if(option == 2){
-            tiles[tileNo].setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
-        }
-    }
-
 
 
     //New Game button is pressed. We create a new Board object and set things to default values
@@ -492,19 +490,34 @@ public class HelloController {
                 //check if tax,cardPl,cardOK,go,freepark,jail,gojail
                 if (checkIfTax()){
                     taxation();
+                    nextTurnB.setVisible(true);
+                    mortB.setVisible(true);
+                    upgradeB.setVisible(true);
                 }else if(checkIfCardPL()){
                     cardPL();
+                    nextTurnB.setVisible(true);
+                    mortB.setVisible(true);
+                    upgradeB.setVisible(true);
                 }else if (checkIfCardOK()){
                     cardOK();
-
+                    nextTurnB.setVisible(true);
+                    mortB.setVisible(true);
+                    upgradeB.setVisible(true);
                 }else if(checkIfFPS()){
                     getFPS();
+                    nextTurnB.setVisible(true);
+                    mortB.setVisible(true);
+                    upgradeB.setVisible(true);
                 }else if(checkifGoJail()){
                     goJail();
+                    upgradeB.setVisible(true);
                 }else if (checkIfJail()){
                     if (checkIfJustVisit()){
                         justVisiting();
                     }
+                    nextTurnB.setVisible(true);
+                    mortB.setVisible(true);
+                    upgradeB.setVisible(true);
 
                 }
                 else{
@@ -527,11 +540,13 @@ public class HelloController {
                     buyBNo.setVisible(false);
                     mortB.setVisible(true);
                     nextTurnB.setVisible(true);
+                    upgradeB.setVisible(true);
                 }else{
                     gameText.setText("You don't have enough money.");
                     buyBYes.setVisible(false);
                     buyBNo.setVisible(false);
                     mortB.setVisible(true);
+                    upgradeB.setVisible(true);
                 }
             });
 
@@ -543,17 +558,17 @@ public class HelloController {
                 endTurn();
             });
 
+            upgradeB.setOnAction(e ->{
+                nums.setVisible(true);
+                lockB.setVisible(true);
+                buyingHouseOption = true;
+                gameText.setText(p.getOwns() + "");
+            });
+
 
             mortB.setOnAction(e -> {
-//                if (b.getGameEnd()) {
-//                    gameText.setText("GAME FINISHED");
-//                } else if (mortgOption == false && p.getOwns().size() < 1 && !b.getPlayer(b.getPlayerTurn()).isBankrupt()) {
-//                    gameText.setText("you don't own any tiles!");
-//                }else if(mortgOption == true && p.getOwns().size() >= 1 && !b.getPlayer(b.getPlayerTurn()).isBankrupt()){
-//                    b.mortgage();
-//                    mortB.setDisable(true);
-//                }
-                System.out.println("Morg");
+                mortB.setVisible(false);
+                mortg();
             });
 
             endMorgB.setOnAction(e ->{
@@ -567,14 +582,14 @@ public class HelloController {
                     nums.setVisible(true);
                     endMorgB.setVisible(true);
                     int tileToMorg = Integer.parseInt(nums.getText());
-
-                    System.out.println("roler");
                     removedTile = b.mortgage(tileToMorg);
                     if (removedTile == true){
                         mortgOption = false;
                         nums.setVisible(false);
                         lockB.setVisible(false);
                         endMorgB.setVisible(false);
+                        mortB.setVisible(true);
+                        gameText.setText(b.getTile(tileToMorg).getTileName() + " has been bought!");
 
                     }else{
                         gameText.setText("You don't own this property");
@@ -582,55 +597,19 @@ public class HelloController {
                         nums.setVisible(true);
                         lockB.setVisible(true);
                         endMorgB.setVisible(true);
-
+                        mortB.setVisible(true);
                     }
 
+                }else if(buyingHouseOption = true){
+                    buyingHouse(Integer.parseInt(nums.getText()));
+                    nums.setVisible(false);
+                    lockB.setVisible(false);
+                    mortB.setVisible(true);
+                    upgradeB.setVisible(true);
                 }
 
 
 
-
-//                if(!nums.getText().isEmpty()) {
-//                    if(isAuction == false){
-//
-//                         this.bid =Integer.parseInt(nums.getText());
-//                        ArrayList<Tile> tilesOfPlayer = p.getOwns();
-//                        boolean removedTile = false;
-//                        for (int i = 0; i < tilesOfPlayer.size(); i++) {
-//                            if (tilesOfPlayer.get(i).getTile_id() == bid.get()) {
-//                                tilesOfPlayer.get(i).flipMortgaged();
-//                                System.out.println("player: " + p.getPlayer_id() + " gains: " + tilesOfPlayer.get(i).getPrice() / 2);
-//                                p.addPl_cash(tilesOfPlayer.get(i).getPrice() / 2);
-//                                removedTile = true;
-//                            }
-//                            }if(removedTile == true){
-//                                lockB.setDisable(true);
-//                            }else{
-//                                gameText.setText("You don't own that tile");
-//                            }
-//                    }else {
-//                        if(currBidNo <= b.pSize()){
-//                            gameText.setText("All bids have been placed");
-//                            b.auctionBuy(b.highest_bid.getKey());
-//                            b.incPlayer();
-//                            yesB.setDisable(true);
-//                            noB.setDisable(true);
-//                            rollB.setDisable(false);
-//                            mortB.setDisable(false);
-//                            gameText.setText(b.getPlayer(b.getPlayerTurn()) + "'s turn");
-//                        }
-//                        gameText.setText("Got it");
-//                        b.bid(Integer.parseInt(nums.getText()), currBidNo);
-//                        currBidNo++;
-//                        lockB.setDisable(true);
-//                        yesB.setDisable(false);
-//                        noB.setDisable(false);
-//                        gameText.appendText(b.getPlayer(currBidNo) + "want to bid");
-//                    }
-//
-//                }else{
-//                        gameText.setText("Please enter a number");
-//                }
             });
 
 

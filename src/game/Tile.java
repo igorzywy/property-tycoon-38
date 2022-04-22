@@ -16,7 +16,7 @@ public class Tile {
     private String tile_action = "";
     private boolean tile_can_be_bought;
     private Integer price, rent_unimproved, rent_1h, rent_2h, rent_3h, rent_4h, rent_hotel;
-    private Integer owned_by = null;
+    private Integer owned_by = 0;
     private boolean mortgaged = false;
     private int houses = 0;
     private int hotels = 0;
