@@ -60,7 +60,7 @@ public class Board {
         }
         return counter;
     }
-
+    //checks if there is a difference of more than 1 house on each property
     public boolean checkForTwoHouseDiff(String grp){
         ArrayList<Tile> tilesDiff = new ArrayList<Tile>();
         for (int i = 0; i < bSize(); i++) {
@@ -77,6 +77,25 @@ public class Board {
                 }
             }
         }
+        return false;
+    }
+
+    //checks if there are 4 houses on each property in a colour set
+    public boolean checkForFourHouses(String grp){
+        ArrayList<Tile> tilesOfSet = new ArrayList<Tile>();
+        for (int i = 0; i < bSize(); i++) {
+            if (board.get(i).getGroup().equals(grp)){
+                tilesOfSet.add(board.get(i));
+            }
+        }
+        for (int i = 0; i < tilesOfSet.size(); i++) {
+            if (tilesOfSet.get(i).getHouses() == 4){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
         return false;
     }
 
