@@ -228,7 +228,7 @@ public class HelloController {
     //checking if the tile is a card tile pot luck
     @FXML
     protected boolean checkIfCardPL(){
-        if (b.getTile(p.getPl_pos()).getGroup() == "CardPL"){
+        if (b.getTile(p.getPl_pos()).getGroup().equals("CardPL")){
             return true;
         }else{
             return false;
@@ -292,7 +292,7 @@ public class HelloController {
     //opportunity knocks
     @FXML
     protected boolean checkIfCardOK(){
-        if (b.getTile(p.getPl_pos()).getGroup() == "CardOK"){
+        if (b.getTile(p.getPl_pos()).getGroup().equals("CardOK")){
             return true;
         }else{
             return false;
@@ -399,26 +399,45 @@ public class HelloController {
     //they pick a house that they own
     //house can only be bought if they own the set
     //or if there isn't more than 1 difference in amount of houses between all the properties
+    //can only get a hotel if they have 4 houses on each property in a colour group
     @FXML
     protected void buyingHouse(int tileI){
-        if (b.getTile(tileI).getOwnedBy() == p.getPlayer_id()){
-             if (playerOwnSet(b.getTile(tileI).getGroup())){
-                 if (!b.checkForTwoHouseDiff(b.getTile(tileI).getGroup())){
-                     b.getTile(tileI).incrHouses();
-                     p.incrHousesOwned();
-                     gameText.setText(p.getPlayer_id() + " has bought a house on " + b.getTile(tileI).getTileName());
-                 }else{
-                     gameText.setText("you have more than 1 house difference between your properties");
-                 }
-             }else{
-                 gameText.setText("you don't own the set");
-             }
-        }else{
-            gameText.setText("you don't own that tile");
+        if (p.getPl_cash() >= b.getTile(tileI).getHousePrice()){
+            if (b.getTile(tileI).getOwnedBy() == p.getPlayer_id()){
+                if (playerOwnSet(b.getTile(tileI).getGroup())){
+                    if (!b.checkForTwoHouseDiff(b.getTile(tileI).getGroup())){
+                        if (!b.checkForFourHouses(b.getTile(tileI).getGroup())) {
+                            p.setPl_cash(p.getPl_cash() - b.getTile(tileI).getHousePrice());
+                            b.getTile(tileI).incrHouses();
+                            p.incrHousesOwned();
+                            gameText.setText(p.getPlayer_id() + " has bought a house on " +
+                                    b.getTile(tileI).getTileName());
+                        }else if (b.getTile(tileI).getHotels() >= 1){
+                            gameText.setText(b.getTile(tileI).getTileName() + " already has a hotel!");
+                        }else if (p.getPl_cash() < (b.getTile(tileI).getHousePrice()*5)){
+                            gameText.setText("you cannot afford a hotel! " + (b.getTile(tileI).getHousePrice()*5) +
+                                    " is needed");
+                        }else{
+                            p.setPl_cash(p.getPl_cash() - (b.getTile(tileI).getHousePrice()*5));
+                            b.getTile(tileI).incrHotels();
+                            gameText.setText(p.getPlayer_id() + " has bought a hotel on " +
+                                    b.getTile(tileI).getTileName());
+                        }
+                    }else{
+                        gameText.setText("you have more than 1 house difference between your properties");
+                    }
+                }else{
+                    gameText.setText("you don't own the set");
+                }
+            }else{
+                gameText.setText("you don't own that tile");
+            }
+        }else {
+            gameText.setText("you don't have enough money to buy a house! " + b.getTile(tileI).getHousePrice() +
+                    " is needed");
         }
-    }
 
-    //buying a hotel
+    }
 
     //checking if the player owns the set
     @FXML

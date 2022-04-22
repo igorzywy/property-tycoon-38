@@ -16,13 +16,16 @@ public class Tile {
     private String tile_action = "";
     private boolean tile_can_be_bought;
     private Integer price, rent_unimproved, rent_1h, rent_2h, rent_3h, rent_4h, rent_hotel;
-    private Integer owned_by = null;
+    private Integer owned_by = 0;
     private boolean mortgaged = false;
     private int houses = 0;
     private int hotels = 0;
+    private int housePrice = 0;
 
     //constructor
-    public Tile(String name, String group, String action, boolean can_be_bought, Integer price, Integer rent_unimproved, Integer rent_1h, Integer rent_2h, Integer rent_3h, Integer rent_4h, Integer rent_hotel){
+    public Tile(String name, String group, String action, boolean can_be_bought, Integer price,
+                Integer rent_unimproved, Integer rent_1h, Integer rent_2h, Integer rent_3h, Integer rent_4h,
+                Integer rent_hotel, Integer housePrice){
         tile_id = tile_id_incrementer++;
         tile_name = name;
         tileGrp = group;
@@ -35,6 +38,7 @@ public class Tile {
         this.rent_3h = rent_3h;
         this.rent_4h = rent_4h;
         this.rent_hotel = rent_hotel;
+        this.housePrice = housePrice;
 
     }
 
@@ -90,6 +94,10 @@ public class Tile {
         return this.tileGrp;
     }
 
+    public int getHousePrice(){
+        return this.housePrice;
+    }
+
     public static ArrayList<Tile> getXLSXData(){
         ArrayList<Tile> tiles= new ArrayList<Tile>();
         String path = "data/PropertyTycoonBoardData.csv";
@@ -105,7 +113,7 @@ public class Tile {
                 tiles.add(new Tile(values[1],values[2],values[3],Boolean.parseBoolean(values[4]),
                         Integer.parseInt(values[5]),Integer.parseInt(values[6]),Integer.parseInt(values[7]),
                         Integer.parseInt(values[8]),Integer.parseInt(values[9]),Integer.parseInt(values[10]),
-                        Integer.parseInt(values[11])));
+                        Integer.parseInt(values[11]),Integer.parseInt(values[12])));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
