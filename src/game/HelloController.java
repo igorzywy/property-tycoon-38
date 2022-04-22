@@ -122,6 +122,12 @@ public class HelloController {
         //assign all pawns to storage array
         pawnsStorage[0]=pawn1;pawnsStorage[1]=pawn2;pawnsStorage[2]=pawn3;pawnsStorage[3]=pawn4;pawnsStorage[4]=pawn5;
 
+        //set opacity of all tiles
+        for(int i = 0; i < tiles.length; i++) {
+            tiles[i].setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
+        }
+
+
         mortB.setVisible(false);
         lockB.setVisible(false);
         buyBYes.setVisible(false);
@@ -437,6 +443,15 @@ public class HelloController {
         buyBNo.setVisible(false);
     }
 
+    @FXML
+    protected void addBuilding(int option, int tileNo){
+        if(option == 1){
+            tiles[tileNo].setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
+        }else if(option == 2){
+            tiles[tileNo].setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
+        }
+    }
+
 
 
     //New Game button is pressed. We create a new Board object and set things to default values
@@ -541,7 +556,8 @@ public class HelloController {
             });
 
             endMorgB.setOnAction(e ->{
-
+                mortgOption = false;
+                mortB.setVisible(false);
             });
 
             lockB.setOnAction(e ->{
