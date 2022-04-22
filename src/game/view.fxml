@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.HelloController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.HelloController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="800.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -61,9 +61,9 @@
                   <FlowPane fx:id="pane20" prefHeight="64.0" prefWidth="107.0" />
                   <FlowPane fx:id="pane19" prefHeight="64.0" prefWidth="107.0" />
                   <FlowPane fx:id="pane18" prefHeight="64.0" prefWidth="107.0" />
-                  <FlowPane fx:id="pane17" prefHeight="64.0" prefWidth="107.0" />
-                  <FlowPane fx:id="pane16" prefHeight="61.0" prefWidth="107.0" />
-                  <FlowPane fx:id="pane15" prefHeight="64.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane17" prefHeight="68.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane16" prefHeight="69.0" prefWidth="107.0" />
+                  <FlowPane fx:id="pane15" prefHeight="69.0" prefWidth="107.0" />
                   <FlowPane fx:id="pane14" prefHeight="71.0" prefWidth="107.0" />
                   <FlowPane fx:id="pane13" prefHeight="64.0" prefWidth="107.0" />
                   <FlowPane fx:id="pane12" prefHeight="66.0" prefWidth="107.0" />
