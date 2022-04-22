@@ -304,7 +304,7 @@ public class Board {
         getPlayer(p).setPl_pos(10);
     }
 
-    public void movePlayer(){
+    public int movePlayer(){
 
         int roll = rollDice();
         if(this.rl_double == 3 ){
@@ -313,16 +313,19 @@ public class Board {
             jail(player_turn);
             System.out.println("player is in jail");
             System.out.println("\n\n");
+            return 10;
         }
         else {
             for (int i = 1; i < roll; i++) {
                 getPlayer(player_turn).incrPos();
                 System.out.println(getPlayer(player_turn).getPl_pos());
             }
+            System.out.println("******" + getPlayer(player_turn).getPl_pos()+"******\n\n");
+            return getPlayer(player_turn).getPl_pos();
         }
 
 
-       System.out.println("******" + getPlayer(player_turn).getPl_pos()+"******\n\n");
+
 
 
     }

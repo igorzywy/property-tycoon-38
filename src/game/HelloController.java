@@ -82,12 +82,26 @@ public class HelloController {
     @FXML public Button buyBNo;
     //End Mortgage Button
     @FXML public Button endMorgB;
+    //Button to end turn
+    @FXML public Button nextTurnB;
 
     Player p;
 
     Circle pawn1 = new Circle(20);
-    Rectangle pawn2 = new Rectangle(20,20);
+    Rectangle pawn2 = new Rectangle(10,10);
     Ellipse pawn3 = new Ellipse(20,10);
+    Polygon pawn4 = new Polygon(
+            0.0, 0.0,
+            10.0, 20.0,
+            20.0, 10.0
+    );
+    Polygon pawn5 = new Polygon(
+            30.0, 20.0,
+            30.0, 50.0,
+            0,0
+    );
+
+
 
 
 
@@ -106,10 +120,7 @@ public class HelloController {
         tiles[35]=pane36;tiles[36]=pane37;tiles[37]=pane38;tiles[38]=pane39;tiles[39]=pane40;
 
         //assign all pawns to storage array
-        pawnsStorage[0]=pawn1;pawnsStorage[1]=pawn2;pawnsStorage[2]=pawn3;
-        //pawnsStorage[3]=pawn4;pawnsStorage[4]=pawn5;
-
-        tiles[0].getChildren().add(pawnsStorage[0]);
+        pawnsStorage[0]=pawn1;pawnsStorage[1]=pawn2;pawnsStorage[2]=pawn3;pawnsStorage[3]=pawn4;pawnsStorage[4]=pawn5;
 
         mortB.setVisible(false);
         lockB.setVisible(false);
@@ -117,6 +128,7 @@ public class HelloController {
         buyBNo.setVisible(false);
         nums.setVisible(false);
         endMorgB.setVisible(false);
+        nextTurnB.setVisible(false);
 
     }
 
@@ -441,14 +453,14 @@ public class HelloController {
             isAuction = false;
 
             mortgOption = false;
-//            pawns = new ImageView[b.getPLAYER_COUNT()];
-//            System.out.println(b.getPLAYER_COUNT());
+            pawns = new Shape[b.getPLAYER_COUNT()];
             //setting up array of pawns
-//            for(int i = 0; i < b.getPLAYER_COUNT(); i++){
-//                System.out.println(i);
-//                pawns[i] = pawnsStorage[i];
-//                tiles[0].getChildren().add(pawns[i]);
-//            }
+            for(int i = 0; i < b.getPLAYER_COUNT(); i++){
+                pawns[i] = pawnsStorage[i];
+            }
+
+            //setting up starting position of all pawns
+            tiles[0].getChildren().addAll(pawns);
 
 
             p = b.getPlayer(b.getPlayerTurn());
@@ -457,7 +469,8 @@ public class HelloController {
 
             //Rolls the dice and moves the player
             rollB.setOnAction(e ->{
-                b.movePlayer();
+                int move = b.movePlayer();
+                tiles[b.getPlayer(b.getPlayerTurn()).getPl_pos()].getChildren().add(pawns[b.getPlayer(b.getPlayerTurn()).getPlayer_id()-1]);
                 gameText.setText(p.toString());
                 rollB.setVisible(false);
                 //check if tax,cardPl,cardOK,go,freepark,jail,gojail
@@ -480,8 +493,38 @@ public class HelloController {
                 }
                 else{
                     gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");
+                    buyBYes.setVisible(true);
+                    buyBNo.setVisible(true);
+                    rollB.setVisible(false);
+                    mortB.setVisible(false);
                 }
 
+            });
+
+            buyBYes.setOnAction(e ->{
+                if(b.getPlayer(b.getPlayerTurn()).getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()){
+                    b.getTile(p.getPl_pos()).setOwnedBy(p.getPlayer_id());
+                    p.addOwns(b.getTile(p.getPl_pos()));
+                    p.setPl_cash(p.getPl_cash() - b.getTile(p.getPl_pos()).getPrice());
+                    gameText.setText("Property has be bought.");
+                    buyBYes.setVisible(false);
+                    buyBNo.setVisible(false);
+                    mortB.setVisible(true);
+                    nextTurnB.setVisible(true);
+                }else{
+                    gameText.setText("You don't have enough money.");
+                    buyBYes.setVisible(false);
+                    buyBNo.setVisible(false);
+                    mortB.setVisible(true);
+                }
+            });
+
+            buyBNo.setOnAction(e ->{
+
+            });
+
+            nextTurnB.setOnAction(e ->{
+                endTurn();
             });
 
 
@@ -526,6 +569,10 @@ public class HelloController {
                     }
 
                 }
+
+
+
+
 //                if(!nums.getText().isEmpty()) {
 //                    if(isAuction == false){
 //
