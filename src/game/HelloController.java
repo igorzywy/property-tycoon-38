@@ -240,62 +240,53 @@ public class HelloController {
 
     @FXML
     protected void cardPL(){
-        Card c = b.getCardsPL().pollFirst();
+        Card c = b.getCardsOK().pollFirst();
         if (c.getType() == CardType.bpp){
             gameText.setText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
-            p.setPl_cash(p.getPl_cash() + c.getAmount());
+            b.Cardbpp(c.getAmount());
         }else if (c.getType() == CardType.ppp){
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " receives " + c.getAmount() +
                     " from each player since it's their birthday!");
-            for (int i = 0; i < b.getPLAYER_COUNT(); i++) {
-                b.getPlayer(i).setPl_cash(b.getPlayer(i).getPl_cash() - c.getAmount());
-            }
-            p.setPl_cash(p.getPl_cash() + (b.getPLAYER_COUNT()*c.getAmount()) + c.getAmount());
+            b.Cardppp(c.getAmount());
             // get all players and sub 10 from all add players.size()*10 + 10 to the current player
         }else if (c.getType() == CardType.pm){
             gameText.setText(p.getPlayer_id() + " moves to tile " + c.getAmount());
-            p.setPl_pos(c.getAmount());
+            b.Cardpm(c.getAmount());
+
         }else if (c.getType() == CardType.ppb){
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " pays the bank " + c.getAmount());
-            p.setPl_cash(p.getPl_cash() - c.getAmount());
+            b.Cardppb(c.getAmount());
+
         }else if (c.getType() == CardType.ppf){
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
-            p.setPl_cash(p.getPl_cash() - c.getAmount());
-            b.addPublicSpace(c.getAmount());
+            b.Cardppf(c.getAmount());
         }else if (c.getType() == CardType.pmx){
             if (c.getAmount() < 0){
                 gameText.setText(p.getPlayer_id() + " moves back " + c.getAmount());
-                for (int i = 0; i < c.getAmount(); i++) {
-                    p.decresePos();
-                }
+                b.CardpmxBack(c.getAmount());
             }else if(c.getAmount() > 0){
                 gameText.setText(p.getPlayer_id() + " moves forwards " + c.getAmount());
-                for (int i = 0; i < c.getAmount(); i++) {
-                    p.incrPos();
-                }
+                b.CardpmxForward(c.getAmount());
             }
         }else if (c.getType() == CardType.ppr){
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " pays for repairs " +
                     c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
-            p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * c.getAmount()) +
-                    p.getHotelsOwned() * c.getHotelPrice());
+            b.Cardppr(c.getAmount());
+
         }else if (c.getType() == CardType.pmf){
             gameText.setText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
-            if (c.getAmount() - p.getPl_pos() > b.bSize()-1){
-                p.setPl_cash(p.getPl_cash() + 200);
-                p.setPl_pos(c.getAmount());
-            }else{
-                p.setPl_pos(c.getAmount());
-            }
+            b.Cardpmf(c.getAmount());
         }else if(c.getType() == CardType.jfc){
-            p.incrNoJailFreeCard();
+            gameText.appendText(p.getPlayer_id() + " gets a get out of jail free card!\n");
+            b.Cardjfc();
         }
-        b.addCardsPL(c);
+        b.addCardsOK(c);
     }
+
     //opportunity knocks
     @FXML
     protected boolean checkIfCardOK(){
@@ -309,56 +300,46 @@ public class HelloController {
         Card c = b.getCardsOK().pollFirst();
         if (c.getType() == CardType.bpp){
             gameText.setText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
-            p.setPl_cash(p.getPl_cash() + c.getAmount());
+            b.Cardbpp(c.getAmount());
         }else if (c.getType() == CardType.ppp){
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " receives " + c.getAmount() +
                     " from each player since it's their birthday!");
-            for (int i = 0; i < b.getPLAYER_COUNT(); i++) {
-                b.getPlayer(i).setPl_cash(b.getPlayer(i).getPl_cash() - c.getAmount());
-            }
-            p.setPl_cash(p.getPl_cash() + (b.getPLAYER_COUNT()*c.getAmount()) + c.getAmount());
+            b.Cardppp(c.getAmount());
             // get all players and sub 10 from all add players.size()*10 + 10 to the current player
         }else if (c.getType() == CardType.pm){
             gameText.setText(p.getPlayer_id() + " moves to tile " + c.getAmount());
-            p.setPl_pos(c.getAmount());
+            b.Cardpm(c.getAmount());
+
         }else if (c.getType() == CardType.ppb){
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " pays the bank " + c.getAmount());
-            p.setPl_cash(p.getPl_cash() - c.getAmount());
+            b.Cardppb(c.getAmount());
+
         }else if (c.getType() == CardType.ppf){
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
-            p.setPl_cash(p.getPl_cash() - c.getAmount());
-            b.addPublicSpace(c.getAmount());
+            b.Cardppf(c.getAmount());
         }else if (c.getType() == CardType.pmx){
             if (c.getAmount() < 0){
                 gameText.setText(p.getPlayer_id() + " moves back " + c.getAmount());
-                for (int i = 0; i < c.getAmount(); i++) {
-                    p.decresePos();
-                }
+                b.CardpmxBack(c.getAmount());
             }else if(c.getAmount() > 0){
                 gameText.setText(p.getPlayer_id() + " moves forwards " + c.getAmount());
-                for (int i = 0; i < c.getAmount(); i++) {
-                    p.incrPos();
-                }
+                b.CardpmxForward(c.getAmount());
             }
         }else if (c.getType() == CardType.ppr){
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " pays for repairs " +
                     c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
-            p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * c.getAmount()) +
-                    p.getHotelsOwned() * c.getHotelPrice());
+            b.Cardppr(c.getAmount());
+
         }else if (c.getType() == CardType.pmf){
             gameText.setText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
-            if (c.getAmount() - p.getPl_pos() > b.bSize()-1){
-                p.setPl_cash(p.getPl_cash() + 200);
-                p.setPl_pos(c.getAmount());
-            }else{
-                p.setPl_pos(c.getAmount());
-            }
+            b.Cardpmf(c.getAmount());
         }else if(c.getType() == CardType.jfc){
-            p.incrNoJailFreeCard();
+            gameText.appendText(p.getPlayer_id() + " gets a get out of jail free card!\n");
+            b.Cardjfc();
         }
         b.addCardsOK(c);
     }
@@ -385,14 +366,31 @@ public class HelloController {
     // checking if the player is in jail and if they are just visiting
     @FXML
     protected boolean checkIfJail(){
-        if ((b.getTile(p.getPl_pos()).getGroup() == "Jail")){
+        if ((b.getTile(p.getPl_pos()).getGroup().equals("Jail"))){
             return true;
         }else{
             return false;
         }
     }
+    @FXML
+    protected boolean checkIfStation() {
+        if (b.getTile(p.getPl_pos()).getGroup().equals("Station")){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
-    @FXML protected boolean checkIfJustVisit(){
+    @FXML
+    protected boolean checkIfUtility() {
+        if (b.getTile(p.getPl_pos()).getGroup().equals("Utilities")){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    @FXML
+    protected boolean checkIfJustVisit(){
         if (p.getInJail()){
             return false;
         }else{
@@ -413,13 +411,13 @@ public class HelloController {
     //or if there isn't more than 1 difference in amount of houses between all the properties
     //can only get a hotel if they have 4 houses on each property in a colour group
     @FXML
-    protected void buyingHouse(int tileI){
+    protected void upgradeTile(int tileI){
         if (b.getTile(tileI).getGroup().equals("Station") || b.getTile(tileI).getGroup().equals("Utilities")){
             gameText.appendText("you cannot upgrade a " + b.getTile(tileI).getGroup());
         }else {
             if (p.getPl_cash() >= b.getTile(tileI).getHousePrice()){
                 if (b.getTile(tileI).getOwnedBy() == p.getPlayer_id()){
-                    if (playerOwnSet(b.getTile(tileI).getGroup())){
+                    if (b.playerOwnSet(b.getTile(tileI).getGroup())){
                         if (!b.checkForTwoHouseDiff(b.getTile(tileI).getGroup())){
                             if (!b.checkForFourHouses(b.getTile(tileI).getGroup())) {
                                 p.setPl_cash(p.getPl_cash() - b.getTile(tileI).getHousePrice());
@@ -456,23 +454,6 @@ public class HelloController {
 
     }
 
-    //buying a hotel
-
-    //checking if the player owns the set
-    @FXML
-    protected boolean playerOwnSet(String tileGroup){
-        int counter = 0;
-        for (int i = 0; i < b.bSize(); i++) {
-            if (b.getTile(i).getGroup().equals(tileGroup) && (b.getTile(i).getOwnedBy() == p.getPlayer_id())){
-                counter++;
-            }
-        }
-        if (counter == b.getGroupSize(tileGroup)){
-            return true;
-        }else{return false;}
-
-
-    }
     @FXML
     protected void endTurn(){
         b.incPlayer();
@@ -489,6 +470,23 @@ public class HelloController {
         }else if(option == 2){
             tiles[tileNo].setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
         }
+    }
+
+    @FXML
+    protected void doYouWantToBuy(){
+        gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");
+        buyBYes.setVisible(true);
+        buyBNo.setVisible(true);
+        rollB.setVisible(false);
+        mortB.setVisible(false);
+    }
+
+    @FXML
+    protected void cannotAffordRent(){
+        gameText.appendText("you cannot afford the rent");
+        //enable bankruptcy button and mortgage button
+        mortB.setVisible(true);
+        //add a bankruptcy button
     }
 
 
@@ -544,22 +542,30 @@ public class HelloController {
                         justVisiting();
                     }
 
+                }else if (checkIfStation()){
+                    if (b.getTile(p.getPl_pos()).getOwnedBy() == 0){
+                        doYouWantToBuy();
+                    }else{
+                        int rentAmount = b.getStationRent();
+                        if (p.getPl_cash() < rentAmount){
+                            cannotAffordRent();
+                        }else{
+                            b.payRent(rentAmount);
+                        }
+                    }
+
+                }else if (checkIfUtility()) {
+
                 }
                 else{
-                    gameText.appendText("\n\nDo you want to buy " + b.getTile(p.getPl_pos()).getTileName() + "?");
-                    buyBYes.setVisible(true);
-                    buyBNo.setVisible(true);
-                    rollB.setVisible(false);
-                    mortB.setVisible(false);
+                    doYouWantToBuy();
                 }
 
             });
 
             buyBYes.setOnAction(e ->{
                 if(b.getPlayer(b.getPlayerTurn()).getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()){
-                    b.getTile(p.getPl_pos()).setOwnedBy(p.getPlayer_id());
-                    p.addOwns(b.getTile(p.getPl_pos()));
-                    p.setPl_cash(p.getPl_cash() - b.getTile(p.getPl_pos()).getPrice());
+                    b.buyingTile();
                     gameText.setText("Property has be bought.");
                     buyBYes.setVisible(false);
                     buyBNo.setVisible(false);
@@ -624,7 +630,7 @@ public class HelloController {
                     }
 
                 }else if(upgradeOption = true){
-                    buyingHouse(Integer.parseInt(nums.getText()));
+                    upgradeTile(Integer.parseInt(nums.getText()));
                     nums.setVisible(false);
                     lockB.setVisible(false);
                 }
@@ -698,4 +704,6 @@ public class HelloController {
 //        }
             }
     }
+
+
 }

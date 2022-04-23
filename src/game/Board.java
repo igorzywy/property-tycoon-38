@@ -51,6 +51,114 @@ public class Board {
 
     }
 
+    public boolean playerOwnSet(String tileGroup) {
+        Player p = players.get(player_turn);
+        int counter = 0;
+        for (int i = 0; i < bSize(); i++) {
+            if (getTile(i).getGroup().equals(tileGroup) && (getTile(i).getOwnedBy() == p.getPlayer_id())) {
+                counter++;
+            }
+        }
+        if (counter == getGroupSize(tileGroup)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int getStationRent(){
+        Player p = players.get(player_turn);
+        int ownedBy = getTile(p.getPl_pos()).getOwnedBy();
+        int numOfStations = getPlayer(ownedBy).getNumberOfStationOwned();
+        int rentAmount = getTile(p.getPl_pos()).getPrice();
+        for (int i = 1; i <= numOfStations; i++) {
+            rentAmount *= i;
+        }
+        return rentAmount;
+    }
+
+    public void payRent(int rentAmount){
+        Player p = players.get(player_turn);
+        int ownedBy = getTile(p.getPl_pos()).getOwnedBy();
+        Player pOwn = getPlayer(ownedBy);
+        p.setPl_cash(p.getPl_cash() - rentAmount);
+        pOwn.setPl_cash(pOwn.getPl_cash() + rentAmount);
+        getTile(p.getPl_pos()).setOwnedBy(p.getPlayer_id());
+    }
+
+    public void buyingTile(){
+        Player p = getPlayer(player_turn);
+        getTile(p.getPl_pos()).setOwnedBy(p.getPlayer_id());
+        p.addOwns(getTile(p.getPl_pos()));
+        p.setPl_cash(p.getPl_cash() - getTile(p.getPl_pos()).getPrice());
+    }
+
+    public void Cardbpp(int amount){
+        Player p = getPlayer(player_turn);
+        p.setPl_cash(p.getPl_cash() + amount);
+    }
+
+    public void Cardppp(int amount){
+        Player p = getPlayer(player_turn);
+        for (int i = 0; i < getPLAYER_COUNT(); i++) {
+            getPlayer(i).setPl_cash(getPlayer(i).getPl_cash() - amount);
+        }
+        p.setPl_cash(p.getPl_cash() + (getPLAYER_COUNT()*amount) + amount);
+    }
+
+    public void Cardpm(int amount){
+        Player p = getPlayer(player_turn);
+        p.setPl_pos(amount);
+    }
+
+    public void Cardppb(int amount) {
+        Player p = getPlayer(player_turn);
+        p.setPl_cash(p.getPl_cash() - amount);
+    }
+
+    public void Cardppf(int amount){
+        Player p = getPlayer(player_turn);
+        p.setPl_cash(p.getPl_cash() - amount);
+        addPublicSpace(amount);
+    }
+
+    public void CardpmxBack(int amount){
+        Player p = getPlayer(player_turn);
+        for (int i = 0; i < amount; i++) {
+            p.decresePos();
+        }
+    }
+
+    public void CardpmxForward(int amount){
+        Player p = getPlayer(player_turn);
+        for (int i = 0; i < amount; i++) {
+            p.incrPos();
+        }
+    }
+
+    public void Cardppr(int amount){
+        Player p = getPlayer(player_turn);
+        p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * amount) +
+                p.getHotelsOwned() * amount);
+    }
+
+    public void Cardpmf(int amount){
+        Player p = getPlayer(player_turn);
+        if (amount - p.getPl_pos() > bSize()-1){
+            p.setPl_cash(p.getPl_cash() + 200);
+            p.setPl_pos(amount);
+        }else{
+            p.setPl_pos(amount);
+        }
+    }
+
+    public void Cardjfc(){
+        Player p = getPlayer(player_turn);
+        p.incrNoJailFreeCard();
+    }
+
+
+
     public int getGroupSize(String grp){
         int counter = 0;
         for (int i = 0; i < bSize(); i++) {

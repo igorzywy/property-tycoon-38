@@ -59,6 +59,28 @@ public class Player {
 
     }
 
+    public int getNumberOfStationOwned() {
+        int counter = 0;
+        if (owns.isEmpty()){
+            return 0;
+        }else{
+            for (int i = 0; i < owns.size(); i++) {
+                if (owns.get(i).getGroup().equals("Station")){
+                    counter++;
+                }
+            }
+        }
+        return counter;
+    }
+
+    public boolean checkIfPlayerCanAfford(int amount){
+        if (pl_cash >= amount){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public boolean getInJail(){
         return this.inJail;
     }
