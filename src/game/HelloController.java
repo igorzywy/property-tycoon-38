@@ -245,6 +245,7 @@ public class HelloController {
             gameText.setText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
             p.setPl_cash(p.getPl_cash() + c.getAmount());
         }else if (c.getType() == CardType.ppp){
+            //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " receives " + c.getAmount() +
                     " from each player since it's their birthday!");
             for (int i = 0; i < b.getPLAYER_COUNT(); i++) {
@@ -256,9 +257,11 @@ public class HelloController {
             gameText.setText(p.getPlayer_id() + " moves to tile " + c.getAmount());
             p.setPl_pos(c.getAmount());
         }else if (c.getType() == CardType.ppb){
+            //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " pays the bank " + c.getAmount());
             p.setPl_cash(p.getPl_cash() - c.getAmount());
         }else if (c.getType() == CardType.ppf){
+            //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
             p.setPl_cash(p.getPl_cash() - c.getAmount());
             b.addPublicSpace(c.getAmount());
@@ -275,6 +278,7 @@ public class HelloController {
                 }
             }
         }else if (c.getType() == CardType.ppr){
+            //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " pays for repairs " +
                     c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
             p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * c.getAmount()) +
@@ -307,6 +311,7 @@ public class HelloController {
             gameText.setText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
             p.setPl_cash(p.getPl_cash() + c.getAmount());
         }else if (c.getType() == CardType.ppp){
+            //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " receives " + c.getAmount() +
                     " from each player since it's their birthday!");
             for (int i = 0; i < b.getPLAYER_COUNT(); i++) {
@@ -318,9 +323,11 @@ public class HelloController {
             gameText.setText(p.getPlayer_id() + " moves to tile " + c.getAmount());
             p.setPl_pos(c.getAmount());
         }else if (c.getType() == CardType.ppb){
+            //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " pays the bank " + c.getAmount());
             p.setPl_cash(p.getPl_cash() - c.getAmount());
         }else if (c.getType() == CardType.ppf){
+            //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
             p.setPl_cash(p.getPl_cash() - c.getAmount());
             b.addPublicSpace(c.getAmount());
@@ -337,6 +344,7 @@ public class HelloController {
                 }
             }
         }else if (c.getType() == CardType.ppr){
+            //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.setText(p.getPlayer_id() + " pays for repairs " +
                     c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
             p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * c.getAmount()) +
@@ -403,23 +411,44 @@ public class HelloController {
     //they pick a house that they own
     //house can only be bought if they own the set
     //or if there isn't more than 1 difference in amount of houses between all the properties
+    //can only get a hotel if they have 4 houses on each property in a colour group
     @FXML
     protected void buyingHouse(int tileI){
-        if (b.getTile(tileI).getOwnedBy() == p.getPlayer_id()){
-             if (playerOwnSet(b.getTile(tileI).getGroup())){
-                 if (!b.checkForTwoHouseDiff(b.getTile(tileI).getGroup())){
-                     b.getTile(tileI).incrHouses();
-                     p.incrHousesOwned();
-                     gameText.setText(p.getPlayer_id() + " has bought a house on " + b.getTile(tileI).getTileName());
-                 }else{
-                     gameText.setText("you have more than 1 house difference between your properties");
-                 }
-             }else{
-                 gameText.setText("you don't own the set");
-             }
-        }else{
-            gameText.setText("you don't own that tile");
+        if (p.getPl_cash() >= b.getTile(tileI).getHousePrice()){
+            if (b.getTile(tileI).getOwnedBy() == p.getPlayer_id()){
+                if (playerOwnSet(b.getTile(tileI).getGroup())){
+                    if (!b.checkForTwoHouseDiff(b.getTile(tileI).getGroup())){
+                        if (!b.checkForFourHouses(b.getTile(tileI).getGroup())) {
+                            p.setPl_cash(p.getPl_cash() - b.getTile(tileI).getHousePrice());
+                            b.getTile(tileI).incrHouses();
+                            p.incrHousesOwned();
+                            gameText.setText(p.getPlayer_id() + " has bought a house on " +
+                                    b.getTile(tileI).getTileName());
+                        }else if (b.getTile(tileI).getHotels() >= 1){
+                            gameText.setText(b.getTile(tileI).getTileName() + " already has a hotel!");
+                        }else if (p.getPl_cash() < (b.getTile(tileI).getHousePrice()*5)){
+                            gameText.setText("you cannot afford a hotel! " + (b.getTile(tileI).getHousePrice()*5) +
+                                    " is needed");
+                        }else{
+                            p.setPl_cash(p.getPl_cash() - (b.getTile(tileI).getHousePrice()*5));
+                            b.getTile(tileI).incrHotels();
+                            gameText.setText(p.getPlayer_id() + " has bought a hotel on " +
+                                    b.getTile(tileI).getTileName());
+                        }
+                    }else{
+                        gameText.setText("you have more than 1 house difference between your properties");
+                    }
+                }else{
+                    gameText.setText("you don't own the set");
+                }
+            }else{
+                gameText.setText("you don't own that tile");
+            }
+        }else {
+            gameText.setText("you don't have enough money to buy a house! " + b.getTile(tileI).getHousePrice() +
+                    " is needed");
         }
+
     }
 
     //buying a hotel
