@@ -292,49 +292,64 @@ public class Board {
 //            incPlayer();
 //    }
 
-    //lets players mortgage a property
-    public boolean mortgage(int tileId){
+    public boolean checkIfOwnProperty(int tileId){
         Player p = getPlayer(player_turn);
-//        System.out.println("player " + p.getPlayer_id() + "owns: " + p.getOwns());
-//        System.out.println("input tile Id to sell");
-//        Scanner input = new Scanner(System.in);
-//        int s = input.nextInt();
-        ArrayList<Tile> tilesOfPlayer = p.getOwns();
-        boolean removedTile = false;
-//        while(!removedTile){
-            for (int i = 0; i < tilesOfPlayer.size(); i++) {
-                if (tilesOfPlayer.get(i).getTile_id() == tileId){
-                    tilesOfPlayer.get(i).flipMortgaged();
-//                    System.out.println("player: " + p.getPlayer_id() + " gains: " + tilesOfPlayer.get(i).getPrice()/2);
-                    p.addPl_cash(tilesOfPlayer.get(i).getPrice()/2);
-                    removedTile = true;
-                    return removedTile;
-                }else{
-//                    System.out.println("you don't own that tile");
-                    return false;
+        if (getTile(p.getPl_pos()).getOwnedBy() == p.getPlayer_id()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    //lets players mortgage a property or downgrade it by selling a house or hotel
+    //check if tile has a hotel
+    //check if tile set has 1 house diff
+    //check if tile has a house
+    //if no house mortgage
+    public boolean mortgage(int tileI) {
+        Player p = getPlayer(player_turn);
+        Tile t = getTile(tileI);
+        //checks if the tile is station or util
+        if (t.getGroup().equals("Station") || t.getGroup().equals("Utilities")) {
+            return false;
+        } else {
+            //check if player owns tile
+            if (t.getOwnedBy() == p.getPlayer_id()) {
+                //checks if the tile has a hotel
+                if (t.getHotels() > 0) {
+                    p.setPl_cash(p.getPl_cash() + ((t.getHousePrice() * 5) / 2));
+                    t.decrHotels();
+                    return true;
+                } else {
+                    //checks if there is a more than 1 house difference on tile set and if the tile
+                    // has houses
+                    if (!checkForTwoHouseDiff(t.getGroup()) && t.getHouses() > 0) {
+                        p.setPl_cash(p.getPl_cash() + (t.getHousePrice() / 2));
+                        t.decrHouses();
+                        return true;
+                    } else {
+                        //checks if the property has been mortgaged if not then it mortgages it so players
+                        // don't collect rent from it
+                        if (!t.getMortgaged()){
+                            p.setPl_cash(p.getPl_cash() + (t.getPrice()/2));
+                            t.flipMortgaged();
+                            return true;
+                        }else {
+                            return false;
+                        }
+                    }
                 }
-            }
-        //}
-
-
-        /* can be used to trade properties
-         while(removedTile == false){
-            for (int i = 0; i < tilesOfPlayer.size(); i++) {
-                if (tilesOfPlayer.get(i).getTile_id() == s){
-                    tilesOfPlayer.get(i).setOwnedBy(null);
-                    p.removeOwned(tilesOfPlayer.get(i));
-
-                    removedTile = true;
-                }else{
-                    System.out.println("you don't own that tile");
-                    s = input.nextInt();
-                }
+            } else {
+                return false;
             }
         }
-         */
-        System.out.println(p.getOwns());
-        return false;
+
     }
+
+
+
+
+
+
 // need to add so that it also ask with the player wants to trade that it gets the other players id
     public String getPlayersTiles(){
         getPlayer(player_turn).getOwns();

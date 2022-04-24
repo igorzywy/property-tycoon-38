@@ -58,6 +58,14 @@ public class Tile {
         this.houses++;
     }
 
+    public void decrHotels() {
+        this.hotels--;
+    }
+
+    public void decrHouses(){
+        this.houses--;
+    }
+
     public String getTileName(){
         return tile_name;
     }

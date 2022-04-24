@@ -339,11 +339,6 @@ public class HelloController {
         b.addCardsOK(c);
     }
 
-    @FXML protected void getCard(){
-
-    }
-
-
     @FXML
     protected void mortg(){
         mortgOption = true;
@@ -445,14 +440,9 @@ public class HelloController {
                         " is needed");
             }
         }
-
-
     }
 
-    @FXML
-    protected void utility(){
 
-    }
 
     @FXML
     protected void endTurn(){
@@ -631,7 +621,8 @@ public class HelloController {
                         gameText.setText(b.getTile(tileToMorg).getTileName() + " has been bought!");
 
                     }else{
-                        gameText.setText("You don't own this property");
+                        gameText.appendText("You don't own this property or it has already been mortgaged, " +
+                                "has a greater than 1 house difference\n");
                         mortgOption = true;
                         nums.setVisible(true);
                         lockB.setVisible(true);
