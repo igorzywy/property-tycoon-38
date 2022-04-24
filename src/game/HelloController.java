@@ -205,11 +205,6 @@ public class HelloController {
         b.setFreeParkingSpace(0);
     }
 
-    @FXML
-    protected void goJail(){
-        p.setInJail();
-        p.setPl_pos(11);
-    }
 
     @FXML
     protected boolean checkIfFPS(){
@@ -455,6 +450,11 @@ public class HelloController {
     }
 
     @FXML
+    protected void utility(){
+
+    }
+
+    @FXML
     protected void endTurn(){
         b.incPlayer();
         p = b.getPlayer(b.getPlayerTurn());
@@ -521,11 +521,12 @@ public class HelloController {
 
             //Rolls the dice and moves the player
             rollB.setOnAction(e ->{
-                int move = b.movePlayer();
+                int diceRollAmount = b.rollDice();
+                int move = b.movePlayer(diceRollAmount);
                 tiles[b.getPlayer(b.getPlayerTurn()).getPl_pos()].getChildren().add(pawns[b.getPlayer(b.getPlayerTurn()).getPlayer_id()-1]);
-                gameText.setText(p.toString());
+                gameText.appendText(p.toString());
                 rollB.setVisible(false);
-                //check if tax,cardPl,cardOK,go,freepark,jail,gojail
+                //check if tax,cardPl,cardOK,go,freepark,jail,gojail,util,station
                 if (checkIfTax()){
                     taxation();
                 }else if(checkIfCardPL()){
@@ -536,7 +537,7 @@ public class HelloController {
                 }else if(checkIfFPS()){
                     getFPS();
                 }else if(checkifGoJail()){
-                    goJail();
+                    b.goJail();
                 }else if (checkIfJail()){
                     if (checkIfJustVisit()){
                         justVisiting();
@@ -546,7 +547,7 @@ public class HelloController {
                     if (b.getTile(p.getPl_pos()).getOwnedBy() == 0){
                         doYouWantToBuy();
                     }else{
-                        int rentAmount = b.getStationRent();
+                        int rentAmount = b.getStationRentAmount();
                         if (p.getPl_cash() < rentAmount){
                             cannotAffordRent();
                         }else{
@@ -555,7 +556,16 @@ public class HelloController {
                     }
 
                 }else if (checkIfUtility()) {
-
+                    if (b.getTile(p.getPl_pos()).getOwnedBy() == 0){
+                        doYouWantToBuy();
+                    }else{
+                        int rentAmount = b.getUtilRentAmount(diceRollAmount);
+                        if (p.getPl_cash() < rentAmount){
+                            cannotAffordRent();
+                        }else{
+                            b.payRent(rentAmount);
+                        }
+                    }
                 }
                 else{
                     doYouWantToBuy();

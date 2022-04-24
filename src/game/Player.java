@@ -59,13 +59,13 @@ public class Player {
 
     }
 
-    public int getNumberOfStationOwned() {
+    public int getNumberOfGroupOwned(String group) {
         int counter = 0;
         if (owns.isEmpty()){
             return 0;
         }else{
             for (int i = 0; i < owns.size(); i++) {
-                if (owns.get(i).getGroup().equals("Station")){
+                if (owns.get(i).getGroup().equals(group)){
                     counter++;
                 }
             }

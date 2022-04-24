@@ -65,15 +65,30 @@ public class Board {
             return false;
         }
     }
-
-    public int getStationRent(){
+    //getting the rent amount for landing on an owned station
+    public int getStationRentAmount(){
         Player p = players.get(player_turn);
         int ownedBy = getTile(p.getPl_pos()).getOwnedBy();
-        int numOfStations = getPlayer(ownedBy).getNumberOfStationOwned();
+        int numOfStations = getPlayer(ownedBy).getNumberOfGroupOwned(getTile(p.getPl_pos()).getGroup());
         int rentAmount = getTile(p.getPl_pos()).getPrice();
         for (int i = 1; i <= numOfStations; i++) {
             rentAmount *= i;
         }
+        return rentAmount;
+    }
+
+    //getting the rent amount for landing on an owned utility
+    public int getUtilRentAmount(int diceRoll){
+        Player p = players.get(player_turn);
+        int ownedBy = getTile(p.getPl_pos()).getOwnedBy();
+        int numOfUtils = getPlayer(ownedBy).getNumberOfGroupOwned(getTile(p.getPl_pos()).getGroup());
+        int rentAmount = 0;
+        if (numOfUtils == 1){
+            rentAmount = 4 * diceRoll;
+        }else if(numOfUtils == 2){
+            rentAmount = 10 * diceRoll;
+        }
+
         return rentAmount;
     }
 
@@ -427,17 +442,19 @@ public class Board {
         }
     }
 
-    public void jail(int p){
-        getPlayer(p).setPl_pos(10);
+    public void goJail(){
+        Player p = players.get(player_turn);
+        p.setInJail();
+        p.setPl_pos(9);
     }
 
-    public int movePlayer(){
+    public int movePlayer(int roll){
 
-        int roll = rollDice();
+
         if(this.rl_double == 3 ){
             this.isDouble = false;
             this.rl_double = 0;
-            jail(player_turn);
+            goJail();
             System.out.println("player is in jail");
             System.out.println("\n\n");
             return 10;
