@@ -2,10 +2,7 @@ package game;
 
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Board {
