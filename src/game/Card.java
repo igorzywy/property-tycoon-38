@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 
 public class Card {
@@ -61,6 +62,7 @@ public class Card {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Collections.shuffle(cards);
         dCard.addAll(cards);
         return dCard;
     }
@@ -83,6 +85,7 @@ public class Card {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Collections.shuffle(cards);
         dCard.addAll(cards);
         return dCard;
 
