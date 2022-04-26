@@ -479,6 +479,61 @@ public class HelloController {
         //add a bankruptcy button
     }
 
+    /*
+    * auction starts
+    * add all players to the list of players for the auction
+    *
+    * pass the tile that we are putting on auction to auction method in this class this makes it easier to pass
+    *   tiles to auction that the player doesn't current stand on for instance when a player goes bankrupt
+    *
+    * Show buttons no, 10, 50, 100 - buttons will call auctionBid(int amount) to increase the current highest bid
+    *   no button will remove player from the list, so they won't be asked to bid again the method for this
+    *   takes the index of the current player in that list
+    *
+    * start with the first player in the list and go to the last player we keep calling auction or not change the
+    *   scene of the gui until the array of auctionList isn't 1 and at that point we assign the last player in the
+    *   list to be the winner of the auction and assign them the ownership of the tile
+    *
+    * after they press a button we increment the index of current bidder but before that we check if the player has
+    *   enough money if they don't have enough money then we don't increment the player, and we make them either
+    *   choose a lower amount to bid or they can only press no
+    *
+     */
+    private int auctionTileI = 0;
+    @FXML
+    protected void auction(int tileI){
+        b.resetHighestBid();
+        auctionTileI = tileI;
+        gameText.appendText("auction for tile " + b.getTile(auctionTileI));
+        b.addAllPlayersToAuction();
+        //display buttons for no and bid amounts each button should pass a different bid amount to bid in this class
+
+    }
+
+    //for bidding pass amount depending on what button was pressed if they cannot afford the bid then they have to
+    //press something else
+    @FXML
+    protected void bid(int amount){
+        if (b.getCurrentBiddingPlayer().getPl_cash() > (b.getHighestBid() + amount)){
+            gameText.appendText(b.getCurrentBiddingPlayer().getPlayer_id() + " has bid £" + amount + " the current " +
+                    "highest bid is " + b.getHighestBid());
+            b.auctionBid(amount);
+            b.incrIndexOfCurrentBidder();
+        }else{
+            gameText.appendText("you cannot afford to bid £" + amount);
+        }
+    }
+
+    //for when the player doesn't want to place a bid i don't think we need to incr the index of current bidder
+    //since removing from the array all elements get shifted to the left by 1
+    @FXML protected void bidNo(){
+        b.auctionNo();
+        //checking if only 1 player left in the auctionList of players
+        if (b.getAuctionList().size() == 1){
+            b.auctionWinner(auctionTileI);
+        }
+    }
+
 
 
     //New Game button is pressed. We create a new Board object and set things to default values
@@ -493,6 +548,7 @@ public class HelloController {
             mortB.setVisible(true);
             lockB.setVisible(false);
             isAuction = false;
+
 
             mortgOption = false;
             pawns = new Shape[b.getPLAYER_COUNT()];

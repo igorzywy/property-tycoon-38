@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Tile {
 
-    private static int tile_id_incrementer = 0;
+
     private int tile_id = 0;
     private String tile_name = "";
     private String tileGrp = "";
@@ -23,10 +23,10 @@ public class Tile {
     private int housePrice = 0;
 
     //constructor
-    public Tile(String name, String group, String action, boolean can_be_bought, Integer price,
+    public Tile(Integer tile_id, String name, String group, String action, boolean can_be_bought, Integer price,
                 Integer rent_unimproved, Integer rent_1h, Integer rent_2h, Integer rent_3h, Integer rent_4h,
                 Integer rent_hotel, Integer housePrice){
-        tile_id = tile_id_incrementer++;
+        this.tile_id = tile_id - 1;
         tile_name = name;
         tileGrp = group;
         tile_action = action;
@@ -118,7 +118,7 @@ public class Tile {
             while((line = br.readLine()) != null){
                 String[] values = line.split(",");
 
-                tiles.add(new Tile(values[1],values[2],values[3],Boolean.parseBoolean(values[4]),
+                tiles.add(new Tile(Integer.parseInt(values[0]),values[1],values[2],values[3],Boolean.parseBoolean(values[4]),
                         Integer.parseInt(values[5]),Integer.parseInt(values[6]),Integer.parseInt(values[7]),
                         Integer.parseInt(values[8]),Integer.parseInt(values[9]),Integer.parseInt(values[10]),
                         Integer.parseInt(values[11]),Integer.parseInt(values[12])));

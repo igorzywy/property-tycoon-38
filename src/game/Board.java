@@ -23,10 +23,65 @@ public class Board {
     //pot luck cards
     private Deque<Card> cardsPL = null;
     private int freeParkingSpace = 0;
+    private Pair<Integer,Integer> highestBidOld = new Pair<>(0,0);
 
+    private ArrayList<Player> auctionList = null;
+    private int indexOfCurrentBidder = 0;
+    private int highestBid = 0;
+    private Player highestBidPlayer = null;
+
+
+    public void setIndexOfCurrentBidder(int indexOfCurrentBidder) {
+        this.indexOfCurrentBidder = indexOfCurrentBidder;
+    }
+
+    public void resetHighestBid(){
+        this.highestBid = 0;
+        this.highestBidPlayer = null;
+    }
+
+    public int getHighestBid(){
+        return this.highestBid;
+    }
+
+    //for when the player doesn't want to bid for the current property
+    public void auctionNo(){
+        this.auctionList.remove(indexOfCurrentBidder);
+    }
+
+    public void auctionBid(int amount){
+        Player ap = auctionList.get(indexOfCurrentBidder);
+        this.highestBid += amount;
+        this.highestBidPlayer = ap;
+    }
+
+    //assigns the tile owned by to the player that won the auctions id and subtracts the money from the players account
+    public void auctionWinner(int tileI){
+        getTile(tileI).setOwnedBy(highestBidPlayer.getPlayer_id());
+        highestBidPlayer.addOwns(getTile(tileI));
+        highestBidPlayer.setPl_cash(highestBidPlayer.getPl_cash() - highestBid);
+    }
+
+    public Player getCurrentBiddingPlayer(){
+        return auctionList.get(indexOfCurrentBidder);
+    }
+
+    public void incrIndexOfCurrentBidder(){
+        if (indexOfCurrentBidder >= auctionList.size()) {
+            indexOfCurrentBidder = 0;
+        }else{
+            indexOfCurrentBidder++;
+        }
+    }
+
+    public void addAllPlayersToAuction(){
+        auctionList.addAll(players);
+    }
+
+    //need to add a remove from current player auction turn
 
     //player,bid
-    Pair<Integer,Integer> highest_bid = new Pair<>(0,0);
+
 
     public boolean game_End = false;
 
@@ -193,7 +248,7 @@ public class Board {
         }
         for (int i = 0; i < tilesDiff.size(); i++) {
             for (int j = 0; j < tilesDiff.size(); j++) {
-                if (Math.abs(tilesDiff.get(i).getHouses() - tilesDiff.get(j).getHouses()) != 1){
+                if (Math.abs(tilesDiff.get(i).getHouses() - tilesDiff.get(j).getHouses()) > 1){
                     return true;
                 }else{
                     return false;
@@ -386,45 +441,61 @@ public class Board {
 //        return true;
 //    }
 
-        public boolean checkCanBeBought() {
-            Tile t = getTile(getPlayer(player_turn).getPl_pos());
+    public boolean checkCanBeBought() {
+        Tile t = getTile(getPlayer(player_turn).getPl_pos());
 
-            if (t.getCanBeBought() == false || t.getOwnedBy() == null) {
-                return false;
-            } else {
-                return true;
-            }
+        if (t.getCanBeBought() == false || t.getOwnedBy() == null) {
+            return false;
+        } else {
+            return true;
         }
+    }
 
-        public boolean checkIsOwned(){
-            Tile t = getTile(getPlayer(player_turn).getPl_pos());
+    public boolean checkIsOwned(){
+        Tile t = getTile(getPlayer(player_turn).getPl_pos());
 
-            if (t.getOwnedBy() == null) {
-                return false;
-            } else {
-                return true;
-            }
+        if (t.getOwnedBy() == null) {
+            return false;
+        } else {
+            return true;
         }
+    }
 
 
-        //buying tiles with auction
-        public void auctionBuy ( int t){
-            // getTile(getPlayer(player_turn).getPl_pos());
-            int cash = getPlayer(highest_bid.getKey()).getPl_cash();
-            int price = highest_bid.getValue();
-            int total = cash - price;
-            if (total > 0) {
-                getPlayer(highest_bid.getKey()).setPl_cash(total);//yh
-                getTile(t).setOwnedBy(highest_bid.getKey()); //yh
-                getPlayer(highest_bid.getKey()).addOwns(getTile(t));
-                System.out.println("cash: " + getPlayer(highest_bid.getKey()).getPl_cash());
-                System.out.println("tile is owned by: " + getTile(t).getOwnedBy());
-            }
+    //auction
+    //should let all players decide if they want to place a bit at an auction
+    //players only add 50 to the current highest bid
+    //if the player doesn't want to add to the bid they won't be asked if they want to add to it again
+    //
+    //at start add all players to auction list
+    //if player doesn't want to buy a tile they get removed from the list so that they don't get asked again
+    //
+
+// adds all the players to the list of players to the auction
+
+
+    public ArrayList<Player> getAuctionList(){
+        return auctionList;
+    }
+
+    //buying tiles with auction
+    public void auctionBuy (int t){
+        // getTile(getPlayer(player_turn).getPl_pos());
+        int cash = getPlayer(highestBidOld.getKey()).getPl_cash();
+        int price = highestBidOld.getValue();
+        int total = cash - price;
+        if (total > 0) {
+            getPlayer(highestBidOld.getKey()).setPl_cash(total);//yh
+            getTile(t).setOwnedBy(highestBidOld.getKey()); //yh
+            getPlayer(highestBidOld.getKey()).addOwns(getTile(t));
+            System.out.println("cash: " + getPlayer(highestBidOld.getKey()).getPl_cash());
+            System.out.println("tile is owned by: " + getTile(t).getOwnedBy());
         }
+    }
 
 
     public void auction(){
-        highest_bid = new Pair<>(0,0);
+        highestBidOld = new Pair<>(0,0);
         for(int i = 0;i< pSize();i++){
             Scanner input = new Scanner(System.in);
             if(!getPlayer(i).isBankrupt()){
@@ -446,14 +517,14 @@ public class Board {
                 }
             }
         }
-        System.out.println(highest_bid);
+        System.out.println(highestBidOld);
         //getting the player pos to get current tile will need to change later to have auctions for bankruptcy
         auctionBuy(getPlayer(player_turn).getPl_pos());
     }
 
     public void bid(int player_bid, int player_id){
-        if (player_bid > highest_bid.getValue()){
-            highest_bid = new Pair<>(player_id,player_bid);
+        if (player_bid > highestBidOld.getValue()){
+            highestBidOld = new Pair<>(player_id,player_bid);
         }
     }
 
