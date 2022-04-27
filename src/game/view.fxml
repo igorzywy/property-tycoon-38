@@ -118,6 +118,10 @@
                   <Button fx:id="endMorgB" layoutX="435.0" layoutY="280.0" mnemonicParsing="false" text="end Mortgage" />
                   <Button fx:id="nextTurnB" layoutX="467.0" layoutY="80.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="69.0" text="Next Turn" />
                   <Button fx:id="upgradeB" layoutX="346.0" layoutY="221.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="78.0" text="Upgrade" />
+                  <Button fx:id="leaveBidB" layoutX="436.0" layoutY="314.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Leave bid" />
+                  <Button fx:id="plusTenB" layoutX="345.0" layoutY="363.0" mnemonicParsing="false" text="+10" />
+                  <Button fx:id="plusFiftyB" layoutX="410.0" layoutY="363.0" mnemonicParsing="false" text="+50" />
+                  <Button fx:id="plusHundredB" layoutX="476.0" layoutY="363.0" mnemonicParsing="false" text="+100" />
                </children></AnchorPane>
          </center>
       </BorderPane>

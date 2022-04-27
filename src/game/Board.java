@@ -22,7 +22,7 @@ public class Board {
     private int freeParkingSpace = 0;
     private Pair<Integer,Integer> highestBidOld = new Pair<>(0,0);
 
-    private ArrayList<Player> auctionList = null;
+    private ArrayList<Player> auctionList = new ArrayList<Player>();
     private int indexOfCurrentBidder = 0;
     private int highestBid = 0;
     private Player highestBidPlayer = null;
@@ -35,6 +35,10 @@ public class Board {
     public void resetHighestBid(){
         this.highestBid = 0;
         this.highestBidPlayer = null;
+    }
+
+    public int numOfBidders(){
+        return auctionList.size();
     }
 
     public int getHighestBid(){

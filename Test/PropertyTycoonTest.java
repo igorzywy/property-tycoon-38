@@ -67,6 +67,5 @@ public class PropertyTycoonTest {
         assertEquals(b.checkCanBeBought(),true);
 
     }
-    @Test
-    public void
+
 }

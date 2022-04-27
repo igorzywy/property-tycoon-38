@@ -9,6 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.shape.*;
 
+import javax.annotation.Generated;
+
 public class HelloController {
 
     @FXML private ImageView dice1;
@@ -62,6 +64,7 @@ public class HelloController {
     Shape[] pawns;
     boolean mortgOption = false;
     boolean upgradeOption = false;
+    boolean bidOption = false;
     int bid = 0;
     boolean isAuction = false;
     int currBidNo = 0;
@@ -84,6 +87,12 @@ public class HelloController {
     @FXML public Button nextTurnB;
     //button to upgrade
     @FXML public Button upgradeB;
+    //button to leave bid
+    @FXML public Button leaveBidB;
+    //buttons to place bids
+    @FXML public Button plusTenB;
+    @FXML public Button plusFiftyB;
+    @FXML public Button plusHundredB;
 
     Player p;
 
@@ -133,9 +142,13 @@ public class HelloController {
         buyBYes.setVisible(false);
         buyBNo.setVisible(false);
         nums.setVisible(false);
+        upgradeB.setVisible(false);
         endMorgB.setVisible(false);
         nextTurnB.setVisible(false);
-
+        leaveBidB.setVisible(false);
+        plusTenB.setVisible(false);
+        plusFiftyB.setVisible(false);
+        plusHundredB.setVisible(false);
     }
 
 //    @FXML
@@ -177,6 +190,9 @@ public class HelloController {
             gameText.setText("You payed tax: " + b.getTile(p.getPl_pos()).getPrice());
             p.setPl_cash(p.getPl_cash() - b.getTile(p.getPl_pos()).getPrice());
             b.addPublicSpace(b.getTile(p.getPl_pos()).getPrice());
+            rollB.setVisible(true);
+            upgradeB.setVisible(true);
+            mortB.setVisible(true);
         }else if (p.getOwns().size() >= 1){
             //checks if all the properties the player owns are mortgaged
             boolean allMortgaged = true;
@@ -458,7 +474,7 @@ public class HelloController {
         if(option == 1){
             tiles[tileNo].setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
         }else if(option == 2){
-            tiles[tileNo].setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
+            tiles[tileNo].setStyle("-fx-background-color: rgba(255, 0, 255, 0.2);");
         }
     }
 
@@ -504,7 +520,7 @@ public class HelloController {
     protected void auction(int tileI){
         b.resetHighestBid();
         auctionTileI = tileI;
-        gameText.appendText("auction for tile " + b.getTile(auctionTileI));
+        gameText.setText("auction for tile " + b.getTile(auctionTileI));
         b.addAllPlayersToAuction();
         //display buttons for no and bid amounts each button should pass a different bid amount to bid in this class
 
@@ -515,7 +531,7 @@ public class HelloController {
     @FXML
     protected void bid(int amount){
         if (b.getCurrentBiddingPlayer().getPl_cash() > (b.getHighestBid() + amount)){
-            gameText.appendText(b.getCurrentBiddingPlayer().getPlayer_id() + " has bid £" + amount + " the current " +
+            gameText.appendText("\n\n\n" +b.getCurrentBiddingPlayer().getPlayer_id() + " has bid £" + amount + " the current " +
                     "highest bid is " + b.getHighestBid());
             b.auctionBid(amount);
             b.incrIndexOfCurrentBidder();
@@ -528,9 +544,18 @@ public class HelloController {
     //since removing from the array all elements get shifted to the left by 1
     @FXML protected void bidNo(){
         b.auctionNo();
+        gameText.setText("Player " + p.getPlayer_id() + " has left the auction");
         //checking if only 1 player left in the auctionList of players
         if (b.getAuctionList().size() == 1){
             b.auctionWinner(auctionTileI);
+            gameText.setText("Winner of auction - player " + p.getPlayer_id());
+            plusTenB.setVisible(false);
+            plusFiftyB.setVisible(false);
+            plusHundredB.setVisible(false);
+            leaveBidB.setVisible(false);
+            rollB.setVisible(true);
+            mortB.setVisible(true);
+            upgradeB.setVisible(true);
         }
     }
 
@@ -636,7 +661,35 @@ public class HelloController {
             });
 
             buyBNo.setOnAction(e ->{
+                bidOption = true;
+                endMorgB.setVisible(false);
+                mortB.setVisible(false);
+                nums.setVisible(false);
+                lockB.setVisible(false);
+                buyBYes.setVisible(false);
+                buyBNo.setVisible(false);
+                plusTenB.setVisible(true);
+                plusFiftyB.setVisible(true);
+                plusHundredB.setVisible(true);
+                leaveBidB.setVisible(true);
+                auction(b.getTile(p.getPl_pos()).getTile_id());
 
+            });
+
+            plusTenB.setOnAction(e ->{
+                bid(10);
+            });
+
+            plusFiftyB.setOnAction(e ->{
+                bid(50);
+            });
+
+            plusHundredB.setOnAction(e ->{
+                bid(100);
+            });
+
+            leaveBidB.setOnAction(e ->{
+                bidNo();
             });
 
             nextTurnB.setOnAction(e ->{
