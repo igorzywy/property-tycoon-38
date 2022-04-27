@@ -165,7 +165,7 @@ public class HelloController {
 //        setDiceImage(temp1, dice1);
 //        setDiceImage(temp2, dice2);
 //        String diceSum = String.valueOf(temp1+temp2);
-//        diceOut.setText(diceSum);
+//        diceOut.appendText(diceSum);
 //        return temp1+temp2;
 //    }
 
@@ -187,7 +187,7 @@ public class HelloController {
     @FXML
     protected void taxation(){
         if(p.getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()) {
-            gameText.setText("You payed tax: " + b.getTile(p.getPl_pos()).getPrice());
+            gameText.appendText("You payed tax: " + b.getTile(p.getPl_pos()).getPrice());
             p.setPl_cash(p.getPl_cash() - b.getTile(p.getPl_pos()).getPrice());
             b.addPublicSpace(b.getTile(p.getPl_pos()).getPrice());
             rollB.setVisible(true);
@@ -216,7 +216,7 @@ public class HelloController {
 
     @FXML
     protected void getFPS(){
-        gameText.setText("Player " + p.getPlayer_id() + " has receive the Free Parking Space money (" + b.getFreeParkingSpace() + ")");
+        gameText.appendText("Player " + p.getPlayer_id() + " has receive the Free Parking Space money (" + b.getFreeParkingSpace() + ")");
         p.addPl_cash(b.getFreeParkingSpace());
         b.setFreeParkingSpace(0);
     }
@@ -253,43 +253,43 @@ public class HelloController {
     protected void cardPL(){
         Card c = b.getCardsOK().pollFirst();
         if (c.getType() == CardType.bpp){
-            gameText.setText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
+            gameText.appendText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
             b.Cardbpp(c.getAmount());
         }else if (c.getType() == CardType.ppp){
             //need to check if the player has enough money else let them mortgage or bankrupt
-            gameText.setText(p.getPlayer_id() + " receives " + c.getAmount() +
+            gameText.appendText(p.getPlayer_id() + " receives " + c.getAmount() +
                     " from each player since it's their birthday!");
             b.Cardppp(c.getAmount());
             // get all players and sub 10 from all add players.size()*10 + 10 to the current player
         }else if (c.getType() == CardType.pm){
-            gameText.setText(p.getPlayer_id() + " moves to tile " + c.getAmount());
+            gameText.appendText(p.getPlayer_id() + " moves to tile " + c.getAmount());
             b.Cardpm(c.getAmount());
 
         }else if (c.getType() == CardType.ppb){
             //need to check if the player has enough money else let them mortgage or bankrupt
-            gameText.setText(p.getPlayer_id() + " pays the bank " + c.getAmount());
+            gameText.appendText(p.getPlayer_id() + " pays the bank " + c.getAmount());
             b.Cardppb(c.getAmount());
 
         }else if (c.getType() == CardType.ppf){
             //need to check if the player has enough money else let them mortgage or bankrupt
-            gameText.setText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
+            gameText.appendText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
             b.Cardppf(c.getAmount());
         }else if (c.getType() == CardType.pmx){
             if (c.getAmount() < 0){
-                gameText.setText(p.getPlayer_id() + " moves back " + c.getAmount());
+                gameText.appendText(p.getPlayer_id() + " moves back " + c.getAmount());
                 b.CardpmxBack(c.getAmount());
             }else if(c.getAmount() > 0){
-                gameText.setText(p.getPlayer_id() + " moves forwards " + c.getAmount());
+                gameText.appendText(p.getPlayer_id() + " moves forwards " + c.getAmount());
                 b.CardpmxForward(c.getAmount());
             }
         }else if (c.getType() == CardType.ppr){
             //need to check if the player has enough money else let them mortgage or bankrupt
-            gameText.setText(p.getPlayer_id() + " pays for repairs " +
+            gameText.appendText(p.getPlayer_id() + " pays for repairs " +
                     c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
             b.Cardppr(c.getAmount());
 
         }else if (c.getType() == CardType.pmf){
-            gameText.setText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
+            gameText.appendText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
             b.Cardpmf(c.getAmount());
         }else if(c.getType() == CardType.jfc){
             gameText.appendText(p.getPlayer_id() + " gets a get out of jail free card!\n");
@@ -310,43 +310,43 @@ public class HelloController {
     @FXML protected void cardOK(){
         Card c = b.getCardsOK().pollFirst();
         if (c.getType() == CardType.bpp){
-            gameText.setText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
+            gameText.appendText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
             b.Cardbpp(c.getAmount());
         }else if (c.getType() == CardType.ppp){
             //need to check if the player has enough money else let them mortgage or bankrupt
-            gameText.setText(p.getPlayer_id() + " receives " + c.getAmount() +
+            gameText.appendText(p.getPlayer_id() + " receives " + c.getAmount() +
                     " from each player since it's their birthday!");
             b.Cardppp(c.getAmount());
             // get all players and sub 10 from all add players.size()*10 + 10 to the current player
         }else if (c.getType() == CardType.pm){
-            gameText.setText(p.getPlayer_id() + " moves to tile " + c.getAmount());
+            gameText.appendText(p.getPlayer_id() + " moves to tile " + c.getAmount());
             b.Cardpm(c.getAmount());
 
         }else if (c.getType() == CardType.ppb){
             //need to check if the player has enough money else let them mortgage or bankrupt
-            gameText.setText(p.getPlayer_id() + " pays the bank " + c.getAmount());
+            gameText.appendText(p.getPlayer_id() + " pays the bank " + c.getAmount());
             b.Cardppb(c.getAmount());
 
         }else if (c.getType() == CardType.ppf){
             //need to check if the player has enough money else let them mortgage or bankrupt
-            gameText.setText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
+            gameText.appendText(p.getPlayer_id() + " puts " + c.getAmount() + " into free parking!");
             b.Cardppf(c.getAmount());
         }else if (c.getType() == CardType.pmx){
             if (c.getAmount() < 0){
-                gameText.setText(p.getPlayer_id() + " moves back " + c.getAmount());
+                gameText.appendText(p.getPlayer_id() + " moves back " + c.getAmount());
                 b.CardpmxBack(c.getAmount());
             }else if(c.getAmount() > 0){
-                gameText.setText(p.getPlayer_id() + " moves forwards " + c.getAmount());
+                gameText.appendText(p.getPlayer_id() + " moves forwards " + c.getAmount());
                 b.CardpmxForward(c.getAmount());
             }
         }else if (c.getType() == CardType.ppr){
             //need to check if the player has enough money else let them mortgage or bankrupt
-            gameText.setText(p.getPlayer_id() + " pays for repairs " +
+            gameText.appendText(p.getPlayer_id() + " pays for repairs " +
                     c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
             b.Cardppr(c.getAmount());
 
         }else if (c.getType() == CardType.pmf){
-            gameText.setText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
+            gameText.appendText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
             b.Cardpmf(c.getAmount());
         }else if(c.getType() == CardType.jfc){
             gameText.appendText(p.getPlayer_id() + " gets a get out of jail free card!\n");
@@ -366,7 +366,7 @@ public class HelloController {
     protected void bankrupt(){
         p.setBankrupt(true);
         System.out.println(p.getPlayer_id() + " is bankrupt");
-        //call for all the players properties to be auctioned
+        b.bankrupt(p.getPlayer_id());
         //call to increment player
     }
     // checking if the player is in jail and if they are just visiting
@@ -406,7 +406,7 @@ public class HelloController {
 
     @FXML
     protected void justVisiting(){
-        gameText.setText(p.getPlayer_id() + " is just visiting!");
+        gameText.appendText(p.getPlayer_id() + " is just visiting!");
     }
 
     //buying a house on a property
@@ -429,30 +429,30 @@ public class HelloController {
                                 p.setPl_cash(p.getPl_cash() - b.getTile(tileI).getHousePrice());
                                 b.getTile(tileI).incrHouses();
                                 p.incrHousesOwned();
-                                gameText.setText(p.getPlayer_id() + " has bought a house on " +
+                                gameText.appendText(p.getPlayer_id() + " has bought a house on " +
                                         b.getTile(tileI).getTileName());
                             }else if (b.getTile(tileI).getHotels() >= 1){
-                                gameText.setText(b.getTile(tileI).getTileName() + " already has a hotel!");
+                                gameText.appendText(b.getTile(tileI).getTileName() + " already has a hotel!");
                             }else if (p.getPl_cash() < (b.getTile(tileI).getHousePrice()*5)){
-                                gameText.setText("you cannot afford a hotel! " + (b.getTile(tileI).getHousePrice()*5) +
+                                gameText.appendText("you cannot afford a hotel! " + (b.getTile(tileI).getHousePrice()*5) +
                                         " is needed");
                             }else{
                                 p.setPl_cash(p.getPl_cash() - (b.getTile(tileI).getHousePrice()*5));
                                 b.getTile(tileI).incrHotels();
-                                gameText.setText(p.getPlayer_id() + " has bought a hotel on " +
+                                gameText.appendText(p.getPlayer_id() + " has bought a hotel on " +
                                         b.getTile(tileI).getTileName());
                             }
                         }else{
-                            gameText.setText("you have more than 1 house difference between your properties");
+                            gameText.appendText("you have more than 1 house difference between your properties");
                         }
                     }else{
-                        gameText.setText("you don't own the set");
+                        gameText.appendText("you don't own the set");
                     }
                 }else{
-                    gameText.setText("you don't own that tile");
+                    gameText.appendText("you don't own that tile");
                 }
             }else {
-                gameText.setText("you don't have enough money to buy a house! " + b.getTile(tileI).getHousePrice() +
+                gameText.appendText("you don't have enough money to buy a house! " + b.getTile(tileI).getHousePrice() +
                         " is needed");
             }
         }
@@ -531,9 +531,9 @@ public class HelloController {
     @FXML
     protected void bid(int amount){
         if (b.getCurrentBiddingPlayer().getPl_cash() > (b.getHighestBid() + amount)){
+            b.auctionBid(amount);
             gameText.appendText("\n\n\n" +b.getCurrentBiddingPlayer().getPlayer_id() + " has bid £" + amount + " the current " +
                     "highest bid is " + b.getHighestBid());
-            b.auctionBid(amount);
             b.incrIndexOfCurrentBidder();
         }else{
             gameText.appendText("you cannot afford to bid £" + amount);
@@ -543,12 +543,15 @@ public class HelloController {
     //for when the player doesn't want to place a bid i don't think we need to incr the index of current bidder
     //since removing from the array all elements get shifted to the left by 1
     @FXML protected void bidNo(){
+        gameText.appendText("\nPlayer " + b.getCurrentBiddingPlayer().getPlayer_id() + " has left the auction");
         b.auctionNo();
-        gameText.setText("Player " + p.getPlayer_id() + " has left the auction");
+
+        //b.incrIndexOfCurrentBidder();
+
         //checking if only 1 player left in the auctionList of players
         if (b.getAuctionList().size() == 1){
             b.auctionWinner(auctionTileI);
-            gameText.setText("Winner of auction - player " + p.getPlayer_id());
+            gameText.appendText("\nWinner of auction - player " + b.getHighestBidPlayer().getPlayer_id());
             plusTenB.setVisible(false);
             plusFiftyB.setVisible(false);
             plusHundredB.setVisible(false);
@@ -576,9 +579,9 @@ public class HelloController {
 
 
             mortgOption = false;
-            pawns = new Shape[b.getPLAYER_COUNT()];
+            pawns = new Shape[b.getPlayerCount()];
             //setting up array of pawns
-            for(int i = 0; i < b.getPLAYER_COUNT(); i++){
+            for(int i = 0; i < b.getPlayerCount(); i++){
                 pawns[i] = pawnsStorage[i];
             }
 
@@ -647,13 +650,13 @@ public class HelloController {
             buyBYes.setOnAction(e ->{
                 if(b.getPlayer(b.getPlayerTurn()).getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()){
                     b.buyingTile();
-                    gameText.setText("Property has be bought.");
+                    gameText.appendText("Property has be bought.");
                     buyBYes.setVisible(false);
                     buyBNo.setVisible(false);
                     mortB.setVisible(true);
                     nextTurnB.setVisible(true);
                 }else{
-                    gameText.setText("You don't have enough money.");
+                    gameText.appendText("You don't have enough money.");
                     buyBYes.setVisible(false);
                     buyBNo.setVisible(false);
                     mortB.setVisible(true);
@@ -701,7 +704,7 @@ public class HelloController {
                 nums.setVisible(true);
                 lockB.setVisible(true);
                 mortgOption = true;
-                gameText.setText(p.getOwns() + "");
+                gameText.appendText(p.getOwns() + "");
             });
 
             endMorgB.setOnAction(e ->{
@@ -727,7 +730,7 @@ public class HelloController {
                         nums.setVisible(false);
                         lockB.setVisible(false);
                         endMorgB.setVisible(false);
-                        gameText.setText(b.getTile(tileToMorg).getTileName() + " has been bought!");
+                        gameText.appendText(b.getTile(tileToMorg).getTileName() + " has been bought!");
 
                     }else{
                         gameText.appendText("You don't own this property or it has already been mortgaged, " +
@@ -764,20 +767,20 @@ public class HelloController {
 //                            }if(removedTile == true){
 //                                lockB.setDisable(true);
 //                            }else{
-//                                gameText.setText("You don't own that tile");
+//                                gameText.appendText("You don't own that tile");
 //                            }
 //                    }else {
 //                        if(currBidNo <= b.pSize()){
-//                            gameText.setText("All bids have been placed");
+//                            gameText.appendText("All bids have been placed");
 //                            b.auctionBuy(b.highest_bid.getKey());
 //                            b.incPlayer();
 //                            yesB.setDisable(true);
 //                            noB.setDisable(true);
 //                            rollB.setDisable(false);
 //                            mortB.setDisable(false);
-//                            gameText.setText(b.getPlayer(b.getPlayerTurn()) + "'s turn");
+//                            gameText.appendText(b.getPlayer(b.getPlayerTurn()) + "'s turn");
 //                        }
-//                        gameText.setText("Got it");
+//                        gameText.appendText("Got it");
 //                        b.bid(Integer.parseInt(nums.getText()), currBidNo);
 //                        currBidNo++;
 //                        lockB.setDisable(true);
@@ -787,7 +790,7 @@ public class HelloController {
 //                    }
 //
 //                }else{
-//                        gameText.setText("Please enter a number");
+//                        gameText.appendText("Please enter a number");
 //                }
             });
 

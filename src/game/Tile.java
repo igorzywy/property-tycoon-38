@@ -42,6 +42,13 @@ public class Tile {
 
     }
 
+
+    public void resetTile(){
+        this.hotels = 0;
+        this.houses = 0;
+        this.mortgaged = false;
+    }
+
     public int getHotels() {
         return hotels;
     }

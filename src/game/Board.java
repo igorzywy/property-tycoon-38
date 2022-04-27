@@ -23,18 +23,19 @@ public class Board {
     private Pair<Integer,Integer> highestBidOld = new Pair<>(0,0);
 
     private ArrayList<Player> auctionList = new ArrayList<Player>();
-    private int indexOfCurrentBidder = 0;
     private int highestBid = 0;
     private Player highestBidPlayer = null;
 
 
-    public void setIndexOfCurrentBidder(int indexOfCurrentBidder) {
-        this.indexOfCurrentBidder = indexOfCurrentBidder;
-    }
+
 
     public void resetHighestBid(){
         this.highestBid = 0;
         this.highestBidPlayer = null;
+    }
+
+    public Player getHighestBidPlayer(){
+        return this.highestBidPlayer;
     }
 
     public int numOfBidders(){
@@ -47,11 +48,11 @@ public class Board {
 
     //for when the player doesn't want to bid for the current property
     public void auctionNo(){
-        this.auctionList.remove(indexOfCurrentBidder);
+        this.auctionList.remove(0);
     }
 
     public void auctionBid(int amount){
-        Player ap = auctionList.get(indexOfCurrentBidder);
+        Player ap = auctionList.get(0);
         this.highestBid += amount;
         this.highestBidPlayer = ap;
     }
@@ -64,18 +65,18 @@ public class Board {
     }
 
     public Player getCurrentBiddingPlayer(){
-        return auctionList.get(indexOfCurrentBidder);
+        return auctionList.get(0);
     }
 
     public void incrIndexOfCurrentBidder(){
-        if (indexOfCurrentBidder >= auctionList.size()) {
-            indexOfCurrentBidder = 0;
-        }else{
-            indexOfCurrentBidder++;
-        }
+        Player temp = auctionList.get(0);
+        auctionList.remove(0);
+        auctionList.add(temp);
     }
 
     public void addAllPlayersToAuction(){
+
+        auctionList.clear();
         auctionList.addAll(players);
     }
 
@@ -87,6 +88,26 @@ public class Board {
     public boolean game_End = false;
 
 
+    /*
+    * Bankrupt calls the player to be removed from the current players arraylist and also resets all of the tiles
+    *  that they own to be their default state
+    *
+     */
+
+    public void bankrupt(int playerId){
+        for (int i = 0; i < getPlayerCount(); i++) {
+            if (getPlayer(i).getPlayer_id() == playerId){
+                ArrayList<Tile> plOwned = getPlayer(i).getOwns();
+                for (int j = 0; j < plOwned.size(); j++) {
+                    plOwned.get(j).setOwnedBy(0);
+                    plOwned.get(j).resetTile();
+                }
+                players.remove(getPlayer(i));
+            }
+
+        }
+
+    }
 
 
     public Board(int p_count){
@@ -94,7 +115,7 @@ public class Board {
         //adding tiles to the board
         this.board = Tile.getXLSXData();
         //setting player count
-        setPLAYER_COUNT(p_count);
+        setPlayerCount(p_count);
         //adding players to board
         this.players = new ArrayList<Player>();
         for (int i = 0; i < PLAYER_COUNT; i++) {
@@ -171,10 +192,10 @@ public class Board {
 
     public void Cardppp(int amount){
         Player p = getPlayer(player_turn);
-        for (int i = 0; i < getPLAYER_COUNT(); i++) {
+        for (int i = 0; i < getPlayerCount(); i++) {
             getPlayer(i).setPl_cash(getPlayer(i).getPl_cash() - amount);
         }
-        p.setPl_cash(p.getPl_cash() + (getPLAYER_COUNT()*amount) + amount);
+        p.setPl_cash(p.getPl_cash() + (getPlayerCount()*amount) + amount);
     }
 
     public void Cardpm(int amount){
@@ -298,7 +319,7 @@ public class Board {
         this.freeParkingSpace = amount;
     }
 
-    public void setPLAYER_COUNT(int player_Count){
+    public void setPlayerCount(int player_Count){
         PLAYER_COUNT = player_Count;
     }
     //increment the player turn
@@ -589,7 +610,7 @@ public class Board {
 
     public ArrayList<Player> getPlayers(){return players;}
 
-    public int getPLAYER_COUNT(){
+    public int getPlayerCount(){
         return PLAYER_COUNT;
     }
 
