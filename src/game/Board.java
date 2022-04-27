@@ -4,21 +4,23 @@ import javafx.util.Pair;
 
 import java.util.*;
 
-
+/**
+ * Board is where all the components of the game like cards and players and tiles will be stored
+ */
 public class Board {
 
 
     private int TILE_COUNT = 40;
-    private int PLAYER_COUNT = 5;
+    private int playerCount = 5;
     private int player_turn = 0;
     private int rl_double = 0 ;
     private boolean isDouble = false;
     private ArrayList<Tile> board = null;
     private ArrayList<Player> players = null;
     //opportunity knocks cards
-    private Deque<Card> cardsOK = null;
+    private ArrayList<Card> cardsOK = null;
     //pot luck cards
-    private Deque<Card> cardsPL = null;
+    private ArrayList<Card> cardsPL = null;
     private int freeParkingSpace = 0;
     private Pair<Integer,Integer> highestBidOld = new Pair<>(0,0);
 
@@ -27,13 +29,18 @@ public class Board {
     private Player highestBidPlayer = null;
 
 
-
-
+    /**
+     * This method resets the highest bid and the player with the highest bid
+     */
     public void resetHighestBid(){
         this.highestBid = 0;
         this.highestBidPlayer = null;
     }
 
+    /**
+     * Gets the player with the highest bid
+     * @return Player This returns the highest bid player
+     */
     public Player getHighestBidPlayer(){
         return this.highestBidPlayer;
     }
@@ -42,15 +49,28 @@ public class Board {
         return auctionList.size();
     }
 
+    /**
+     * Gets the highest bid amount
+     * @return int returns the amount in the highest bid
+     */
     public int getHighestBid(){
         return this.highestBid;
     }
 
     //for when the player doesn't want to bid for the current property
+
+    /**
+     * This method removes the player who is currently bidding if they decided to
+     * not place a bid
+     */
     public void auctionNo(){
         this.auctionList.remove(0);
     }
 
+    /**
+     * Adds the amount the player currently bidding has selected
+     * @param amount the amount to be added to the highest bid
+     */
     public void auctionBid(int amount){
         Player ap = auctionList.get(0);
         this.highestBid += amount;
@@ -58,22 +78,38 @@ public class Board {
     }
 
     //assigns the tile owned by to the player that won the auctions id and subtracts the money from the players account
+
+    /**
+     * Assigns the player the tile that they won in the auction and adds it to their owned tiles.
+     * Also changes the tiles owned by to be the same as the playerID of the winner of the auction
+     * @param tileI This is the index of the tile that was won at auction
+     */
     public void auctionWinner(int tileI){
         getTile(tileI).setOwnedBy(highestBidPlayer.getPlayer_id());
         highestBidPlayer.addOwns(getTile(tileI));
         highestBidPlayer.setPl_cash(highestBidPlayer.getPl_cash() - highestBid);
     }
 
+    /**
+     * Gets the current player that is given the option to bid or stop bidding
+     * @return Player The player at the front of the queue for the auction
+     */
     public Player getCurrentBiddingPlayer(){
         return auctionList.get(0);
     }
 
+    /**
+     * Changes the current player to be given the option to place a bid or not
+     */
     public void incrIndexOfCurrentBidder(){
         Player temp = auctionList.get(0);
         auctionList.remove(0);
         auctionList.add(temp);
     }
 
+    /**
+     * Clears the auction arraylist and adds all players that are not bankrupt to an arraylist
+     */
     public void addAllPlayersToAuction(){
 
         auctionList.clear();
@@ -94,6 +130,11 @@ public class Board {
     *
      */
 
+    /**
+     * Removes the player from the current players arraylist and also resets all the tiles
+     * that they own to be their default state
+     * @param playerId The ID of the player that is going to be bankrupt
+     */
     public void bankrupt(int playerId){
         for (int i = 0; i < getPlayerCount(); i++) {
             if (getPlayer(i).getPlayer_id() == playerId){
@@ -104,12 +145,18 @@ public class Board {
                 }
                 players.remove(getPlayer(i));
             }
-
         }
-
     }
 
 
+    /**
+     * The constructor for the Board class. This assigns all the tiles that are on the csv file to the board variable.
+     * This adds new players to the arraylist of players.
+     * This also adds the pot luck cards and the opportunity knocks cards to the arraylists of the different types
+     * of cards.
+     * Also sets the player count
+     * @param p_count Used to allow the user to input how many players there will be in the game.
+     */
     public Board(int p_count){
 
         //adding tiles to the board
@@ -118,7 +165,7 @@ public class Board {
         setPlayerCount(p_count);
         //adding players to board
         this.players = new ArrayList<Player>();
-        for (int i = 0; i < PLAYER_COUNT; i++) {
+        for (int i = 0; i < playerCount; i++) {
             this.players.add(new Player());
         }
         //adding pot luck cards to board
@@ -128,6 +175,11 @@ public class Board {
 
     }
 
+    /**
+     * This method checks if the player owns the set of a certain tile group
+     * @param tileGroup The name of the tile group to be checked
+     * @return boolean Returns true if the player owns the set and false if the player doesn't own the set
+     */
     public boolean playerOwnSet(String tileGroup) {
         Player p = players.get(player_turn);
         int counter = 0;
@@ -143,6 +195,13 @@ public class Board {
         }
     }
     //getting the rent amount for landing on an owned station
+
+    /**
+     * Calculates the amount the player that landed on the tile will have to pay for a station. Doubles the amount
+     * the station costs depending on the number of stations owned by the player that owns the station tile that
+     * was landed on.
+     * @return The rent that the player will have to pay for landing on a station.
+     */
     public int getStationRentAmount(){
         Player p = players.get(player_turn);
         int ownedBy = getTile(p.getPl_pos()).getOwnedBy();
@@ -154,7 +213,12 @@ public class Board {
         return rentAmount;
     }
 
-    //getting the rent amount for landing on an owned utility
+    /**
+     * Calculates the amount the player that landed on the tile will have to pay for a utility. Multiplies the
+     * number on the dice roll by 4 if the player owns one utility and 10 if they own two utilities.
+     * @param diceRoll The amount the player rolled on the dice to be multiplied
+     * @return int The amount the player will have to pay for the rent
+     */
     public int getUtilRentAmount(int diceRoll){
         Player p = players.get(player_turn);
         int ownedBy = getTile(p.getPl_pos()).getOwnedBy();
@@ -169,6 +233,11 @@ public class Board {
         return rentAmount;
     }
 
+    /**
+     * Makes the player pay rent and subtracts the amount they have to pay from their bankroll and also
+     * gives that money to the player that owns that tile
+     * @param rentAmount The amount that the player will have to pay
+     */
     public void payRent(int rentAmount){
         Player p = players.get(player_turn);
         int ownedBy = getTile(p.getPl_pos()).getOwnedBy();
@@ -178,6 +247,10 @@ public class Board {
         getTile(p.getPl_pos()).setOwnedBy(p.getPlayer_id());
     }
 
+    /**
+     * The method adds the tile that they have bought to the arraylist of the player owned tiles.
+     * Also subtracts the amount the tile costs from the players bankroll
+     */
     public void buyingTile(){
         Player p = getPlayer(player_turn);
         getTile(p.getPl_pos()).setOwnedBy(p.getPlayer_id());
@@ -185,11 +258,20 @@ public class Board {
         p.setPl_cash(p.getPl_cash() - getTile(p.getPl_pos()).getPrice());
     }
 
+    /**
+     * Method for when the card is a bank pay player card adds the amount the card says to the players bankroll
+     * @param amount The amount that the player will receive
+     */
     public void Cardbpp(int amount){
         Player p = getPlayer(player_turn);
         p.setPl_cash(p.getPl_cash() + amount);
     }
 
+    /**
+     * Method for when the card is a player pay player card. Since there is only 1 card of this type the players all
+     * get deducted the amount on the card. It is then added to the player who got the card bankroll.
+     * @param amount The amount that the player will receive
+     */
     public void Cardppp(int amount){
         Player p = getPlayer(player_turn);
         for (int i = 0; i < getPlayerCount(); i++) {
@@ -198,22 +280,39 @@ public class Board {
         p.setPl_cash(p.getPl_cash() + (getPlayerCount()*amount) + amount);
     }
 
+    /**
+     * Method for when the card is a player move card the players position is set to the amount on the card
+     * @param amount The position the player will move to
+     */
     public void Cardpm(int amount){
         Player p = getPlayer(player_turn);
         p.setPl_pos(amount);
     }
 
+    /**
+     * Method for when the card is a player pay bank card. This will deduct how much the player will pay to the bank
+     * @param amount The amount the player will have to pay
+     */
     public void Cardppb(int amount) {
         Player p = getPlayer(player_turn);
         p.setPl_cash(p.getPl_cash() - amount);
     }
 
+    /**
+     * Method for when the card is a player pay free card. The player will pay the specified amount to free parking
+     * @param amount The amount the player will have to pay
+     */
     public void Cardppf(int amount){
         Player p = getPlayer(player_turn);
         p.setPl_cash(p.getPl_cash() - amount);
         addPublicSpace(amount);
     }
 
+    /**
+     * Method for when the card is a player move x amount backwards card. This will move the player back a
+     * specified amount of spaces
+     * @param amount The amount of spaces the player will move back
+     */
     public void CardpmxBack(int amount){
         Player p = getPlayer(player_turn);
         for (int i = 0; i < amount; i++) {
@@ -221,6 +320,11 @@ public class Board {
         }
     }
 
+    /**
+     * Method for when the card is a player move x amount forwards card. This will move the player forwards a
+     * specified amount of spaces
+     * @param amount The amount of spaces the player will move forwards
+     */
     public void CardpmxForward(int amount){
         Player p = getPlayer(player_turn);
         for (int i = 0; i < amount; i++) {
@@ -228,12 +332,26 @@ public class Board {
         }
     }
 
-    public void Cardppr(int amount){
+    /**
+     * Method for when the card is a player pay repair card. This will get the number of hotels and houses that the
+     * player owns and then get multiplied by the amount on the card for houses and the amount for on the card for
+     * hotel prices
+     * @param houseAmount The amount a repair will cost for 1 house
+     * @param hotelAmount The amount a repair will cost for 1 hotel
+     */
+    public void Cardppr(int houseAmount, int hotelAmount){
         Player p = getPlayer(player_turn);
-        p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * amount) +
-                p.getHotelsOwned() * amount);
+        p.setPl_cash(p.getPl_cash() - (p.getHousesOwned() * houseAmount) +
+                p.getHotelsOwned() * hotelAmount);
     }
 
+
+    /**
+     * Method for when the card is a player move forward. They will also collect 200 if they pass go. Checks if the
+     * player will pass go and adds 200 to their bankroll and sets their new position to the amount on the card
+     * otherwise just sets the players position to the amount on the card.
+     * @param amount The position that the player will be moved to.
+     */
     public void Cardpmf(int amount){
         Player p = getPlayer(player_turn);
         if (amount - p.getPl_pos() > bSize()-1){
@@ -244,13 +362,20 @@ public class Board {
         }
     }
 
+    /**
+     * Method for when the card is a get out of jail free card. Player will be given a get out of jail free card to use
+     */
     public void Cardjfc(){
         Player p = getPlayer(player_turn);
         p.incrNoJailFreeCard();
     }
 
 
-
+    /**
+     * Gets the amount of tiles that there are in a certain group
+     * @param grp The group that you want to get the amount of tiles for
+     * @return int The number of tiles in a group
+     */
     public int getGroupSize(String grp){
         int counter = 0;
         for (int i = 0; i < bSize(); i++) {
@@ -261,6 +386,12 @@ public class Board {
         return counter;
     }
     //checks if there is a difference of more than 1 house on each property
+
+    /**
+     * Checks if there is a more than 1 house difference on a given group
+     * @param grp The group to be checked
+     * @return boolean True if there is a greater difference than 1 on a group false if there isn't.
+     */
     public boolean checkForTwoHouseDiff(String grp){
         ArrayList<Tile> tilesDiff = new ArrayList<Tile>();
         for (int i = 0; i < bSize(); i++) {
@@ -280,7 +411,11 @@ public class Board {
         return false;
     }
 
-    //checks if there are 4 houses on each property in a colour set
+    /**
+     * Checks if there are 4 houses on each property in a colour set.
+     * @param grp The group to be checked.
+     * @return boolean True if there are 4 houses false if otherwise.
+     */
     public boolean checkForFourHouses(String grp){
         ArrayList<Tile> tilesOfSet = new ArrayList<Tile>();
         for (int i = 0; i < bSize(); i++) {
@@ -300,11 +435,19 @@ public class Board {
     }
 
     public void addCardsOK(Card c){
-        this.cardsOK.addLast(c);
+        this.cardsOK.add(c);
     }
 
     public void addCardsPL(Card c){
-        this.cardsPL.addLast(c);
+        this.cardsPL.add(c);
+    }
+
+    public void removeCardsPL(){
+        this.cardsPL.remove(0);
+    }
+
+    public void removeCardsOK(){
+        this.cardsOK.remove(0);
     }
 
     public void addPublicSpace(int amount){
@@ -320,7 +463,7 @@ public class Board {
     }
 
     public void setPlayerCount(int player_Count){
-        PLAYER_COUNT = player_Count;
+        playerCount = player_Count;
     }
 
 
@@ -621,7 +764,7 @@ public class Board {
     public ArrayList<Player> getPlayers(){return players;}
 
     public int getPlayerCount(){
-        return PLAYER_COUNT;
+        return playerCount;
     }
 
 
@@ -639,9 +782,9 @@ public class Board {
     public int bSize(){
         return this.board.size();
     }
-    public Deque<Card> getCardsOK(){
+    public ArrayList<Card> getCardsOK(){
         return cardsOK;   }
-    public Deque<Card> getCardsPL(){
+    public ArrayList<Card> getCardsPL(){
         return cardsPL;   }
 
 

@@ -44,9 +44,8 @@ public class Card {
         return this.perHotel;
     }
 
-    public static Deque<Card> getXLSXDataPotLuck(){
+    public static ArrayList<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
-        Deque<Card> dCard = new ArrayDeque<>();
         String path = "data/PotLuckCardData.csv";
         String line = "";
         try {
@@ -63,13 +62,11 @@ public class Card {
             e.printStackTrace();
         }
         Collections.shuffle(cards);
-        dCard.addAll(cards);
-        return dCard;
+        return cards;
     }
 
-    public static Deque<Card> getXLSXDataOpportunityKnocks(){
+    public static ArrayList<Card> getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
-        Deque<Card> dCard = new ArrayDeque<>();
         String path = "data/OpportunityKnocksCardData.csv";
         String line = "";
         try {
@@ -86,8 +83,7 @@ public class Card {
             e.printStackTrace();
         }
         Collections.shuffle(cards);
-        dCard.addAll(cards);
-        return dCard;
+        return cards;
 
     }
 

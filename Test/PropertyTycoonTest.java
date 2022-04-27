@@ -5,6 +5,7 @@ import game.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import static org.junit.Assert.*;
@@ -42,15 +43,15 @@ public class PropertyTycoonTest {
     @Test
     public void shuffleOpportunityCard(){
         Board A = new Board(2);
-        Deque<Card> check = b.getCardsOK();
-        Deque<Card> test = A.getCardsOK();
+        ArrayList<Card> check = b.getCardsOK();
+        ArrayList<Card> test = A.getCardsOK();
         assertNotSame(check, test);
     }
     @Test
     public void shufflePotOfLuckCard(){
         Board A = new Board(2);
-        Deque<Card> check = b.getCardsPL();
-        Deque<Card> test = A.getCardsPL();
+        ArrayList<Card> check = b.getCardsPL();
+        ArrayList<Card> test = A.getCardsPL();
         assertNotSame(check, test);
     }
     @Test

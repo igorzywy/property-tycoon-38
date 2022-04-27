@@ -251,7 +251,8 @@ public class HelloController {
 
     @FXML
     protected void cardPL(){
-        Card c = b.getCardsOK().pollFirst();
+        Card c = b.getCardsPL().get(0);
+        b.removeCardsPL();
         if (c.getType() == CardType.bpp){
             gameText.appendText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
             b.Cardbpp(c.getAmount());
@@ -286,7 +287,7 @@ public class HelloController {
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.appendText(p.getPlayer_id() + " pays for repairs " +
                     c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
-            b.Cardppr(c.getAmount());
+            b.Cardppr(c.getAmount(), c.getHotelPrice());
 
         }else if (c.getType() == CardType.pmf){
             gameText.appendText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
@@ -295,7 +296,7 @@ public class HelloController {
             gameText.appendText(p.getPlayer_id() + " gets a get out of jail free card!\n");
             b.Cardjfc();
         }
-        b.addCardsOK(c);
+        b.addCardsPL(c);
     }
 
     //opportunity knocks
@@ -308,7 +309,8 @@ public class HelloController {
         }
     }
     @FXML protected void cardOK(){
-        Card c = b.getCardsOK().pollFirst();
+        Card c = b.getCardsOK().get(0);
+        b.removeCardsOK();
         if (c.getType() == CardType.bpp){
             gameText.appendText(p.getPlayer_id() + " receives: " + c.getAmount() + " from the bank!");
             b.Cardbpp(c.getAmount());
@@ -343,7 +345,7 @@ public class HelloController {
             //need to check if the player has enough money else let them mortgage or bankrupt
             gameText.appendText(p.getPlayer_id() + " pays for repairs " +
                     c.getAmount() + " per house " + c.getHotelPrice() + " per hotel ");
-            b.Cardppr(c.getAmount());
+            b.Cardppr(c.getAmount(), c.getHotelPrice());
 
         }else if (c.getType() == CardType.pmf){
             gameText.appendText(p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
