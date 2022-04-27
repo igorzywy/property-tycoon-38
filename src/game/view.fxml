@@ -76,7 +76,7 @@
                   <FlowPane fx:id="pane11" prefHeight="106.0" prefWidth="107.0" />
                   <FlowPane fx:id="pane10" prefHeight="106.0" prefWidth="64.0" />
                   <FlowPane fx:id="pane9" prefHeight="106.0" prefWidth="64.0" />
-                  <FlowPane fx:id="pane8" prefHeight="106.0" prefWidth="64.0" />
+                  <FlowPane fx:id="pane8" />
                   <FlowPane fx:id="pane7" prefHeight="106.0" prefWidth="64.0" />
                   <FlowPane fx:id="pane6" prefHeight="106.0" prefWidth="68.0" />
                   <FlowPane fx:id="pane5" prefHeight="106.0" prefWidth="71.0" />
@@ -101,27 +101,27 @@
                      </image>
                   </ImageView>
                   <Label fx:id="diceOut" layoutX="156.0" layoutY="507.0" prefHeight="34.0" prefWidth="50.0" />
-                  <Button fx:id="mortB" layoutX="346.0" layoutY="272.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="78.0" text="Mortgage" />
+                  <Button fx:id="mortB" layoutX="373.0" layoutY="267.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="78.0" text="Mortgage" />
                   <TextField fx:id="playerNum" layoutX="29.0" layoutY="51.0" prefHeight="35.0" prefWidth="41.0" />
                   <Text layoutX="17.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player count" />
                   <Button layoutX="93.0" layoutY="52.0" mnemonicParsing="false" onAction="#NewGame" prefHeight="33.0" prefWidth="75.0" text="New Game" />
-                  <Button fx:id="buyBYes" layoutX="69.0" layoutY="363.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="Yes" />
-                  <TextArea fx:id="gameText" layoutX="22.0" layoutY="144.0" prefHeight="200.0" prefWidth="268.0">
+                  <Button fx:id="buyBYes" layoutX="53.0" layoutY="433.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="Yes" />
+                  <TextArea fx:id="gameText" layoutX="12.0" layoutY="125.0" prefHeight="292.0" prefWidth="353.0">
                      <font>
                         <Font name="Segoe UI Bold" size="17.0" />
                      </font>
                   </TextArea>
-                  <Button fx:id="rollB" layoutX="330.0" layoutY="79.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="82.0" text="Roll" />
-                  <Button fx:id="buyBNo" layoutX="166.0" layoutY="363.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="No" />
-                  <TextField fx:id="nums" layoutX="453.0" layoutY="244.0" prefHeight="31.0" prefWidth="54.0" />
-                  <Button fx:id="lockB" layoutX="460.0" layoutY="211.0" mnemonicParsing="false" text="Lock" />
-                  <Button fx:id="endMorgB" layoutX="435.0" layoutY="280.0" mnemonicParsing="false" text="end Mortgage" />
-                  <Button fx:id="nextTurnB" layoutX="467.0" layoutY="80.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="69.0" text="Next Turn" />
-                  <Button fx:id="upgradeB" layoutX="346.0" layoutY="221.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="78.0" text="Upgrade" />
-                  <Button fx:id="leaveBidB" layoutX="436.0" layoutY="314.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Leave bid" />
-                  <Button fx:id="plusTenB" layoutX="345.0" layoutY="363.0" mnemonicParsing="false" text="+10" />
-                  <Button fx:id="plusFiftyB" layoutX="410.0" layoutY="363.0" mnemonicParsing="false" text="+50" />
-                  <Button fx:id="plusHundredB" layoutX="476.0" layoutY="363.0" mnemonicParsing="false" text="+100" />
+                  <Button fx:id="rollB" layoutX="373.0" layoutY="147.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="82.0" text="Roll" />
+                  <Button fx:id="buyBNo" layoutX="141.0" layoutY="433.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="No" />
+                  <TextField fx:id="nums" layoutX="480.0" layoutY="249.0" prefHeight="31.0" prefWidth="54.0" />
+                  <Button fx:id="lockB" layoutX="487.0" layoutY="221.0" mnemonicParsing="false" text="Lock" />
+                  <Button fx:id="endMorgB" layoutX="461.0" layoutY="288.0" mnemonicParsing="false" text="end Mortgage" />
+                  <Button fx:id="nextTurnB" layoutX="472.0" layoutY="148.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="69.0" text="Next Turn" />
+                  <Button fx:id="upgradeB" layoutX="373.0" layoutY="216.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="78.0" text="Upgrade" />
+                  <Button fx:id="leaveBidB" layoutX="462.0" layoutY="323.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Leave bid" />
+                  <Button fx:id="plusTenB" layoutX="434.0" layoutY="363.0" mnemonicParsing="false" text="+10" />
+                  <Button fx:id="plusFiftyB" layoutX="482.0" layoutY="363.0" mnemonicParsing="false" text="+50" />
+                  <Button fx:id="plusHundredB" layoutX="526.0" layoutY="363.0" mnemonicParsing="false" text="+100" />
                </children></AnchorPane>
          </center>
       </BorderPane>
