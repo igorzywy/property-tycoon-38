@@ -322,16 +322,26 @@ public class Board {
     public void setPlayerCount(int player_Count){
         PLAYER_COUNT = player_Count;
     }
-    //increment the player turn
-    public void incPlayer(){
+
+
+    //increment the player turn old don't use
+    /*
+    public void incPlayer2(){
         if (this.player_turn == PLAYER_COUNT-1) {
             this.player_turn = 0;
         }else{
             this.player_turn++;
         }
+    }
+     */
 
+    //increments current player
+    public void incPlayer(){
 
-
+        Player temp = players.get(0);
+        players.remove(0);
+        players.add(temp);
+        player_turn = 0;
     }
 
     public void setRl_double(int d){
@@ -618,9 +628,14 @@ public class Board {
     public boolean getGameEnd(){
         return game_End;
     }
+
     public int getPlayerTurn(){
+        player_turn = players.indexOf(players.get(0));
         return player_turn;
     }
+
+
+
     public int bSize(){
         return this.board.size();
     }
