@@ -92,5 +92,15 @@ public class PropertyTycoonTest {
         System.out.println(b.checkCanBeBought());
         assertFalse(b.checkCanBeBought());
     }
+    @Test
+    public void playertest(){
+
+        Player p = b.getPlayer(0);
+        System.out.println(p.getLap());
+        for (int i = 0; i < 40 ; i++) {
+            p.incrPos();
+        }
+        System.out.println(p.getLap());
+    }
 
 }

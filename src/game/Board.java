@@ -325,7 +325,8 @@ public class Board {
      */
     public void Cardpm(int amount){
         Player p = getPlayer(player_turn);
-        p.setPl_pos(amount);
+        while(p.getPl_pos()!=0){
+        p.incrPos();}
     }
 
     /**
@@ -371,6 +372,13 @@ public class Board {
         }
     }
 
+    public void CardpmBack(int amount){
+        Player p = getPlayer(player_turn);
+        while(p.getPl_pos()!=amount){
+            p.decresePos();
+        }
+    }
+
     /**
      * Method for when the card is a player pay repair card. This will get the number of hotels and houses that the
      * player owns and then get multiplied by the amount on the card for houses and the amount for on the card for
@@ -393,11 +401,14 @@ public class Board {
      */
     public void Cardpmf(int amount){
         Player p = getPlayer(player_turn);
-        if (amount - p.getPl_pos() > bSize()-1){
-            p.setPl_cash(p.getPl_cash() + 200);
-            p.setPl_pos(amount);
-        }else{
-            p.setPl_pos(amount);
+        if(amount==0){
+            while(p.getPl_pos()!=0){
+                p.incrPos();
+            }
+        } else{
+            while(p.getPl_pos()!=amount){
+                p.incrPos();
+            }
         }
     }
 
@@ -559,6 +570,8 @@ public class Board {
         isDouble = b;
 
     }
+
+
 
 
 //    public void turn(){
@@ -821,7 +834,7 @@ public class Board {
         dice2 ++;
         if(dice == dice2){
             this.rl_double++;
-            this.isDouble = true;
+
         }
         else{
             this.isDouble = false;

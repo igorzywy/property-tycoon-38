@@ -16,6 +16,8 @@ public class Player {
     private int housesOwned = 0;
     private int hotelsOwned = 0;
     private int noJailFreeCard = 0;
+    private int lap = 0;
+    private boolean passedgo = false;
 
     public int getNoJailFreeCard() {
         return noJailFreeCard;
@@ -52,6 +54,10 @@ public class Player {
     public void setPl_pos(int pl_pos) {
         this.pl_pos = pl_pos;
     }
+
+    public int getLap(){return this.lap;}
+
+
 
     public int getPl_pos() {
 
@@ -128,8 +134,12 @@ public class Player {
     public void incrPos(){
         if (this.pl_pos == 39){
             this.pl_pos = 0;
+            pl_cash+=200;
+            this.lap++;
         } else {
+
             this.pl_pos ++;
+            this.passedgo=false;
         }
 
     }
@@ -148,5 +158,9 @@ public class Player {
         a+=  "\nplayer id: " + this.player_id + "\npos: " + this.pl_pos + "\nCash: " + this.pl_cash;
         a+= "\n-----------------";
         return a;
+    }
+
+    public boolean isPassedgo() {
+        return passedgo;
     }
 }

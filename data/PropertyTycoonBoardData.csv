@@ -1,5 +1,5 @@
 ﻿Position,Space/property,Group,Action,Can be bought?,Cost,Rent (unimproved) ,1 house,2 houses,3 houses,4 houses,1 hotel,house price
-1,Go,Go,Collect £200,FALSE,-200,0,0,0,0,0,0,0
+1,Go,Go,Collect £200,FALSE,200,0,0,0,0,0,0,0
 2,The Old Creek,Brown,None,TRUE,60,2,10,30,90,160,250,50
 3,Pot Luck,CardPL,Take card,FALSE,0,0,0,0,0,0,0,0
 4,Gangsters Paradise,Brown,None,TRUE,60,4,20,60,180,320,450,50

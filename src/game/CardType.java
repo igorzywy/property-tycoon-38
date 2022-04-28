@@ -12,7 +12,7 @@ public enum CardType {
     pm("PLAYERMOVE"),ppb("PLAYERPAYBANK"),
     ppf("PLAYERPAYFREE"),pmx("PLAYERMOVEX"),
     pmf("PLAYERMOVEFORWARD"),ppr("PLAYERPAYREPAIR"),
-    jfc("JAILFREECARD")
+    jfc("JAILFREECARD"),pmb("PLAYERMOVEBACK")
     ;
     private final String s;
     CardType(String s) {
