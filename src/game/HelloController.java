@@ -108,6 +108,12 @@ public class HelloController {
 
 
     //Setting objects up
+
+
+    /**
+     * Method that initialises at the start of the application.
+     * Sets up tiles, players and buttons to their initial state
+     */
     @FXML
     protected void initialize(){
         System.out.println("Initialising");
