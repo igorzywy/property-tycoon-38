@@ -766,6 +766,7 @@ public class HelloController {
 
                 if (p.getInJail()){
                     pay50B.setVisible(true);
+                    goBankruptB.setVisible(true);
                     if (p.getNoJailFreeCard()>0){
                         //show get out of jail free card button
                         useJfcB.setVisible(true);
@@ -797,6 +798,8 @@ public class HelloController {
                         getFPS();
                     }else if(checkifGoJail()){
                         b.goJail();
+                        nextTurnB.setVisible(true);
+                        gameText.appendText("\nPlayer " + p.getPlayer_id() + " is in jail!");
                     }else if (checkIfJail()){
                         if (checkIfJustVisit()){
                             justVisiting();

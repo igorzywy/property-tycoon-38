@@ -375,12 +375,6 @@ public class Board {
         }
     }
 
-    public void CardpmBack(int amount){
-        Player p = getPlayer(player_turn);
-        while(p.getPl_pos()!=amount){
-            p.decresePos();
-        }
-    }
 
     /**
      * Method for when the card is a player pay repair card. This will get the number of hotels and houses that the
@@ -566,51 +560,9 @@ public class Board {
         player_turn = 0;
     }
 
-    public void setRl_double(int d){
-        rl_double = d;
-    }
-    public void setIsDouble(boolean b){
-        isDouble = b;
-
-    }
 
 
 
-
-//    public void turn(){
-//        Player p = getPlayer(player_turn);
-//        for (int i = 0; i < board.size(); i++) {
-//            System.out.println(getTile(i));
-//        }
-//        gameText.setText( "it's player  "+ p.getPlayer_id() +
-//                " turn\n" + p.getPl_cash());
-//        System.out.println("want to mortgage?");
-//        Scanner input = new Scanner(System.in);
-//        String s = input.nextLine();
-//        if (s.equals("y") && p.getOwns().size() >= 1){
-//            //mortgage();
-//        }else if (s.equals("y") && p.getOwns().size() < 1){
-//            System.out.println("you don't own any tiles!");
-//        }
-//
-//        movePlayer();
-//        canBeBought();
-//        while(this.isDouble && this.rl_double<3) {  //check if is double is true and the amount of doubles rolled is less than 3
-//            movePlayer();
-//        }
-//            this.isDouble = false; //reset values
-//            this.rl_double = 0;
-//            incPlayer();
-//    }
-
-    public boolean checkIfOwnProperty(int tileId){
-        Player p = getPlayer(player_turn);
-        if (getTile(p.getPl_pos()).getOwnedBy() == p.getPlayer_id()){
-            return true;
-        }else {
-            return false;
-        }
-    }
     //lets players mortgage a property or downgrade it by selling a house or hotel
     //check if tile has a hotel
     //check if tile set has 1 house diff
@@ -664,46 +616,6 @@ public class Board {
     }
 
 
-
-
-
-
-// need to add so that it also ask with the player wants to trade that it gets the other players id
-    public String getPlayersTiles(){
-        getPlayer(player_turn).getOwns();
-        return null;
-    }
-    //regular buying of tiles(no auction)
-//    public boolean canBeBought() {
-//        Player p = getPlayer(player_turn);
-//        Tile t = getTile(getPlayer(player_turn).getPl_pos());
-//        String s = "";
-//        if (t.getCanBeBought() && t.getOwnedBy() == null) { // check that the title can be bought and is not owned by any1
-//            System.out.println(t.getTileName());
-//            System.out.println("Price is " + t.getPrice());
-//            System.out.println("Do you want to buy? Y/N \n");
-//            if (s.equals("y")) { // checks if the input is y
-//                int cash = p.getPl_cash();
-//                int price = t.getPrice();
-//                int total = cash - price;
-//                if (total > 0) {
-//                    p.setPl_cash(total);//yh
-//                    t.setOwnedBy(p.getPlayer_id()); //yh
-//                    p.addOwns(t);
-//                    System.out.println("cash: " + p.getPl_cash());
-//                    System.out.println("tile is owned by: " + t.getOwnedBy());
-//                } else {
-//                    System.out.println("you have insufficient funds");
-//                    mortgage();
-//                }
-//            }
-//            if (s.equals("n")) {
-//                auction();
-//            }
-//        }
-//        return true;
-//    }
-
     /**
      * Checks if the current tile that the player is on can be purchased
      * @return boolean True if the tile can be purchased and another player doesn't own it
@@ -753,20 +665,6 @@ public class Board {
         return auctionList;
     }
 
-    //buying tiles with auction
-    public void auctionBuy (int t){
-        // getTile(getPlayer(player_turn).getPl_pos());
-        int cash = getPlayer(highestBidOld.getKey()).getPl_cash();
-        int price = highestBidOld.getValue();
-        int total = cash - price;
-        if (total > 0) {
-            getPlayer(highestBidOld.getKey()).setPl_cash(total);//yh
-            getTile(t).setOwnedBy(highestBidOld.getKey()); //yh
-            getPlayer(highestBidOld.getKey()).addOwns(getTile(t));
-            System.out.println("cash: " + getPlayer(highestBidOld.getKey()).getPl_cash());
-            System.out.println("tile is owned by: " + getTile(t).getOwnedBy());
-        }
-    }
 
     /**
      * Subtracts 50 from the current players bankroll if they are in jail
@@ -776,41 +674,6 @@ public class Board {
         p.setPl_cash(p.getPl_cash() - 50);
         addPublicSpace(50);
         p.setNotInJail();
-    }
-
-
-    public void auction(){
-        highestBidOld = new Pair<>(0,0);
-        for(int i = 0;i< pSize();i++){
-            Scanner input = new Scanner(System.in);
-            if(!getPlayer(i).isBankrupt()){
-                System.out.println(getPlayer(i).getPlayer_id() + " would you like to place a bid?y/n \n");
-                String s = input.nextLine();
-                if(s.equals("y")){
-                    System.out.println("place bid: ");
-                    int bid = input.nextInt();//lets goo
-                    boolean valid_bid = false;
-                    while(valid_bid == false){
-                        if (bid > getPlayer(i).getPl_cash()){
-                            System.out.println("Cannot place bid you are too poor!");
-                            bid = input.nextInt();
-                        }else{
-                            valid_bid = true;
-                        }
-                    }
-                    bid(bid, i);
-                }
-            }
-        }
-        System.out.println(highestBidOld);
-        //getting the player pos to get current tile will need to change later to have auctions for bankruptcy
-        auctionBuy(getPlayer(player_turn).getPl_pos());
-    }
-
-    public void bid(int player_bid, int player_id){
-        if (player_bid > highestBidOld.getValue()){
-            highestBidOld = new Pair<>(player_id,player_bid);
-        }
     }
 
     public void goJail(){
