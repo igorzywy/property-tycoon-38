@@ -581,9 +581,7 @@ public class HelloController {
             mortB.setVisible(true);
             upgradeB.setVisible(true);
             nextTurnB.setVisible(true);
-            nextTurnB.setOnAction(e ->{
-                endTurn();
-            });
+
         }
 
     }
