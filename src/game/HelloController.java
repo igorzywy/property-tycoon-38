@@ -582,6 +582,7 @@ public class HelloController {
         //enable bankruptcy button and mortgage button
         gameText.appendText("\nYou need to mortgage " + Math.abs(p.getPl_cash()));
         mortB.setVisible(true);
+        goBankruptB.setVisible(true);
 
         //add a bankruptcy button
     }
