@@ -87,7 +87,7 @@ public class Board {
      * @param tileI This is the index of the tile that was won at auction
      */
     public void auctionWinner(int tileI){
-        if (auctionList.isEmpty()){
+        if (highestBidPlayer == null){
 
         }else {
             getTile(tileI).setOwnedBy(highestBidPlayer.getPlayer_id());

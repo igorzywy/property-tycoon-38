@@ -559,7 +559,11 @@ public class HelloController {
         //checking if only 1 player left in the auctionList of players
         if (b.getAuctionList().size() == 1){
             b.auctionWinner(auctionTileI);
-            gameText.appendText("\n\nWinner of auction - player " + b.getHighestBidPlayer().getPlayer_id());
+            if (b.getHighestBidPlayer() == null){
+                gameText.appendText("\n\nNo one placed a bid so the bank still owns the tile!");
+            }else {
+                gameText.appendText("\n\nWinner of auction - player " + b.getHighestBidPlayer().getPlayer_id());
+            }
             plusTenB.setVisible(false);
             plusFiftyB.setVisible(false);
             plusHundredB.setVisible(false);
