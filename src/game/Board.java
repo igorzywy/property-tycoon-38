@@ -716,10 +716,14 @@ public class Board {
         }
     }
 
+    /**
+     * Checks if a certain tile is owned by another player
+     * @return boolean True if the tile is owned by another player and false if the tile isn't owned by another player
+     */
     public boolean checkIsOwned(){
         Tile t = getTile(getPlayer(player_turn).getPl_pos());
 
-        if (t.getOwnedBy() == null) {
+        if (t.getOwnedBy() == 0) {
             return false;
         } else {
             return true;

@@ -88,6 +88,9 @@ public class HelloController {
     @FXML public Button plusTenB;
     @FXML public Button plusFiftyB;
     @FXML public Button plusHundredB;
+    //buttons for jail
+    @FXML public Button pay50B;
+    @FXML public Button useJfcB;
 
     Player p;
 
@@ -150,6 +153,8 @@ public class HelloController {
         plusTenB.setVisible(false);
         plusFiftyB.setVisible(false);
         plusHundredB.setVisible(false);
+        pay50B.setVisible(false);
+        useJfcB.setVisible(false);
     }
 
 //    @FXML
@@ -673,6 +678,8 @@ public class HelloController {
         upgradeB.setVisible(false);
         rollB.setVisible(false);
         nextTurnB.setVisible(true);
+        useJfcB.setVisible(false);
+        pay50B.setVisible(false);
     }
 
     @FXML
@@ -683,6 +690,8 @@ public class HelloController {
         upgradeB.setVisible(false);
         rollB.setVisible(false);
         nextTurnB.setVisible(true);
+        useJfcB.setVisible(false);
+        pay50B.setVisible(false);
     }
 
     //New Game button is pressed. We create a new Board object and set things to default values
@@ -722,9 +731,10 @@ public class HelloController {
             //Rolls the dice and moves the player
             rollB.setOnAction(e ->{
                 if (p.getInJail()){
-                    //show get out of jail 50 button
+                    pay50B.setVisible(true);
                     if (p.getNoJailFreeCard()>0){
                         //show get out of jail free card button
+                        useJfcB.setVisible(true);
                     }
                 }else{
                     int lap = p.getLap();
@@ -843,6 +853,14 @@ public class HelloController {
                 leaveBidB.setVisible(true);
                 auction(b.getTile(p.getPl_pos()).getTile_id());
 
+            });
+
+            pay50B.setOnAction(e ->{
+                payJail50();
+            });
+
+            useJfcB.setOnAction(e->{
+                jailJFC();
             });
 
             plusTenB.setOnAction(e ->{

@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.HelloController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.HelloController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="800.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -106,6 +106,7 @@
                   <Text layoutX="17.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player count" />
                   <Button layoutX="93.0" layoutY="52.0" mnemonicParsing="false" onAction="#NewGame" prefHeight="33.0" prefWidth="75.0" text="New Game" />
                   <Button fx:id="buyBYes" layoutX="53.0" layoutY="433.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="Yes" />
+                  <Button fx:id="pay50B" layoutX="53.0" layoutY="433.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="Pay 50" />
                   <TextArea fx:id="gameText" layoutX="12.0" layoutY="125.0" prefHeight="292.0" prefWidth="353.0">
                      <font>
                         <Font name="Segoe UI Bold" size="17.0" />
@@ -113,6 +114,7 @@
                   </TextArea>
                   <Button fx:id="rollB" layoutX="373.0" layoutY="147.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="82.0" text="Roll" />
                   <Button fx:id="buyBNo" layoutX="141.0" layoutY="433.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="No" />
+                  <Button fx:id="useJfcB" layoutX="141.0" layoutY="433.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="Use JFC" />
                   <TextField fx:id="nums" layoutX="480.0" layoutY="249.0" prefHeight="31.0" prefWidth="54.0" />
                   <Button fx:id="lockB" layoutX="487.0" layoutY="221.0" mnemonicParsing="false" text="Lock" />
                   <Button fx:id="endMorgB" layoutX="461.0" layoutY="288.0" mnemonicParsing="false" text="end Mortgage" />
