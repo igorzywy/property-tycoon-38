@@ -1,7 +1,7 @@
 ﻿Description,Action,Type,Amount/HousePice,HotelPrice
 """You inherit £200""",Bank pays player £200,bpp,200,0
 """You have won 2nd prize in a beauty contest collect £50""",Bank pays player £50,bpp,50,0
-"""You are up the creek with no paddle - go back to the Old Creek""",Player token moves backwards to the Old Creek,pmb,0,0
+"""You are up the creek with no paddle - go back to the Old Creek""",Player token moves backwards to the Old Creek,pmb,1,0
 """Student loan refund Collect £20""",Bank pays player £20,bpp,20,0
 """Bank error in your favour Collect £200""",Bank pays player £200,bpp,200,0
 """Pay bill for text books of £100""",Player pays £100 to the bank,ppb,100,0

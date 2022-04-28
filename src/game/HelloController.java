@@ -273,6 +273,7 @@ public class HelloController {
         }else if (c.getType() == CardType.pm){
             gameText.appendText("\n\n"+p.getPlayer_id() + " moves to tile " + c.getAmount());
             b.Cardpm(c.getAmount());
+            updatePos();
             afterBuy();
 
         }else if (c.getType() == CardType.ppb){
@@ -302,10 +303,12 @@ public class HelloController {
             if (c.getAmount() < 0){
                 gameText.appendText("\n\n"+p.getPlayer_id() + " moves back " + c.getAmount());
                 b.CardpmxBack(c.getAmount());
+                updatePos();
                 afterBuy();
             }else if(c.getAmount() > 0){
                 gameText.appendText("\n\n"+p.getPlayer_id() + " moves forwards " + c.getAmount());
                 b.CardpmxForward(c.getAmount());
+                updatePos();
                 afterBuy();
             }
         }else if (c.getType() == CardType.ppr){
@@ -318,6 +321,7 @@ public class HelloController {
         }else if (c.getType() == CardType.pmf){
             gameText.appendText("\n\n"+p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
             b.Cardpmf(c.getAmount());
+            updatePos();
             afterBuy();
         }else if(c.getType() == CardType.jfc){
             gameText.appendText("\n\n"+p.getPlayer_id() + " gets a get out of jail free card!\n");
@@ -353,6 +357,7 @@ public class HelloController {
         }else if (c.getType() == CardType.pm){
             gameText.appendText("\n\n"+p.getPlayer_id() + " moves to tile " + c.getAmount());
             b.Cardpm(c.getAmount());
+            updatePos();
             afterBuy();
 
         }else if (c.getType() == CardType.ppb){
@@ -382,10 +387,12 @@ public class HelloController {
             if (c.getAmount() < 0){
                 gameText.appendText("\n\n"+p.getPlayer_id() + " moves back " + c.getAmount());
                 b.CardpmxBack(c.getAmount());
+                updatePos();
                 afterBuy();
             }else if(c.getAmount() > 0){
                 gameText.appendText("\n\n"+p.getPlayer_id() + " moves forwards " + c.getAmount());
                 b.CardpmxForward(c.getAmount());
+                updatePos();
                 afterBuy();
             }
         }else if (c.getType() == CardType.ppr){
@@ -398,6 +405,7 @@ public class HelloController {
         }else if (c.getType() == CardType.pmf){
             gameText.appendText("\n\n"+p.getPlayer_id() + " advances to " + b.getTile(c.getAmount()).getTileName());
             b.Cardpmf(c.getAmount());
+            updatePos();
             afterBuy();
         }else if(c.getType() == CardType.jfc){
             gameText.appendText("\n\n"+p.getPlayer_id() + " gets a get out of jail free card!\n");
@@ -453,6 +461,11 @@ public class HelloController {
         }else{
             return true;
         }
+    }
+    @FXML
+    protected void updatePos(){
+        tiles[b.getPlayer(b.getPlayerTurn()).getPl_pos()].getChildren().add(pawns[b.getPlayer(b.getPlayerTurn())
+                .getPlayer_id()-1]);
     }
 
     @FXML
@@ -639,7 +652,12 @@ public class HelloController {
         }
 
     }
-
+    @FXML
+    protected  void checkIfPassGo(int lap){
+        if (p.getLap()==lap+1){
+            gameText.appendText("\n\nYou have been given £200");
+        }
+    }
     @FXML
     protected void rentMsg(int rentAmount){
         gameText.appendText("\nPlayer " + p.getPlayer_id() + " has paid " + rentAmount +
@@ -684,6 +702,7 @@ public class HelloController {
 
             //Rolls the dice and moves the player
             rollB.setOnAction(e ->{
+                int lap = p.getLap();
                 int diceRollAmount = b.rollDice();
                 int move = b.movePlayer(diceRollAmount);
                 tiles[b.getPlayer(b.getPlayerTurn()).getPl_pos()].getChildren().add(pawns[b.getPlayer(b.getPlayerTurn())
@@ -691,6 +710,7 @@ public class HelloController {
                 gameText.appendText("\n\nPlayer " +p.getPlayer_id() + "\nMoney " + p.getPl_cash() + "\nPosition " +
                         p.getPl_pos());
                 rollB.setVisible(false);
+                 checkIfPassGo(lap);
                 //check if tax,cardPl,cardOK,go,freepark,jail,gojail,util,station
                 if (checkIfTax()){
                     taxation();
