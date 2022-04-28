@@ -537,18 +537,9 @@ public class Board {
     }
 
 
-    //increment the player turn old don't use
-    /*
-    public void incPlayer2(){
-        if (this.player_turn == PLAYER_COUNT-1) {
-            this.player_turn = 0;
-        }else{
-            this.player_turn++;
-        }
-    }
-     */
 
-    //increments current player
+
+
     /**
      * Changes whose turn it is out of the list of players
      */
@@ -676,12 +667,20 @@ public class Board {
         p.setNotInJail();
     }
 
+    /**
+     * Puts the current player in jail and sets them as in jail
+     */
     public void goJail(){
         Player p = players.get(player_turn);
         p.setInJail();
         p.setPl_pos(10);
     }
 
+    /**
+     * Moves the player a set amount of tiles.
+     * @param roll The amount of tiles to move the player
+     * @return int The player position
+     */
     public int movePlayer(int roll){
 
 
@@ -705,7 +704,10 @@ public class Board {
 
     }
 
-
+    /**
+     * Rolls 2 dice at random between 1-6 and adds them together
+     * @return int The sum of the 2 dice
+     */
     public int rollDice(){
         Random rand = new Random();
         int dice = rand.nextInt(6);
@@ -725,38 +727,67 @@ public class Board {
         return dice + dice2;
     }
 
+    /**
+     * Gets a certain tile from the Board
+     * @param i The index of the tile
+     * @return Tile The tile that is at index i
+     */
     public Tile getTile(int i){
         return this.board.get(i);
     }
 
+    /**
+     * Gets a player at a certain index
+     * @param i The index of the desired player
+     * @return Player The player at a certain index
+     */
     public Player getPlayer(int i){
         return this.players.get(i);
     }
 
+    /**
+     * Gets the arraylist of players currently in the game
+     * @return ArrayList<Player> The arraylist of players that are in the game
+     */
     public ArrayList<Player> getPlayers(){return players;}
 
+    /**
+     * The number of players at the start of the game
+     * @return int The number of players at the start of the game
+     */
     public int getPlayerCount(){
         return playerCount;
     }
 
+    /**
+     * Gets the index of the current players turn
+     * @return int The index of the current players turn
+     */
     public int getPlayerTurn(){
         player_turn = players.indexOf(players.get(0));
         return player_turn;
     }
 
 
-
+    /**
+     * Gets the number of tiles that is on the board
+     * @return int The number of tiles on the board
+     */
     public int bSize(){
         return this.board.size();
     }
+
+    /**
+     * Gets the arraylist of the opportunity knocks cards
+     * @return ArrayList<Card> The arraylist of opportunity knocks cards
+     */
     public ArrayList<Card> getCardsOK(){
         return cardsOK;   }
+    /**
+     * Gets the arraylist of the pot luck cards
+     * @return ArrayList<Card> The arraylist of pot luck cards
+     */
     public ArrayList<Card> getCardsPL(){
         return cardsPL;   }
-
-
-    public int pSize(){
-        return this.players.size();
-    }
 
 }

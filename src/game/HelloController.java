@@ -863,9 +863,6 @@ public class HelloController {
             buyBYes.setOnAction(e ->{
                 if(b.getPlayer(b.getPlayerTurn()).getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()){
                     b.buyingTile();
-                    for (int i = 0; i < b.bSize(); i++) {
-                        System.out.println(b.getTile(i));
-                    }
                     gameText.appendText("\n\nProperty has be bought.\nPlayer " + p.getPlayer_id() + " has " +
                             p.getPl_cash());
                     buyBYes.setVisible(false);
