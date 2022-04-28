@@ -65,6 +65,11 @@ public class Player {
 
     }
 
+    public void useJFC(){
+        this.noJailFreeCard--;
+        this.inJail = false;
+    }
+
     public int getNumberOfGroupOwned(String group) {
         int counter = 0;
         if (owns.isEmpty()){
@@ -93,6 +98,10 @@ public class Player {
 
     public void setInJail(){
         this.inJail = true;
+    }
+
+    public void setNotInJail(){
+        this.inJail = false;
     }
 
     public int getPl_cash(){

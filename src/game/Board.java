@@ -761,6 +761,16 @@ public class Board {
         }
     }
 
+    /**
+     * Subtracts 50 from the current players bankroll if they are in jail
+     */
+    public void pay50Jail(){
+        Player p = getPlayer(player_turn);
+        p.setPl_cash(p.getPl_cash() - 50);
+        addPublicSpace(50);
+        p.setNotInJail();
+    }
+
 
     public void auction(){
         highestBidOld = new Pair<>(0,0);
