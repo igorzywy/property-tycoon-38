@@ -484,6 +484,17 @@ public class HelloController {
         mortB.setVisible(false);
     }
 
+    /**
+     * After the player has made a decision on whether to buy a tile mortgage, upgrade, next turn will be
+     * visible buttons and the roll button will be disabled and not visible
+     */
+    @FXML protected void afterBuy(){
+        mortB.setVisible(true);
+        upgradeB.setVisible(true);
+        nextTurnB.setVisible(true);
+        rollB.setVisible(false);
+    }
+
     @FXML
     protected void cannotAffordRent(){
         gameText.appendText("\n\nyou cannot afford the rent");
@@ -642,10 +653,7 @@ public class HelloController {
                     if (b.checkCanBeBought()){
                         doYouWantToBuy();
                     }else{
-                        mortB.setVisible(true);
-                        upgradeB.setVisible(true);
-                        nextTurnB.setVisible(true);
-                        rollB.setVisible(false);
+                        afterBuy();
                     }
 
                 }

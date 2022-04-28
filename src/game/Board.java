@@ -81,13 +81,20 @@ public class Board {
 
     /**
      * Assigns the player the tile that they won in the auction and adds it to their owned tiles.
-     * Also changes the tiles owned by to be the same as the playerID of the winner of the auction
+     * Also changes the tiles owned by to be the same as the playerID of the winner of the auction. If the list of
+     * players that were in the auction was 0 or all the players left and no one placed a bid then the bank still holds
+     * that property.
      * @param tileI This is the index of the tile that was won at auction
      */
     public void auctionWinner(int tileI){
-        getTile(tileI).setOwnedBy(highestBidPlayer.getPlayer_id());
-        highestBidPlayer.addOwns(getTile(tileI));
-        highestBidPlayer.setPl_cash(highestBidPlayer.getPl_cash() - highestBid);
+        if (auctionList.isEmpty()){
+
+        }else {
+            getTile(tileI).setOwnedBy(highestBidPlayer.getPlayer_id());
+            highestBidPlayer.addOwns(getTile(tileI));
+            highestBidPlayer.setPl_cash(highestBidPlayer.getPl_cash() - highestBid);
+        }
+
     }
 
     /**
@@ -666,7 +673,7 @@ public class Board {
     public boolean checkCanBeBought() {
         Tile t = getTile(getPlayer(player_turn).getPl_pos());
 
-        if (t.getCanBeBought() == false || t.getOwnedBy() == 0) {
+        if (t.getCanBeBought() == false || t.getOwnedBy() != 0) {
             return false;
         } else {
             return true;
