@@ -6,6 +6,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.shape.*;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.paint.Color;
+
+import java.awt.*;
 
 public class HelloController {
 
@@ -88,9 +94,10 @@ public class HelloController {
 
     Player p;
 
-    Circle pawn1 = new Circle(20);
-    Rectangle pawn2 = new Rectangle(15,15);
+    Circle pawn1 = new Circle(20,Color.BLUE);
+    Rectangle pawn2 = new Rectangle(15,15,Color.RED);
     Ellipse pawn3 = new Ellipse(20,10);
+
     Polygon pawn4 = new Polygon(
             0.0, 0.0,
             10.0, 20.0,
@@ -125,6 +132,8 @@ public class HelloController {
 
         //assign all pawns to storage array
         pawnsStorage[0]=pawn1;pawnsStorage[1]=pawn2;pawnsStorage[2]=pawn3;pawnsStorage[3]=pawn4;pawnsStorage[4]=pawn5;
+        pawnsStorage[2].setFill(Color.BROWN);
+        pawnsStorage[3].setFill(Color.DARKGOLDENROD);
 
         //set opacity of all tiles
         for(int i = 0; i < tiles.length; i++) {
@@ -568,10 +577,15 @@ public class HelloController {
             plusFiftyB.setVisible(false);
             plusHundredB.setVisible(false);
             leaveBidB.setVisible(false);
-            rollB.setVisible(true);
+            rollB.setVisible(false);
             mortB.setVisible(true);
             upgradeB.setVisible(true);
+            nextTurnB.setVisible(true);
+            nextTurnB.setOnAction(e ->{
+                endTurn();
+            });
         }
+
     }
 
 

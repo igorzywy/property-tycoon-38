@@ -88,7 +88,7 @@ public class Board {
      */
     public void auctionWinner(int tileI){
         if (highestBidPlayer == null){
-
+            getTile(tileI).setOwnedBy(0);
         }else {
             getTile(tileI).setOwnedBy(highestBidPlayer.getPlayer_id());
             highestBidPlayer.addOwns(getTile(tileI));
