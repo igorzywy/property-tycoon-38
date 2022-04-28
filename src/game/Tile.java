@@ -43,6 +43,30 @@ public class Tile {
     }
 
 
+    public int getRentHotel(){
+        return rent_hotel;
+    }
+
+    public int getRentUnimp(){
+        return rent_unimproved;
+    }
+
+    public int get1HRent(){
+        return rent_1h;
+    }
+
+    public int get2HRent(){
+        return rent_2h;
+    }
+
+    public int get3HRent(){
+        return rent_3h;
+    }
+
+    public int get4HRent(){
+        return rent_4h;
+    }
+
     public void resetTile(){
         this.hotels = 0;
         this.houses = 0;

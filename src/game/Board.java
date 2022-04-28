@@ -175,12 +175,15 @@ public class Board {
         for (int i = 0; i < playerCount; i++) {
             this.players.add(new Player());
         }
+        Collections.shuffle(this.players);
         //adding pot luck cards to board
         this.cardsPL = Card.getXLSXDataPotLuck();
         //adding opportunity knocks cards to board
         this.cardsOK = Card.getXLSXDataOpportunityKnocks();
 
     }
+
+
 
     /**
      * This method checks if the player owns the set of a certain tile group
@@ -248,10 +251,39 @@ public class Board {
     public void payRent(int rentAmount){
         Player p = players.get(player_turn);
         int ownedBy = getTile(p.getPl_pos()).getOwnedBy();
-        Player pOwn = getPlayer(ownedBy);
+        Player pOwn = getPlayer(ownedBy-1);
         p.setPl_cash(p.getPl_cash() - rentAmount);
         pOwn.setPl_cash(pOwn.getPl_cash() + rentAmount);
-        getTile(p.getPl_pos()).setOwnedBy(p.getPlayer_id());
+    }
+
+    /**
+     * Gets the rent of a tile depending on how many houses and hotels they have
+     * @return int The amount that the rent for the tile will be
+     */
+    public int calcRentOfTile(){
+        Player p = players.get(player_turn);
+        Tile t = getTile(p.getPl_pos());
+        int noHouses = t.getHouses();
+        int noHotels = t.getHotels();
+
+        if (noHotels > 0){
+            return t.getRentHotel();
+        }else if (noHouses > 0){
+            if (noHouses == 1){
+                return t.get1HRent();
+            }else if (noHouses == 2){
+                return t.get2HRent();
+            }else if (noHouses == 3){
+                return t.get3HRent();
+            }else if (noHouses == 4){
+                return t.get4HRent();
+            }
+
+        }else{
+            return t.getRentUnimp();
+        }
+        return t.getRentUnimp();
+
     }
 
     /**
@@ -778,10 +810,9 @@ public class Board {
         }
 
 
-
-
-
     }
+
+
     public int rollDice(){
         Random rand = new Random();
         int dice = rand.nextInt(6);
