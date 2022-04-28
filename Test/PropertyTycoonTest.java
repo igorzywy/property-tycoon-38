@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -18,13 +19,25 @@ public class PropertyTycoonTest {
 
     @Test
     public void tileTest(){
-
+        Random random = new Random();
+        int i = random.nextInt(39);
+        int a = random.nextInt(39);
+        System.out.println(b.getTile(i));
+        System.out.println(b.getTile(a));
     }
     @Test
     public void diceTest(){
 
         assertTrue(b.rollDice()>0);
     }
+
+    @Test
+    public void getPlayersTest(){
+        for (Player player:b.getPlayers()) {
+            System.out.println(player);
+        }
+    }
+
     @Test
     public void movePlayerTest(){
         int intial=b.getPlayer(0).getPl_pos();
@@ -63,10 +76,21 @@ public class PropertyTycoonTest {
     @Test
     public  void checkifTitlecanbeBought(){
         Player p = b.getPlayer(0);
-        p.setPl_pos(1);
+        p.setPl_pos(3);
+        System.out.println(b.getTile(3));
+        System.out.println(b.checkCanBeBought());
 
-        assertEquals(b.checkCanBeBought(),true);
-
+        assertTrue(b.checkCanBeBought());
+    }
+    @Test
+    public void check(){
+        Player p = b.getPlayer(0);
+        p.setPl_pos(3);
+        System.out.println(b.getTile(3));
+        b.buyingTile();
+        System.out.println(b.getTile(3));
+        System.out.println(b.checkCanBeBought());
+        assertFalse(b.checkCanBeBought());
     }
 
 }
