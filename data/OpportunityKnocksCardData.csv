@@ -12,6 +12,6 @@
 """You are assessed for repairs £25/house £100/hotel""",Player pays money to the bank,ppr,25,100
 """Go back 3 spaces""",Player moves token,pmx,-3,0
 """Advance to Skywalker Drive. If you pass GO collect £200""",Player moves token,pmf,11,0
-"""Go to jail. Do not pass GO do not collect £200""",As the card says,pm,0,0
-"""Drunk in charge of a hoverboard. Fine £30""",Player puts £20 on free parking,ppf,30,0
+"""Go to jail. Do not pass GO do not collect £200""",As the card says,pm,10,0
+"""Drunk in charge of a hoverboard. Fine £30""",Player puts £20 on free parking,ppf,20,0
 """Get out of jail free""",Retained by the player until needed. No resale or trade value,jfc,0,0

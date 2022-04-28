@@ -140,20 +140,20 @@ public class Board {
     /**
      * Removes the player from the current players arraylist and also resets all the tiles
      * that they own to be their default state
-     * @param playerId The ID of the player that is going to be bankrupt
+     * @param playerId The player that is going to be bankrupt
      */
-    public void bankrupt(int playerId){
-        for (int i = 0; i < getPlayerCount(); i++) {
-            if (getPlayer(i).getPlayer_id() == playerId){
-                ArrayList<Tile> plOwned = getPlayer(i).getOwns();
-                for (int j = 0; j < plOwned.size(); j++) {
-                    plOwned.get(j).setOwnedBy(0);
-                    plOwned.get(j).resetTile();
-                }
-                players.remove(getPlayer(i));
-            }
+    public void bankrupt(Player playerId){
+        ArrayList<Tile> plOwned = playerId.getOwns();
+        for (int j = 0; j < plOwned.size(); j++) {
+            plOwned.get(j).setOwnedBy(0);
+            plOwned.get(j).resetTile();
         }
+        players.remove(playerId);
     }
+
+
+
+
 
 
     /**
@@ -325,8 +325,10 @@ public class Board {
      */
     public void Cardpm(int amount){
         Player p = getPlayer(player_turn);
-        while(p.getPl_pos()!=0){
-        p.incrPos();}
+        if (amount == 10){
+            p.setInJail();
+        }
+        p.setPl_pos(amount);
     }
 
     /**
@@ -355,6 +357,7 @@ public class Board {
      */
     public void CardpmxBack(int amount){
         Player p = getPlayer(player_turn);
+        amount = amount * -1;
         for (int i = 0; i < amount; i++) {
             p.decresePos();
         }
@@ -813,7 +816,7 @@ public class Board {
     public void goJail(){
         Player p = players.get(player_turn);
         p.setInJail();
-        p.setPl_pos(9);
+        p.setPl_pos(10);
     }
 
     public int movePlayer(int roll){
@@ -871,11 +874,6 @@ public class Board {
 
     public int getPlayerCount(){
         return playerCount;
-    }
-
-
-    public boolean getGameEnd(){
-        return game_End;
     }
 
     public int getPlayerTurn(){

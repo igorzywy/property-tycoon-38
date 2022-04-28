@@ -68,6 +68,7 @@ public class HelloController {
     @FXML public TextArea gameText;
     @FXML public TextField playerNum;
     @FXML public TextField nums;
+    @FXML public Button newGameB;
     @FXML public Button rollB;
     @FXML public Button mortB;
     @FXML public Button yesB;
@@ -157,6 +158,7 @@ public class HelloController {
         plusHundredB.setVisible(false);
         pay50B.setVisible(false);
         useJfcB.setVisible(false);
+        goBankruptB.setVisible(false);
     }
 
 //    @FXML
@@ -429,12 +431,32 @@ public class HelloController {
         nums.setVisible(true);
     }
 
+    /**
+     * Calls bankrupt removing the player from the list of players and go straight to the next players turn.
+     */
     @FXML
     protected void bankrupt(){
-        gameText.setText(p.getPlayer_id() + " is bankrupt");
-        b.bankrupt(p.getPlayer_id());
-        goBankruptB.setVisible(true);
-        //call to increment player
+        gameText.appendText("\nPlayer " + p.getPlayer_id() + " is bankrupt");
+        b.bankrupt(p);
+        goBankruptB.setVisible(false);
+        p = b.getPlayer(b.getPlayerTurn());
+        rollB.setVisible(true);
+        buyBYes.setVisible(false);
+        buyBNo.setVisible(false);
+        mortB.setVisible(false);
+        upgradeB.setVisible(false);
+        nextTurnB.setVisible(false);
+        if (b.getPlayers().size() == 1) {
+            gameText.appendText("\nPlayer " + p.getPlayer_id() + " is the WINNER!!!");
+            rollB.setVisible(false);
+            buyBYes.setVisible(false);
+            buyBNo.setVisible(false);
+            mortB.setVisible(false);
+            upgradeB.setVisible(false);
+            nextTurnB.setVisible(false);
+        }
+
+
     }
     // checking if the player is in jail and if they are just visiting
     @FXML
@@ -543,6 +565,7 @@ public class HelloController {
         mortB.setVisible(false);
         upgradeB.setVisible(false);
         nextTurnB.setVisible(false);
+        goBankruptB.setVisible(false);
     }
 
     @FXML
@@ -562,6 +585,7 @@ public class HelloController {
         buyBNo.setVisible(true);
         rollB.setVisible(false);
         mortB.setVisible(false);
+        goBankruptB.setVisible(false);
     }
 
     /**
@@ -658,6 +682,7 @@ public class HelloController {
             mortB.setVisible(true);
             upgradeB.setVisible(true);
             nextTurnB.setVisible(true);
+            goBankruptB.setVisible(true);
 
         }
 
@@ -672,6 +697,7 @@ public class HelloController {
     protected void rentMsg(int rentAmount){
         gameText.appendText("\nPlayer " + p.getPlayer_id() + " has paid " + rentAmount +
                 " to Player " + b.getTile(p.getPl_pos()).getOwnedBy());
+
 
     }
 
@@ -704,7 +730,7 @@ public class HelloController {
     protected void NewGame() throws InterruptedException {
 
         if(Integer.parseInt(playerNum.getText()) >0 && Integer.parseInt(playerNum.getText())<6){
-
+            newGameB.setVisible(false);
             b = new Board(Integer.parseInt(playerNum.getText()));
             System.out.println(b.bSize());
             rollB.setVisible(true);
@@ -725,6 +751,7 @@ public class HelloController {
                 pawns[i] = pawnsStorage[i];
             }
 
+
             //setting up starting position of all pawns
             tiles[0].getChildren().addAll(pawns);
 
@@ -735,6 +762,8 @@ public class HelloController {
 
             //Rolls the dice and moves the player
             rollB.setOnAction(e ->{
+
+
                 if (p.getInJail()){
                     pay50B.setVisible(true);
                     if (p.getNoJailFreeCard()>0){
@@ -744,9 +773,9 @@ public class HelloController {
                 }else{
                     int lap = p.getLap();
                     int diceRollAmount = b.rollDice();
+                    gameText.appendText("\nYou rolled a " + diceRollAmount);
                     int move = b.movePlayer(diceRollAmount);
-                    tiles[b.getPlayer(b.getPlayerTurn()).getPl_pos()].getChildren().add(pawns[b.getPlayer(b.getPlayerTurn())
-                            .getPlayer_id()-1]);
+                    updatePos();
                     gameText.appendText("\n\nPlayer " +p.getPlayer_id() + "\nMoney " + p.getPl_cash() + "\nPosition " +
                             p.getPl_pos());
                     rollB.setVisible(false);
@@ -785,6 +814,7 @@ public class HelloController {
                             }else{
                                 b.payRent(rentAmount);
                                 rentMsg(rentAmount);
+                                afterBuy();
                             }
                         }
 
@@ -800,6 +830,7 @@ public class HelloController {
                             }else{
                                 b.payRent(rentAmount);
                                 rentMsg(rentAmount);
+                                afterBuy();
                             }
                         }
                     }
@@ -829,6 +860,9 @@ public class HelloController {
             buyBYes.setOnAction(e ->{
                 if(b.getPlayer(b.getPlayerTurn()).getPl_cash() >= b.getTile(p.getPl_pos()).getPrice()){
                     b.buyingTile();
+                    for (int i = 0; i < b.bSize(); i++) {
+                        System.out.println(b.getTile(i));
+                    }
                     gameText.appendText("\n\nProperty has be bought.\nPlayer " + p.getPlayer_id() + " has " +
                             p.getPl_cash());
                     buyBYes.setVisible(false);
@@ -836,11 +870,13 @@ public class HelloController {
                     mortB.setVisible(true);
                     upgradeB.setVisible(true);
                     nextTurnB.setVisible(true);
+                    goBankruptB.setVisible(true);
                 }else{
                     gameText.appendText("\n\nYou don't have enough money.");
                     buyBYes.setVisible(false);
                     buyBNo.setVisible(true);
                     mortB.setVisible(false);
+                    goBankruptB.setVisible(false);
                 }
             });
 
@@ -856,6 +892,7 @@ public class HelloController {
                 plusFiftyB.setVisible(true);
                 plusHundredB.setVisible(true);
                 leaveBidB.setVisible(true);
+                goBankruptB.setVisible(false);
                 auction(b.getTile(p.getPl_pos()).getTile_id());
 
             });
