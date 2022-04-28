@@ -434,34 +434,64 @@ public class Board {
         return false;
     }
 
+    /**
+     * Adds a card to the arraylist of opportunity knocks cards
+     * @param c The card to be added to the list
+     */
     public void addCardsOK(Card c){
         this.cardsOK.add(c);
     }
 
+    /**
+     * Adds a card to the arraylist of pot luck cards
+     * @param c The card to be added to the list
+     */
     public void addCardsPL(Card c){
         this.cardsPL.add(c);
     }
 
+    /**
+     * Removes the first card in the list of pot luck cards
+     */
     public void removeCardsPL(){
         this.cardsPL.remove(0);
     }
 
+    /**
+     * Removes the top card in the list of opportunity knocks cards
+     */
     public void removeCardsOK(){
         this.cardsOK.remove(0);
     }
 
+    /**
+     * Increases the amount of money in free parking
+     * @param amount The amount to be added to the free parking tile
+     */
     public void addPublicSpace(int amount){
         this.freeParkingSpace += amount;
     }
 
+    /**
+     * Gets the amount stored in free parking
+     * @return int The amount of money in free parking
+     */
     public int getFreeParkingSpace(){
         return this.freeParkingSpace;
     }
 
+    /**
+     * Sets the amount of money stored in free parking overwrites the old amount
+     * @param amount The amount that free parking will be set to
+     */
     public void setFreeParkingSpace(int amount){
         this.freeParkingSpace = amount;
     }
 
+    /**
+     * Sets the player count for the start of the game so that the correct amount of players is added
+     * @param player_Count The amount of players that the user specifies
+     */
     public void setPlayerCount(int player_Count){
         playerCount = player_Count;
     }
@@ -479,6 +509,10 @@ public class Board {
      */
 
     //increments current player
+
+    /**
+     * Changes whose turn it is out of the list of players
+     */
     public void incPlayer(){
 
         Player temp = players.get(0);
@@ -535,6 +569,14 @@ public class Board {
     //check if tile set has 1 house diff
     //check if tile has a house
     //if no house mortgage
+
+    /**
+     * Allows the player to downgrade a property and gain money. It will first remove hotels then houses if there is no
+     * greater than one difference between the amount of houses on each set. Then the property will be
+     * mortgaged.
+     * @param tileI The index of the tile to be mortgaged
+     * @return boolean True if the tile has been downgraded in any way. False if nothing has been downgraded.
+     */
     public boolean mortgage(int tileI) {
         Player p = getPlayer(player_turn);
         Tile t = getTile(tileI);
@@ -616,10 +658,15 @@ public class Board {
 //        return true;
 //    }
 
+    /**
+     * Checks if the current tile that the player is on can be purchased
+     * @return boolean True if the tile can be purchased and another player doesn't own it
+     * and False if otherwise
+     */
     public boolean checkCanBeBought() {
         Tile t = getTile(getPlayer(player_turn).getPl_pos());
 
-        if (t.getCanBeBought() == false || t.getOwnedBy() == null) {
+        if (t.getCanBeBought() == false || t.getOwnedBy() == 0) {
             return false;
         } else {
             return true;
@@ -648,12 +695,20 @@ public class Board {
 
 // adds all the players to the list of players to the auction
 
-
+    /**
+     * Gets the list of players that are currently in the auction
+     * @return ArrayList<Player> The list of players involved with the auction
+     */
     public ArrayList<Player> getAuctionList(){
         return auctionList;
     }
 
     //buying tiles with auction
+
+    /**
+     *
+     * @param t
+     */
     public void auctionBuy (int t){
         // getTile(getPlayer(player_turn).getPl_pos());
         int cash = getPlayer(highestBidOld.getKey()).getPl_cash();
