@@ -91,6 +91,8 @@ public class HelloController {
     //buttons for jail
     @FXML public Button pay50B;
     @FXML public Button useJfcB;
+    //button to go bankrupt
+    @FXML public Button goBankruptB;
 
     Player p;
 
@@ -431,6 +433,7 @@ public class HelloController {
     protected void bankrupt(){
         gameText.setText(p.getPlayer_id() + " is bankrupt");
         b.bankrupt(p.getPlayer_id());
+        goBankruptB.setVisible(true);
         //call to increment player
     }
     // checking if the player is in jail and if they are just visiting
@@ -570,6 +573,7 @@ public class HelloController {
         upgradeB.setVisible(true);
         nextTurnB.setVisible(true);
         rollB.setVisible(false);
+        goBankruptB.setVisible(true);
     }
 
     @FXML
@@ -853,6 +857,10 @@ public class HelloController {
                 leaveBidB.setVisible(true);
                 auction(b.getTile(p.getPl_pos()).getTile_id());
 
+            });
+
+            goBankruptB.setOnAction(e->{
+                bankrupt();
             });
 
             pay50B.setOnAction(e ->{
