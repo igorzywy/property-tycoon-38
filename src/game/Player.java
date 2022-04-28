@@ -17,7 +17,7 @@ public class Player {
     private int hotelsOwned = 0;
     private int noJailFreeCard = 0;
     private int lap = 0;
-    private boolean passedgo = false;
+    private boolean passedGo = false;
 
     public int getNoJailFreeCard() {
         return noJailFreeCard;
@@ -148,7 +148,7 @@ public class Player {
         } else {
 
             this.pl_pos ++;
-            this.passedgo=false;
+            this.passedGo =false;
         }
 
     }
@@ -169,7 +169,7 @@ public class Player {
         return a;
     }
 
-    public boolean isPassedgo() {
-        return passedgo;
+    public boolean isPassedGo() {
+        return passedGo;
     }
 }

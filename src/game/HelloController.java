@@ -665,6 +665,25 @@ public class HelloController {
 
     }
 
+    @FXML
+    protected void payJail50(){
+        gameText.appendText("\nPlayer " + p.getPlayer_id() + " has paid 50 to get out of jail!");
+        b.pay50Jail();
+        mortB.setVisible(false);
+        upgradeB.setVisible(false);
+        rollB.setVisible(false);
+        nextTurnB.setVisible(true);
+    }
+
+    @FXML
+    protected void jailJFC(){
+        gameText.appendText("\nPlayer " + p.getPlayer_id() + " has used a get out of jail free card!");
+        p.useJFC();
+        mortB.setVisible(false);
+        upgradeB.setVisible(false);
+        rollB.setVisible(false);
+        nextTurnB.setVisible(true);
+    }
 
     //New Game button is pressed. We create a new Board object and set things to default values
     @FXML
@@ -702,80 +721,88 @@ public class HelloController {
 
             //Rolls the dice and moves the player
             rollB.setOnAction(e ->{
-                int lap = p.getLap();
-                int diceRollAmount = b.rollDice();
-                int move = b.movePlayer(diceRollAmount);
-                tiles[b.getPlayer(b.getPlayerTurn()).getPl_pos()].getChildren().add(pawns[b.getPlayer(b.getPlayerTurn())
-                        .getPlayer_id()-1]);
-                gameText.appendText("\n\nPlayer " +p.getPlayer_id() + "\nMoney " + p.getPl_cash() + "\nPosition " +
-                        p.getPl_pos());
-                rollB.setVisible(false);
-                 checkIfPassGo(lap);
-                //check if tax,cardPl,cardOK,go,freepark,jail,gojail,util,station
-                if (checkIfTax()){
-                    taxation();
-
-                }else if(checkIfCardPL()){
-
-                    cardPL();
-
-                }else if (checkIfCardOK()){
-
-                    cardOK();
-
-
-                }else if(checkIfFPS()){
-                    getFPS();
-                }else if(checkifGoJail()){
-                    b.goJail();
-                }else if (checkIfJail()){
-                    if (checkIfJustVisit()){
-                        justVisiting();
+                if (p.getInJail()){
+                    //show get out of jail 50 button
+                    if (p.getNoJailFreeCard()>0){
+                        //show get out of jail free card button
                     }
+                }else{
+                    int lap = p.getLap();
+                    int diceRollAmount = b.rollDice();
+                    int move = b.movePlayer(diceRollAmount);
+                    tiles[b.getPlayer(b.getPlayerTurn()).getPl_pos()].getChildren().add(pawns[b.getPlayer(b.getPlayerTurn())
+                            .getPlayer_id()-1]);
+                    gameText.appendText("\n\nPlayer " +p.getPlayer_id() + "\nMoney " + p.getPl_cash() + "\nPosition " +
+                            p.getPl_pos());
+                    rollB.setVisible(false);
+                    checkIfPassGo(lap);
+                    //check if tax,cardPl,cardOK,go,freepark,jail,gojail,util,station
+                    if (checkIfTax()){
+                        taxation();
 
-                }else if (checkIfStation()){
-                    if (b.checkCanBeBought()){
-                        doYouWantToBuy();
-                    }else{
-                        int rentAmount = b.getStationRentAmount();
-                        if (p.getPl_cash() < rentAmount){
-                            b.payRent(rentAmount);
-                            rentMsg(rentAmount);
-                            cannotAffordRent();
+                    }else if(checkIfCardPL()){
+
+                        cardPL();
+
+                    }else if (checkIfCardOK()){
+
+                        cardOK();
+
+
+                    }else if(checkIfFPS()){
+                        getFPS();
+                    }else if(checkifGoJail()){
+                        b.goJail();
+                    }else if (checkIfJail()){
+                        if (checkIfJustVisit()){
+                            justVisiting();
+                        }
+
+                    }else if (checkIfStation()){
+                        if (b.checkCanBeBought()){
+                            doYouWantToBuy();
                         }else{
-                            b.payRent(rentAmount);
-                            rentMsg(rentAmount);
+                            int rentAmount = b.getStationRentAmount();
+                            if (p.getPl_cash() < rentAmount){
+                                b.payRent(rentAmount);
+                                rentMsg(rentAmount);
+                                cannotAffordRent();
+                            }else{
+                                b.payRent(rentAmount);
+                                rentMsg(rentAmount);
+                            }
+                        }
+
+                    }else if (checkIfUtility()) {
+                        if (b.checkCanBeBought()){
+                            doYouWantToBuy();
+                        }else{
+                            int rentAmount = b.getUtilRentAmount(diceRollAmount);
+                            if (p.getPl_cash() < rentAmount){
+                                b.payRent(rentAmount);
+                                rentMsg(rentAmount);
+                                cannotAffordRent();
+                            }else{
+                                b.payRent(rentAmount);
+                                rentMsg(rentAmount);
+                            }
                         }
                     }
+                    else{
+                        if (b.checkCanBeBought()){
+                            doYouWantToBuy();
+                        }else if (b.checkIsOwned()){
+                            int rentAmount = b.calcRentOfTile();
+                            if (p.getPl_cash() < rentAmount){
+                                b.payRent(rentAmount);
+                                rentMsg(rentAmount);
+                                cannotAffordRent();
+                            }else{
+                                b.payRent(rentAmount);
+                                rentMsg(rentAmount);
+                                afterBuy();
+                            }
 
-                }else if (checkIfUtility()) {
-                    if (b.checkCanBeBought()){
-                        doYouWantToBuy();
-                    }else{
-                        int rentAmount = b.getUtilRentAmount(diceRollAmount);
-                        if (p.getPl_cash() < rentAmount){
-                            b.payRent(rentAmount);
-                            rentMsg(rentAmount);
-                            cannotAffordRent();
-                        }else{
-                            b.payRent(rentAmount);
-                            rentMsg(rentAmount);
-                        }
-                    }
-                }
-                else{
-                    if (b.checkCanBeBought()){
-                        doYouWantToBuy();
-                    }else if (b.checkIsOwned()){
-                        int rentAmount = b.calcRentOfTile();
-                        if (p.getPl_cash() < rentAmount){
-                            b.payRent(rentAmount);
-                            rentMsg(rentAmount);
-                            cannotAffordRent();
-                        }else{
-                            b.payRent(rentAmount);
-                            rentMsg(rentAmount);
-                            afterBuy();
                         }
 
                     }
