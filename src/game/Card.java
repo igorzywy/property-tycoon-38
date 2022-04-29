@@ -5,11 +5,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
 
+/**
+ * Card class holds the information about a single card
+ */
 public class Card {
     private static int card_id_incrementer = 0;
     private int card_id = 0;
@@ -20,6 +21,15 @@ public class Card {
     private Integer perHotel = null;
     private String typeS = null;
 
+    /**
+     * Constructor of the Card class assigns all variables
+     * @param desc The description of the card
+     * @param action What the card does
+     * @param type The type of card
+     * @param amount The amount the card will have a player move or amount to be added or deducted
+     *               from a players bankroll
+     * @param perHotel The amount to pay per hotel if paying for repairs
+     */
     public Card(String desc, String action, String type, Integer amount, Integer perHotel){
         CardType c = CardType.valueOf(type);
         card_id = card_id_incrementer++;
@@ -32,18 +42,34 @@ public class Card {
 
     }
 
+    /**
+     * Gets the type of the card
+     * @return The type of the Card
+     */
     public CardType getType(){
         return this.type;
     }
 
+    /**
+     * Gets the amount the card holds
+     * @return The amount the card holds
+     */
     public int getAmount(){
         return this.amount;
     }
 
+    /**
+     * Gets the price per hotel if the card is a player pay repair card
+     * @return The amount per hotel
+     */
     public int getHotelPrice(){
         return this.perHotel;
     }
 
+    /**
+     * Gets the data of the cards from a .csv file and
+     * @return The arraylist of all the cards from the .csv file
+     */
     public static ArrayList<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
         String path = "data/PotLuckCardData.csv";
@@ -64,7 +90,10 @@ public class Card {
         Collections.shuffle(cards);
         return cards;
     }
-
+    /**
+     * Gets the data of the cards from a .csv file and
+     * @return The arraylist of all the cards from the .csv file
+     */
     public static ArrayList<Card> getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
         String path = "data/OpportunityKnocksCardData.csv";
