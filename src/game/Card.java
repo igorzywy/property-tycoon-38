@@ -68,7 +68,7 @@ public class Card {
 
     /**
      * Gets the data of the cards from a .csv file and
-     * @return The arraylist of all the cards from the .csv file
+     * @return The arraylist of all the cards from the .csv file not in order
      */
     public static ArrayList<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
@@ -92,7 +92,7 @@ public class Card {
     }
     /**
      * Gets the data of the cards from a .csv file and
-     * @return The arraylist of all the cards from the .csv file
+     * @return The arraylist of all the cards from the .csv file not in order
      */
     public static ArrayList<Card> getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
