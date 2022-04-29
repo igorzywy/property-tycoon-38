@@ -266,6 +266,10 @@ public class Board {
         int noHouses = t.getHouses();
         int noHotels = t.getHotels();
 
+
+        if (t.getMortgaged()){
+            return 0;
+        }
         if (noHotels > 0){
             return t.getRentHotel();
         }else if (noHouses > 0){
