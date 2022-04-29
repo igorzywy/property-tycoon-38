@@ -195,7 +195,7 @@ public class Player {
 
     /**
      * Gets the list of tiles that the player owns
-     * @return ArrayList<Tile> The list of tiles that the player owns
+     * @return ArrayList Tile The list of tiles that the player owns
      */
     public ArrayList<Tile> getOwns(){
         return this.owns;

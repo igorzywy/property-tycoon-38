@@ -51,7 +51,7 @@ public class Board {
 
     /**
      * Gets the highest bid amount
-     * @return int returns the amount in the highest bid
+     * @return int Returns the amount in the highest bid
      */
     public int getHighestBid(){
         return this.highestBid;
@@ -650,7 +650,7 @@ public class Board {
 
     /**
      * Gets the list of players that are currently in the auction
-     * @return ArrayList<Player> The list of players involved with the auction
+     * @return ArrayList Player The list of players involved with the auction
      */
     public ArrayList<Player> getAuctionList(){
         return auctionList;
@@ -747,7 +747,7 @@ public class Board {
 
     /**
      * Gets the arraylist of players currently in the game
-     * @return ArrayList<Player> The arraylist of players that are in the game
+     * @return ArrayList Player The arraylist of players that are in the game
      */
     public ArrayList<Player> getPlayers(){return players;}
 
@@ -779,13 +779,13 @@ public class Board {
 
     /**
      * Gets the arraylist of the opportunity knocks cards
-     * @return ArrayList<Card> The arraylist of opportunity knocks cards
+     * @return ArrayList Card The arraylist of opportunity knocks cards
      */
     public ArrayList<Card> getCardsOK(){
         return cardsOK;   }
     /**
      * Gets the arraylist of the pot luck cards
-     * @return ArrayList<Card> The arraylist of pot luck cards
+     * @return ArrayList Card The arraylist of pot luck cards
      */
     public ArrayList<Card> getCardsPL(){
         return cardsPL;   }

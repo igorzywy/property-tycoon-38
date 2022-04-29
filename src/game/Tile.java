@@ -237,7 +237,7 @@ public class Tile {
 
     /**
      * Gets the data from a .csv file to be stored in the tile
-     * @return ArrayList<Tile> The list of all the tiles from the .csv file
+     * @return ArrayList Tile The list of all the tiles from the .csv file
      */
     public static ArrayList<Tile> getXLSXData(){
         ArrayList<Tile> tiles= new ArrayList<Tile>();

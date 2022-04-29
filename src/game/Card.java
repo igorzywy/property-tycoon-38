@@ -44,7 +44,7 @@ public class Card {
 
     /**
      * Gets the type of the card
-     * @return The type of the Card
+     * @return int The type of the Card
      */
     public CardType getType(){
         return this.type;
@@ -52,7 +52,7 @@ public class Card {
 
     /**
      * Gets the amount the card holds
-     * @return The amount the card holds
+     * @return int The amount the card holds
      */
     public int getAmount(){
         return this.amount;
@@ -60,7 +60,7 @@ public class Card {
 
     /**
      * Gets the price per hotel if the card is a player pay repair card
-     * @return The amount per hotel
+     * @return int The amount per hotel
      */
     public int getHotelPrice(){
         return this.perHotel;
@@ -68,7 +68,7 @@ public class Card {
 
     /**
      * Gets the data of the cards from a .csv file and
-     * @return The arraylist of all the cards from the .csv file not in order
+     * @return ArrayList Card The arraylist of all the cards from the .csv file not in order
      */
     public static ArrayList<Card> getXLSXDataPotLuck(){
         ArrayList<Card> cards= new ArrayList<Card>();
@@ -92,7 +92,7 @@ public class Card {
     }
     /**
      * Gets the data of the cards from a .csv file and
-     * @return The arraylist of all the cards from the .csv file not in order
+     * @return ArrayList Card The arraylist of all the cards from the .csv file not in order
      */
     public static ArrayList<Card> getXLSXDataOpportunityKnocks(){
         ArrayList<Card> cards= new ArrayList<Card>();
