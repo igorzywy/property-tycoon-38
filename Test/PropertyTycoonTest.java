@@ -97,7 +97,7 @@ public class PropertyTycoonTest {
         assertNotSame(check, test);
     }
     /**
-     * F
+     * F26
      * test if player gets sent to jail
      */
     @Test
@@ -169,5 +169,45 @@ public class PropertyTycoonTest {
         assertSame(f,b.getCardsPL().get(16));
         assertSame(c,b.getCardsOK().get(15));
     }
+
+    /***
+     * F31
+     * test if half the tile price has been added to player cash
+     */
+    @Test
+    public void mortgageTest(){
+        Player p = b.getPlayer(b.getPlayerTurn());
+        p.setPl_pos(1);
+        b.buyingTile();
+        p.setPl_cash(p.getPl_cash() - b.getTile(1).getHousePrice());
+        b.getTile(1).incrHouses();
+        p.incrHousesOwned();
+        Tile t = b.getTile(1);
+        int tilePrice = t.getPrice();
+        int cash = p.getPl_cash();
+        b.mortgage(1);
+        assertTrue(p.getPl_cash()-cash==tilePrice/2);
+    }
+    /**
+     * f34
+     * test if mortgage is sell house each time it is used before it mortgages a tile
+     *
+     */
+    @Test
+    public void mortageHouse(){
+        Player p = b.getPlayer(b.getPlayerTurn());
+        p.setPl_pos(1);
+        b.buyingTile();
+        int cash = p.getPl_cash();
+        p.setPl_cash(p.getPl_cash() - b.getTile(1).getHousePrice());
+        b.getTile(1).incrHouses();
+        p.incrHousesOwned();
+        Tile t = b.getTile(1);
+        int tilehouse = t.getHouses();
+        b.mortgage(1);
+        assertTrue(t.getHouses()==tilehouse-1);
+    }
+
+
 
 }
