@@ -128,7 +128,7 @@ public class Board {
     //player,bid
 
 
-    public boolean game_End = false;
+
 
 
     /*
