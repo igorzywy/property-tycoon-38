@@ -486,10 +486,10 @@ public class HelloController {
     }
     @FXML
     protected boolean checkIfJustVisit(){
-        if (p.getInJail()){
-            return false;
-        }else{
+        if (!p.getInJail()){
             return true;
+        }else{
+            return false;
         }
     }
     @FXML
@@ -637,7 +637,7 @@ public class HelloController {
     protected void auction(int tileI){
         b.resetHighestBid();
         auctionTileI = tileI;
-        gameText.setText("Auction for tile " + b.getTile(auctionTileI).getTileName() + "\nOriginal value " +
+        gameText.appendText("\n\nAuction for tile " + b.getTile(auctionTileI).getTileName() + "\nOriginal value " +
                 b.getTile(auctionTileI).getPrice());
         b.addAllPlayersToAuction();
         //display buttons for no and bid amounts each button should pass a different bid amount to bid in this class
@@ -775,8 +775,10 @@ public class HelloController {
                 }else{
                     int lap = p.getLap();
                     int diceRollAmount = b.rollDice();
-                    gameText.appendText("\nYou rolled a " + diceRollAmount);
                     int move = b.movePlayer(diceRollAmount);
+                    diceRollAmount = diceRollAmount-1;
+                    gameText.appendText("\nYou rolled a " + diceRollAmount);
+                    diceRollAmount = diceRollAmount+1;
                     updatePos();
                     gameText.appendText("\n\nPlayer " +p.getPlayer_id() + "\nMoney " + p.getPl_cash() + "\nPosition " +
                             p.getPl_pos());
@@ -805,6 +807,7 @@ public class HelloController {
                         if (checkIfJustVisit()){
                             justVisiting();
                         }
+                        nextTurnB.setVisible(true);
 
                     }else if (checkIfStation()){
                         if (b.checkCanBeBought()){
