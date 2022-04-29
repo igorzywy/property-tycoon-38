@@ -161,23 +161,7 @@ public class HelloController {
         goBankruptB.setVisible(false);
     }
 
-//    @FXML
-//    protected void setDiceImage(int diceNum, ImageView dice){
-//        String num = new String(String.valueOf(diceNum));
-//        dice.setImage(new Image("Alea_" + num + ".png"));
-//    }
 
-//    @FXML
-//    protected int diceRoll() throws InterruptedException {
-//        Random rng = new Random();
-//        int temp1 = rng.nextInt(1,7);
-//        int temp2 = rng.nextInt(1,7);
-//        setDiceImage(temp1, dice1);
-//        setDiceImage(temp2, dice2);
-//        String diceSum = String.valueOf(temp1+temp2);
-//        diceOut.appendText(diceSum);
-//        return temp1+temp2;
-//    }
 
     @FXML
     protected boolean checkIfTax(){
@@ -185,11 +169,7 @@ public class HelloController {
             return true;
         }else{return false;}
 
-//                boolean removedTile = false;
-//                nums.setVisible(true);
-//                int tileToMorg = Integer.parseInt(nums.getText());
-//                while(!removedTile){
-//                    removedTile = b.mortgage(tileToMorg);
+
 
 
     }
@@ -205,23 +185,7 @@ public class HelloController {
             p.setPl_cash(p.getPl_cash() - b.getTile(p.getPl_pos()).getPrice());
             b.addPublicSpace(b.getTile(p.getPl_pos()).getPrice());
             cannotAffordRent();
-            //checks if all the properties the player owns are mortgaged
-            /*
-            boolean allMortgaged = true;
-            for (int i = 0; i < p.getOwns().size(); i++) {
-                if (p.getOwns().get(i).getMortgaged() == false){
-                    allMortgaged = false;
-                }
-            }
-            //if they are mortgaged then the player goes bankrupt
-            if (allMortgaged == true){
-                bankrupt();
-            }
-            mortgOption = true;
-            nums.setVisible(true);
-            lockB.setVisible(true);
-            endMorgB.setVisible(true);
-             */
+
 
         }
     }
