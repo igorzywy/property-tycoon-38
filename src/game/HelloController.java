@@ -529,11 +529,12 @@ public class HelloController {
                             }else if (b.getTile(tileI).getHotels() >= 1){
                                 gameText.appendText("\n\n"+b.getTile(tileI).getTileName() + " already has a hotel!");
                             }else if (p.getPl_cash() < (b.getTile(tileI).getHousePrice()*5)){
-                                gameText.appendText("\n\nYou cannot afford a hotel! " + (b.getTile(tileI).getHousePrice()*5) +
-                                        " is needed");
+                                gameText.appendText("\n\nYou cannot afford a hotel! " +
+                                        (b.getTile(tileI).getHousePrice()*5) + " is needed");
                             }else{
                                 p.setPl_cash(p.getPl_cash() - (b.getTile(tileI).getHousePrice()*5));
                                 b.getTile(tileI).incrHotels();
+                                p.incrHotelsOwned();
                                 gameText.appendText("\n\n"+p.getPlayer_id() + " has bought a hotel on " +
                                         b.getTile(tileI).getTileName());
                             }
